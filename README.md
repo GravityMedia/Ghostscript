@@ -42,8 +42,8 @@ use Ghostscript\Device\Pdf as PdfDevice;
 use Ghostscript\Ghostscript;
 use Ghostscript\Parameters;
 
-$inputFile = 'resources/text_graph_image_cmyk_rgb.pdf';
-$outputFile = 'out.pdf';
+$inputFile = '/path/to/input/file.pdf';
+$outputFile = '/path/to/output/file.pdf';
 
 $interactionParameters = new Parameters\Interaction();
 $interactionParameters
