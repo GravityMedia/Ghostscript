@@ -1,6 +1,6 @@
 {
     "name": "gravitymedia/ghostscript",
-    "description": "Ghostscript processing",
+    "description": "Object oriented Ghostscript processing library for PHP",
     "license": "MIT",
     "authors": [
         {

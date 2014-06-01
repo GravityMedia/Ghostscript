@@ -1,6 +1,6 @@
 #Ghostscript
 
-Object oriented Ghostscript processing library for PHP.
+Object oriented Ghostscript processing library for PHP
 
 ##Requirements##
 
