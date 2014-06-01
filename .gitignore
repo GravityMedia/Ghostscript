@@ -1,4 +1,7 @@
 .idea/
+bin/sami.php
+build/
+cache/
 resources/
 vendor/
 composer.phar
