@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This file is part of the Ghostscript package
+ *
+ * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
+ */
+
+require __DIR__ . '/ghostscript.php';
