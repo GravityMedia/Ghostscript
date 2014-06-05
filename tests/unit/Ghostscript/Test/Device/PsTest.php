@@ -23,7 +23,7 @@ class PsTest extends \PHPUnit_Framework_TestCase
     {
         $ps = new Ps();
 
-        $this->assertEquals('-sDEVICE=\'ps2write\'', strval($ps->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'ps2write\'', strval($ps->getCommandParameterList()));
     }
 
     /**

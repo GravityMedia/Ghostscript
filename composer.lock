@@ -4,53 +4,44 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b6382559472f44a547738b2b88ca138e",
+    "hash": "ad9e2b892fcb53f45418ee84bbaf9594",
     "packages": [
         {
-            "name": "adambrett/shell-wrapper",
-            "version": "0.4.1",
+            "name": "gravitymedia/commander",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/adambrett/php-shell-wrapper.git",
-                "reference": "421cef3e4cc5d835b18a134c8b34d8c44a6f9506"
+                "url": "https://github.com/GravityMedia/Commander.git",
+                "reference": "2f1b9afd5a21f619b711723f6766d20b79320b99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adambrett/php-shell-wrapper/zipball/421cef3e4cc5d835b18a134c8b34d8c44a6f9506",
-                "reference": "421cef3e4cc5d835b18a134c8b34d8c44a6f9506",
+                "url": "https://api.github.com/repos/GravityMedia/Commander/zipball/2f1b9afd5a21f619b711723f6766d20b79320b99",
+                "reference": "2f1b9afd5a21f619b711723f6766d20b79320b99",
                 "shasum": ""
             },
             "require-dev": {
-                "covex-nn/phpcb": "*@dev",
-                "fzaninotto/faker": "*@dev",
-                "mockery/mockery": "*@dev",
-                "pdepend/pdepend": "*@dev",
-                "phploc/phploc": "*@dev",
-                "phpmd/phpmd": "*@dev",
-                "phpunit/phpunit": "*@dev",
-                "sebastian/phpcpd": "*@dev",
-                "squizlabs/php_codesniffer": "*@dev"
+                "phpunit/phpunit": "4.1.*",
+                "sami/sami": "1.3.*"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "AdamBrett\\ShellWrapper\\": "src"
+                "psr-0": {
+                    "Commander": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BDS-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Adam Brett",
-                    "email": "adam@adambrett.co.uk",
-                    "homepage": "http://adambrett.co.uk",
-                    "role": "Developer"
+                    "name": "Daniel Schröder",
+                    "email": "daniel.schroeder@gravitymedia.de"
                 }
             ],
-            "description": "An object oriented wrapper for shell commands",
-            "time": "2014-04-24 15:15:56"
+            "description": "Object oriented program execution library for PHP",
+            "time": "2014-06-04 20:32:35"
         },
         {
             "name": "symfony/console",
@@ -1213,7 +1204,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gravitymedia/commander": 20
+    },
     "platform": [],
     "platform-dev": []
 }

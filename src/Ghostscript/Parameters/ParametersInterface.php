@@ -15,9 +15,9 @@ namespace Ghostscript\Parameters;
 interface ParametersInterface
 {
     /**
-     * Get parameters as flags
+     * Get command parameter list
      *
-     * @return \Ghostscript\ShellWrapper\Command\Collections\Flags
+     * @return \Commander\Command\ParameterList
      */
-    public function toFlags();
+    public function getCommandParameterList();
 }

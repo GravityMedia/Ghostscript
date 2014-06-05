@@ -23,7 +23,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
     {
         $pdf = new Pdf();
 
-        $this->assertEquals('-sDEVICE=\'pdfwrite\'', strval($pdf->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'pdfwrite\'', strval($pdf->getCommandParameterList()));
     }
 
     /**
@@ -45,7 +45,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
             'configuration' => Pdf::CONFIGURATION_DEFAULT
         ));
 
-        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dPDFSETTINGS=\'/default\'', strval($pdf->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dPDFSETTINGS=\'/default\'', strval($pdf->getCommandParameterList()));
     }
 
     /**
@@ -57,7 +57,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
             'process-color-model' => Pdf::DEVICE_CMYK
         ));
 
-        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dProcessColorModel=\'/DeviceCMYK\'', strval($pdf->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dProcessColorModel=\'/DeviceCMYK\'', strval($pdf->getCommandParameterList()));
     }
 
     /**
@@ -68,6 +68,6 @@ class PdfTest extends \PHPUnit_Framework_TestCase
         $pdf = new Pdf();
         $pdf->setCompatibilityLevel('1.4');
 
-        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dCompatibilityLevel=\'1.4\'', strval($pdf->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'pdfwrite\' -dCompatibilityLevel=\'1.4\'', strval($pdf->getCommandParameterList()));
     }
 }

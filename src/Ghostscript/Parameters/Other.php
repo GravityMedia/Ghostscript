@@ -7,7 +7,8 @@
 
 namespace Ghostscript\Parameters;
 
-use Ghostscript\ShellWrapper\Command;
+use Commander\Command\ParameterList;
+use Ghostscript\Command\Parameter\TokenOption;
 
 /**
  * Other parameters object
@@ -24,13 +25,13 @@ class Other implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function toFlags()
+    public function getCommandParameterList()
     {
-        $flags = new Command\Collections\Flags();
+        $parameters = new ParameterList();
         if (null !== $this->safer) {
-            $flags->addFlag(new Command\TokenFlag($this->safer ? 'SAFER' : 'NOSAFER'));
+            $parameters->addParameter(new TokenOption($this->safer ? 'SAFER' : 'NOSAFER'));
         }
-        return $flags;
+        return $parameters;
     }
 
     /**

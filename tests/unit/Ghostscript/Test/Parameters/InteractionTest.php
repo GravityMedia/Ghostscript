@@ -25,7 +25,7 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setQuiet(true);
 
-        $this->assertEquals('-dQUIET', strval($interaction->toFlags()));
+        $this->assertEquals('-dQUIET', strval($interaction->getCommandParameterList()));
     }
 
     /**
@@ -36,7 +36,7 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setBatch(true);
 
-        $this->assertEquals('-dBATCH', strval($interaction->toFlags()));
+        $this->assertEquals('-dBATCH', strval($interaction->getCommandParameterList()));
     }
 
     /**
@@ -47,6 +47,6 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setPause(false);
 
-        $this->assertEquals('-dNOPAUSE', strval($interaction->toFlags()));
+        $this->assertEquals('-dNOPAUSE', strval($interaction->getCommandParameterList()));
     }
 }

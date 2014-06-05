@@ -25,7 +25,7 @@ class OtherTest extends GhostscriptTestCase
         $other = new Other();
         $other->setSafer(true);
 
-        $this->assertEquals('-dSAFER', strval($other->toFlags()));
+        $this->assertEquals('-dSAFER', strval($other->getCommandParameterList()));
     }
 
     /**
@@ -36,6 +36,6 @@ class OtherTest extends GhostscriptTestCase
         $other = new Other();
         $other->setSafer(false);
 
-        $this->assertEquals('-dNOSAFER', strval($other->toFlags()));
+        $this->assertEquals('-dNOSAFER', strval($other->getCommandParameterList()));
     }
 }

@@ -15,11 +15,11 @@ namespace Ghostscript\Device;
 interface DeviceInterface
 {
     /**
-     * Get device flags
+     * Get command parameter list
      *
-     * @return \Ghostscript\ShellWrapper\Command\Collections\Flags
+     * @return \Commander\Command\ParameterList
      */
-    public function getDeviceFlags();
+    public function getCommandParameterList();
 
     /**
      * Get device name

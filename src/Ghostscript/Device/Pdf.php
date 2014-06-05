@@ -7,7 +7,8 @@
 
 namespace Ghostscript\Device;
 
-use Ghostscript\ShellWrapper\Command;
+use Commander\Command\Parameter\Argument;
+use Ghostscript\Command\Parameter\TokenOption;
 
 /**
  * PDF device object
@@ -103,28 +104,26 @@ class Pdf extends AbstractDevice
     }
 
     /**
-     * Get flags
-     *
-     * @return \Ghostscript\ShellWrapper\Command\Collections\Flags
+     * @inheritdoc
      */
-    public function getDeviceFlags()
+    public function getCommandParameterList()
     {
-        $flags = parent::getDeviceFlags();
+        $parameters = parent::getCommandParameterList();
 
         // @see http://ghostscript.com/doc/current/Ps2pdf.htm#Options
         $configuration = $this->getOption('configuration');
         if (in_array($configuration, array(self::CONFIGURATION_DEFAULT, self::CONFIGURATION_SCREEN, self::CONFIGURATION_EBOOK, self::CONFIGURATION_PRINTER, self::CONFIGURATION_PREPRESS))) {
-            $flags->addFlag(new Command\TokenFlag('PDFSETTINGS', $configuration));
+            $parameters->addParameter(new TokenOption('PDFSETTINGS', new Argument($configuration)));
         }
         $processColorModel = $this->getOption('process-color-model');
         if (in_array($processColorModel, array(self::DEVICE_GRAY, self::DEVICE_RGB, self::DEVICE_CMYK))) {
-            $flags->addFlag(new Command\TokenFlag('ProcessColorModel', $processColorModel));
+            $parameters->addParameter(new TokenOption('ProcessColorModel', new Argument($processColorModel)));
         }
 
         if (null !== $this->compatibilityLevel) {
-            $flags->addFlag(new Command\TokenFlag('CompatibilityLevel', $this->compatibilityLevel));
+            $parameters->addParameter(new TokenOption('CompatibilityLevel', new Argument($this->compatibilityLevel)));
         }
-        return $flags;
+        return $parameters;
     }
 
     /**

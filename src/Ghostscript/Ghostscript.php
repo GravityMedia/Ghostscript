@@ -7,12 +7,11 @@
 
 namespace Ghostscript;
 
-use AdamBrett\ShellWrapper\Command\Argument;
-use AdamBrett\ShellWrapper\Command\Param;
+use Commander\Command;
+use Commander\Runner\Exec as Shell;
+use Commander\Runner\ExitCode;
 use Ghostscript\Device\DeviceInterface as Device;
 use Ghostscript\Parameters\ParametersInterface as Parameters;
-use Ghostscript\ShellWrapper\Command;
-use Ghostscript\ShellWrapper\Runners\Exec as Shell;
 
 /**
  * The Ghostscript object
@@ -27,7 +26,7 @@ class Ghostscript
     const DEFAULT_GS_COMMAND = 'gs';
 
     /**
-     * @var \Ghostscript\ShellWrapper\Runners\Exec
+     * @var \Commander\Runner\Exec
      */
     protected $shell;
 
@@ -64,7 +63,7 @@ class Ghostscript
                 '2>/dev/null'
             )
         ));
-        $command->addArgument(new Argument('version'));
+        $command->addLongOption(new Command\Parameter\LongOption('version'));
         $version = $this->shell->run($command);
 
         if (version_compare('9.00', $version) > 0) {
@@ -75,7 +74,7 @@ class Ghostscript
     /**
      * Get shell
      *
-     * @return \AdamBrett\ShellWrapper\Runners\Exec
+     * @return \Commander\Runner\Exec
      */
     public function getShell()
     {
@@ -129,29 +128,25 @@ class Ghostscript
      *
      * @param $inputFile
      *
-     * @return \Ghostscript\ShellWrapper\Command
+     * @return \Commander\Command
      */
     public function getCommand($inputFile)
     {
-        $flags = new Command\Collections\Flags();
+        $command = new Command($this->getOption('command', self::DEFAULT_GS_COMMAND));
 
         foreach ($this->parameters as $parameters) {
-            foreach ($parameters->toFlags()->toArray() as $flag) {
-                $flags->addFlag($flag);
+            foreach ($parameters->getCommandParameterList() as $parameter) {
+                $command->addParameter($parameter);
             }
         }
 
         if ($this->device instanceof Device) {
-            foreach ($this->device->getDeviceFlags()->toArray() as $flag) {
-                $flags->addFlag($flag);
+            foreach ($this->device->getCommandParameterList() as $parameter) {
+                $command->addParameter($parameter);
             }
         }
 
-        $command = new Command($this->getOption('command', self::DEFAULT_GS_COMMAND), array(
-            'flags' => $flags
-        ));
-
-        $command->addParam(new Param($inputFile));
+        $command->addArgument(new Command\Parameter\Argument($inputFile));
 
         return $command;
     }
@@ -159,17 +154,17 @@ class Ghostscript
     /**
      * Process input file
      *
-     * @param \Ghostscript\ShellWrapper\Command $command
+     * @param \Commander\Command $command
      *
      * @return \Ghostscript\Ghostscript
      * @throws \RuntimeException
      */
     public function process(Command $command)
     {
-        $this->shell->clearOutput()->run($command);
+        $this->shell->clearOutputBuffer()->run($command);
 
-        if (0 !== $this->shell->getReturnValue()) {
-            throw new \RuntimeException(implode("\n", $this->shell->getOutput()));
+        if (ExitCode::SUCCESS !== $this->shell->getExitCode()->getCode()) {
+            throw new \RuntimeException(implode("\n", $this->shell->getOutputBuffer()));
         }
 
         return $this;

@@ -7,7 +7,9 @@
 
 namespace Ghostscript\Device;
 
-use Ghostscript\ShellWrapper\Command;
+use Commander\Command\Parameter\Argument;
+use Commander\Command\ParameterList;
+use Ghostscript\Command\Parameter\StringOption;
 
 /**
  * Abstract device object
@@ -22,18 +24,16 @@ abstract class AbstractDevice implements DeviceInterface
     protected $outputFile;
 
     /**
-     * Get flags
-     *
-     * @return \Ghostscript\ShellWrapper\Command\Collections\Flags
+     * @inheritdoc
      */
-    public function getDeviceFlags()
+    public function getCommandParameterList()
     {
-        $flags = new Command\Collections\Flags();
-        $flags->addFlag(new Command\StringFlag('DEVICE', $this->getDeviceName()));
+        $parameters = new ParameterList();
+        $parameters->addParameter(new StringOption('DEVICE', new Argument($this->getDeviceName())));
         if (null !== $this->outputFile) {
-            $flags->addFlag(new Command\StringFlag('OutputFile', $this->outputFile));
+            $parameters->addParameter(new StringOption('OutputFile', new Argument($this->outputFile)));
         }
-        return $flags;
+        return $parameters;
     }
 
     /**

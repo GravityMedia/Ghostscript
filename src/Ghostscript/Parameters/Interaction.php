@@ -7,7 +7,8 @@
 
 namespace Ghostscript\Parameters;
 
-use Ghostscript\ShellWrapper\Command;
+use Commander\Command\ParameterList;
+use Ghostscript\Command\Parameter\TokenOption;
 
 /**
  * Interaction parameters object
@@ -34,19 +35,19 @@ class Interaction implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function toFlags()
+    public function getCommandParameterList()
     {
-        $flags = new Command\Collections\Flags();
+        $parameters = new ParameterList();
         if (true === $this->quiet) {
-            $flags->addFlag(new Command\TokenFlag('QUIET'));
+            $parameters->addParameter(new TokenOption('QUIET'));
         }
         if (true === $this->batch) {
-            $flags->addFlag(new Command\TokenFlag('BATCH'));
+            $parameters->addParameter(new TokenOption('BATCH'));
         }
         if (false === $this->pause) {
-            $flags->addFlag(new Command\TokenFlag('NOPAUSE'));
+            $parameters->addParameter(new TokenOption('NOPAUSE'));
         }
-        return $flags;
+        return $parameters;
     }
 
     /**

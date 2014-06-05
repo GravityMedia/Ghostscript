@@ -7,7 +7,9 @@
 
 namespace Ghostscript\Parameters;
 
-use Ghostscript\ShellWrapper\Command;
+use Commander\Command\Parameter\Argument;
+use Commander\Command\ParameterList;
+use Ghostscript\Command\Parameter\TokenOption;
 
 /**
  * Rendering parameters object
@@ -39,28 +41,28 @@ class Rendering implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function toFlags()
+    public function getCommandParameterList()
     {
-        $flags = new Command\Collections\Flags();
+        $parameters = new ParameterList();
         if (null !== $this->colorscreen) {
             if ($this->colorscreen) {
-                $flags->addFlag(new Command\TokenFlag('COLORSCREEN'));
+                $parameters->addParameter(new TokenOption('COLORSCREEN'));
             } elseif (false === $this->colorscreen || 'false' === $this->colorscreen) {
-                $flags->addFlag(new Command\TokenFlag('COLORSCREEN', 'false'));
+                $parameters->addParameter(new TokenOption('COLORSCREEN', new Argument('false')));
             } else {
-                $flags->addFlag(new Command\TokenFlag('COLORSCREEN', '0'));
+                $parameters->addParameter(new TokenOption('COLORSCREEN', new Argument('0')));
             }
         }
         if (null !== $this->ditherPpi) {
-            $flags->addFlag(new Command\TokenFlag('DITHERPPI', $this->ditherPpi));
+            $parameters->addParameter(new TokenOption('DITHERPPI', new Argument($this->ditherPpi)));
         }
         if (null !== $this->textAlphaBits) {
-            $flags->addFlag(new Command\TokenFlag('TextAlphaBits', $this->textAlphaBits));
+            $parameters->addParameter(new TokenOption('TextAlphaBits', new Argument($this->textAlphaBits)));
         }
         if (null !== $this->graphicsAlphaBits) {
-            $flags->addFlag(new Command\TokenFlag('GraphicsAlphaBits', $this->graphicsAlphaBits));
+            $parameters->addParameter(new TokenOption('GraphicsAlphaBits', new Argument($this->graphicsAlphaBits)));
         }
-        return $flags;
+        return $parameters;
     }
 
     /**

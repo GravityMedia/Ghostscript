@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "adambrett/shell-wrapper": "0.4.*",
+        "gravitymedia/commander": "dev-master",
         "symfony/console": "2.4.*"
     },
     "require-dev": {

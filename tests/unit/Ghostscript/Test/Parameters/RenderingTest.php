@@ -25,7 +25,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(true);
 
-        $this->assertEquals('-dCOLORSCREEN', strval($rendering->toFlags()));
+        $this->assertEquals('-dCOLORSCREEN', strval($rendering->getCommandParameterList()));
     }
 
     /**
@@ -36,7 +36,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(false);
 
-        $this->assertEquals('-dCOLORSCREEN=\'false\'', strval($rendering->toFlags()));
+        $this->assertEquals('-dCOLORSCREEN=\'false\'', strval($rendering->getCommandParameterList()));
     }
 
     /**
@@ -47,7 +47,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(0);
 
-        $this->assertEquals('-dCOLORSCREEN=\'0\'', strval($rendering->toFlags()));
+        $this->assertEquals('-dCOLORSCREEN=\'0\'', strval($rendering->getCommandParameterList()));
     }
 
     /**
@@ -58,7 +58,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setDitherPpi(72);
 
-        $this->assertEquals('-dDITHERPPI=\'72\'', strval($rendering->toFlags()));
+        $this->assertEquals('-dDITHERPPI=\'72\'', strval($rendering->getCommandParameterList()));
     }
 
     /**
@@ -69,7 +69,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setTextAlphaBits(4);
 
-        $this->assertEquals('-dTextAlphaBits=\'4\'', strval($rendering->toFlags()));
+        $this->assertEquals('-dTextAlphaBits=\'4\'', strval($rendering->getCommandParameterList()));
     }
 
     /**
@@ -80,6 +80,6 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setGraphicsAlphaBits(4);
 
-        $this->assertEquals('-dGraphicsAlphaBits=\'4\'', strval($rendering->toFlags()));
+        $this->assertEquals('-dGraphicsAlphaBits=\'4\'', strval($rendering->getCommandParameterList()));
     }
 }

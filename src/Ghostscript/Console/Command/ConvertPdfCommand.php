@@ -17,7 +17,7 @@ class ConvertPdfCommand extends GhostscriptCommand
     protected function configure()
     {
         $this
-            ->setName('ghostscript:convert:pdf')
+            ->setName('convert:pdf')
             ->setDescription('Convert any file via Ghostscript to PDF')
             ->addArgument(
                 'input',
@@ -47,15 +47,15 @@ class ConvertPdfCommand extends GhostscriptCommand
             ->getGhostscript()
             ->setDevice($pdfDevice);
 
-        $ghostscriptCommand = $ghostscript->getCommand($inputFile);
-        $ghostscriptOutput = $ghostscript->process($ghostscriptCommand)
+        $command = $ghostscript->getCommand($inputFile);
+        $outputBuffer = $ghostscript->process($command)
             ->getShell()
-            ->getOutput();
+            ->getOutputBuffer();
 
         // debug
-        $output->writeln('<info>' . $ghostscriptCommand . '</info>');
-        if (!empty($ghostscriptOutput)) {
-            $output->writeln('<comment>' . implode('</comment>' . "\n" . '<comment>', $ghostscriptOutput) . '</comment>');
+        $output->writeln('<info>Command:</info> ' . $command);
+        if (!empty($outputBuffer)) {
+            $output->writeln('<comment>' . implode('</comment>' . "\n" . '<comment>', $outputBuffer) . '</comment>');
         }
     }
 }

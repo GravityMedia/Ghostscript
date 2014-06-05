@@ -23,7 +23,7 @@ class EpsTest extends \PHPUnit_Framework_TestCase
     {
         $eps = new Eps();
 
-        $this->assertEquals('-sDEVICE=\'eps2write\'', strval($eps->getDeviceFlags()));
+        $this->assertEquals('-sDEVICE=\'eps2write\'', strval($eps->getCommandParameterList()));
     }
 
     /**
