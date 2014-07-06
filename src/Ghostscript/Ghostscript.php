@@ -8,7 +8,7 @@
 namespace Ghostscript;
 
 use Commander\Command;
-use Commander\Runner\Exec as Shell;
+use Commander\Runner\Executable as Shell;
 use Commander\Runner\ExitCode;
 use Ghostscript\Device\DeviceInterface as Device;
 use Ghostscript\Parameters\ParametersInterface as Parameters;
@@ -26,7 +26,7 @@ class Ghostscript
     const DEFAULT_GS_COMMAND = 'gs';
 
     /**
-     * @var \Commander\Runner\Exec
+     * @var \Commander\Runner\Executable
      */
     protected $shell;
 
@@ -64,17 +64,18 @@ class Ghostscript
             )
         ));
         $command->addLongOption(new Command\Parameter\LongOption('version'));
-        $version = $this->shell->run($command);
+        $output = $this->shell->run($command)->getOutput();
+        $version = array_pop($output);
 
         if (version_compare('9.00', $version) > 0) {
-            throw new \RuntimeException('Ghostscript version 9.0 or higher is required');
+            throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
         }
     }
 
     /**
      * Get shell
      *
-     * @return \Commander\Runner\Exec
+     * @return \Commander\Runner\Executable
      */
     public function getShell()
     {
@@ -161,10 +162,10 @@ class Ghostscript
      */
     public function process(Command $command)
     {
-        $this->shell->clearOutputBuffer()->run($command);
+        $this->shell->clearOutput()->run($command);
 
-        if (ExitCode::SUCCESS !== $this->shell->getExitCode()->getCode()) {
-            throw new \RuntimeException(implode("\n", $this->shell->getOutputBuffer()));
+        if (ExitCode::OK !== $this->shell->getExitCode()->getCode()) {
+            throw new \RuntimeException(implode("\n", $this->shell->getOutput()));
         }
 
         return $this;
