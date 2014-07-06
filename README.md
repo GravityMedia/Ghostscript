@@ -1,4 +1,6 @@
 #Ghostscript
+[![Project Status](http://stillmaintained.com/GravityMedia/Ghostscript.png)](http://stillmaintained.com/GravityMedia/Ghostscript)
+[![Build Status](https://travis-ci.org/GravityMedia/Ghostscript.svg?branch=master)](https://travis-ci.org/GravityMedia/Ghostscript)
 
 Object oriented Ghostscript processing library for PHP
 
@@ -6,7 +8,7 @@ Object oriented Ghostscript processing library for PHP
 
 This library has the following requirements:
 
- - PHP 5.5+
+ - PHP 5.4+
  - Ghostscript 9.00+
 
 ##Installation##
