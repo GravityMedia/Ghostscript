@@ -17,7 +17,7 @@ use Ghostscript\Device\Pdf;
 class PdfTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \Ghostscript\Devices\Pdf::__construct
+     * @covers \Ghostscript\Device\Pdf::__construct
      */
     public function testShouldBePdfWriteDevice()
     {
@@ -27,7 +27,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Pdf::getDeviceName
+     * @covers \Ghostscript\Device\Pdf::getDeviceName
      */
     public function testShouldIndicateCorrectDeviceName()
     {
@@ -37,7 +37,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Pdf::getDeviceFlags
+     * @covers \Ghostscript\Device\Pdf::getOption
      */
     public function testShouldHaveDefaultConfiguration()
     {
@@ -49,7 +49,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Pdf::getDeviceFlags
+     * @covers \Ghostscript\Device\Pdf::getOption
      */
     public function testShouldHaveProcessColorModelCMYK()
     {
@@ -61,7 +61,7 @@ class PdfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Pdf::setCompatibilityLevel
+     * @covers \Ghostscript\Device\Pdf::setCompatibilityLevel
      */
     public function testShouldHaveCompatibilityLevel()
     {

@@ -17,7 +17,7 @@ use Ghostscript\Device\Eps;
 class EpsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \Ghostscript\Devices\Eps::__construct
+     * @covers \Ghostscript\Device\Eps::__construct
      */
     public function testShouldBePdfWriteDevice()
     {
@@ -27,7 +27,7 @@ class EpsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Eps::getDeviceName
+     * @covers \Ghostscript\Device\Eps::getDeviceName
      */
     public function testShouldIndicateCorrectDeviceName()
     {

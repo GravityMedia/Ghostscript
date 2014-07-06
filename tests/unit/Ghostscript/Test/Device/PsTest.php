@@ -17,7 +17,7 @@ use Ghostscript\Device\Ps;
 class PsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \Ghostscript\Devices\Ps::__construct
+     * @covers \Ghostscript\Device\Ps::__construct
      */
     public function testShouldBePdfWriteDevice()
     {
@@ -27,7 +27,7 @@ class PsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Ghostscript\Devices\Ps::getDeviceName
+     * @covers \Ghostscript\Device\Ps::getDeviceName
      */
     public function testShouldIndicateCorrectDeviceName()
     {

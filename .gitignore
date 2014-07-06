@@ -2,6 +2,7 @@
 bin/sami.php
 cache/
 docs/
+reports/
 resources/
 vendor/
 composer.phar
