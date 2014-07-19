@@ -11,16 +11,16 @@
          syntaxCheck="false"
          bootstrap="tests/bootstrap.php">
     <testsuites>
-        <testsuite name="Ghostscript Test Suite">
-            <directory>./tests/unit/Ghostscript/</directory>
+        <testsuite name="Ghostscript test suite">
+            <directory>./tests/unit/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/Ghostscript/</directory>
+            <directory>./src/</directory>
             <!--
             <exclude>
-                <directory>./tests/unit/Ghostscript/Fixtures/</directory>
+                <directory>./tests/unit/Fixtures/</directory>
             </exclude>
             -->
         </whitelist>

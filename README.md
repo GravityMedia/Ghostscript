@@ -40,9 +40,9 @@ php composer.phar install
 ```php
 require 'vendor/autoload.php';
 
-use Ghostscript\Device\Pdf as PdfDevice;
-use Ghostscript\Ghostscript;
-use Ghostscript\Parameters;
+use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
+use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\Parameters;
 
 $inputFile = '/path/to/input/file.pdf';
 $outputFile = '/path/to/output/file.pdf';
@@ -53,8 +53,8 @@ $interactionParameters
     ->setBatch(true)
     ->setPause(false);
 
-$otherParameters = new Parameters\Other();
-$otherParameters
+$controlParameters = new Parameters\Control();
+$controlParameters
     ->setSafer(true);
 
 $pdfDevice = new PdfDevice(array('configuration' => PdfDevice::CONFIGURATION_DEFAULT));
@@ -64,7 +64,7 @@ $pdfDevice
 $ghostscript = new Ghostscript();
 $ghostscript
     ->addParameters($interactionParameters)
-    ->addParameters($otherParameters)
+    ->addParameters($controlParameters)
     ->setDevice($pdfDevice);
 
 $command = $ghostscript

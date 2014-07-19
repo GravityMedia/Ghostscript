@@ -6,4 +6,4 @@
  */
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->add('Ghostscript\Test', __DIR__ . '/unit');
+$loader->addPsr4('GravityMedia\\Ghostscript\\', __DIR__ . '/unit');
