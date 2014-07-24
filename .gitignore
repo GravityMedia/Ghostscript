@@ -1,8 +1,6 @@
 .idea/
-bin/sami.php
 cache/
 docs/
-resources/
 vendor/
 composer.phar
 coverage.clover
