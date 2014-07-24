@@ -1,6 +1,8 @@
 #Ghostscript
 [![Project Status](http://stillmaintained.com/GravityMedia/Ghostscript.png)](http://stillmaintained.com/GravityMedia/Ghostscript)
 [![Build Status](https://travis-ci.org/GravityMedia/Ghostscript.svg?branch=master)](https://travis-ci.org/GravityMedia/Ghostscript)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
 
 Object oriented Ghostscript processing library for PHP
 
