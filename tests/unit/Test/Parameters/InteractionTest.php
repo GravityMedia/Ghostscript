@@ -18,16 +18,6 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 class InteractionTest extends GhostscriptTestCase
 {
     /**
-     * @covers \GravityMedia\Ghostscript\Parameters\Interaction::getCommandParameterList
-     */
-    public function testShouldReturnCommandParameterList()
-    {
-        $interaction = new Interaction();
-
-        $this->assertInstanceOf('\GravityMedia\Commander\Command\ParameterList', $interaction->getCommandParameterList());
-    }
-
-    /**
      * @covers \GravityMedia\Ghostscript\Parameters\Interaction::setQuiet
      */
     public function testShouldBeQuiet()
@@ -35,7 +25,7 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setQuiet(true);
 
-        $this->assertEquals('-dQUIET', strval($interaction->getCommandParameterList()));
+        $this->assertContains('-dQUIET', $interaction->getCommandParameterList());
     }
 
     /**
@@ -46,7 +36,7 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setBatch(true);
 
-        $this->assertEquals('-dBATCH', strval($interaction->getCommandParameterList()));
+        $this->assertContains('-dBATCH', $interaction->getCommandParameterList());
     }
 
     /**
@@ -57,6 +47,6 @@ class InteractionTest extends GhostscriptTestCase
         $interaction = new Interaction();
         $interaction->setPause(false);
 
-        $this->assertEquals('-dNOPAUSE', strval($interaction->getCommandParameterList()));
+        $this->assertContains('-dNOPAUSE', $interaction->getCommandParameterList());
     }
 }

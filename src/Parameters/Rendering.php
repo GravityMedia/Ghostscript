@@ -7,8 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Commander\Command\Parameter\Argument;
-use GravityMedia\Commander\Command\ParameterList;
 use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
 
 /**
@@ -43,24 +41,24 @@ class Rendering implements ParametersInterface
      */
     public function getCommandParameterList()
     {
-        $parameters = new ParameterList();
+        $parameters = array();
         if (null !== $this->colorscreen) {
             if ($this->colorscreen) {
-                $parameters->addParameter(new TokenOption('COLORSCREEN'));
+                array_push($parameters, new TokenOption('COLORSCREEN'));
             } elseif (false === $this->colorscreen || 'false' === $this->colorscreen) {
-                $parameters->addParameter(new TokenOption('COLORSCREEN', new Argument('false')));
+                array_push($parameters, new TokenOption('COLORSCREEN', 'false'));
             } else {
-                $parameters->addParameter(new TokenOption('COLORSCREEN', new Argument('0')));
+                array_push($parameters, new TokenOption('COLORSCREEN', '0'));
             }
         }
         if (null !== $this->ditherPpi) {
-            $parameters->addParameter(new TokenOption('DITHERPPI', new Argument($this->ditherPpi)));
+            array_push($parameters, new TokenOption('DITHERPPI', strval($this->ditherPpi)));
         }
         if (null !== $this->textAlphaBits) {
-            $parameters->addParameter(new TokenOption('TextAlphaBits', new Argument($this->textAlphaBits)));
+            array_push($parameters, new TokenOption('TextAlphaBits', strval($this->textAlphaBits)));
         }
         if (null !== $this->graphicsAlphaBits) {
-            $parameters->addParameter(new TokenOption('GraphicsAlphaBits', new Argument($this->graphicsAlphaBits)));
+            array_push($parameters, new TokenOption('GraphicsAlphaBits', strval($this->graphicsAlphaBits)));
         }
         return $parameters;
     }

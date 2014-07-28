@@ -47,15 +47,7 @@ class ConvertPdfCommand extends GhostscriptCommand
             ->getGhostscript()
             ->setDevice($pdfDevice);
 
-        $command = $ghostscript->getCommand($inputFile);
-        $shellOutput = $ghostscript->process($command)
-            ->getShell()
-            ->getOutput();
-
         // debug
-        $output->writeln('<info>Command:</info> ' . $command);
-        if (!empty($shellOutput)) {
-            $output->writeln('<comment>' . implode('</comment>' . "\n" . '<comment>', $shellOutput) . '</comment>');
-        }
+        $output->writeln('<info>Command:</info> ' . $ghostscript->process($ghostscript->getCommand($inputFile)));
     }
 }

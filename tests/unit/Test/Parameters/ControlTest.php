@@ -18,16 +18,6 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 class ControlTest extends GhostscriptTestCase
 {
     /**
-     * @covers \GravityMedia\Ghostscript\Parameters\Control::getCommandParameterList
-     */
-    public function testShouldReturnCommandParameterList()
-    {
-        $control = new Control();
-
-        $this->assertInstanceOf('\GravityMedia\Commander\Command\ParameterList', $control->getCommandParameterList());
-    }
-
-    /**
      * @covers \GravityMedia\Ghostscript\Parameters\Control::setSafer
      */
     public function testShouldBeSafer()
@@ -35,7 +25,7 @@ class ControlTest extends GhostscriptTestCase
         $control = new Control();
         $control->setSafer(true);
 
-        $this->assertEquals('-dSAFER', strval($control->getCommandParameterList()));
+        $this->assertContains('-dSAFER', $control->getCommandParameterList());
     }
 
     /**
@@ -46,6 +36,6 @@ class ControlTest extends GhostscriptTestCase
         $control = new Control();
         $control->setSafer(false);
 
-        $this->assertEquals('-dNOSAFER', strval($control->getCommandParameterList()));
+        $this->assertContains('-dNOSAFER', $control->getCommandParameterList());
     }
 }

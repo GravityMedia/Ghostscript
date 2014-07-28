@@ -72,11 +72,5 @@ $ghostscript
 $command = $ghostscript
     ->getCommand($inputFile);
 
-$output = $ghostscript
-    ->process($command)
-    ->getShell()
-    ->getOutput();
-
-var_dump((string)$command);
-var_dump($output);
+$ghostscript->process($command);
 ```

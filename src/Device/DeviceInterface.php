@@ -17,7 +17,7 @@ interface DeviceInterface
     /**
      * Get command parameter list
      *
-     * @return \GravityMedia\Commander\Command\ParameterList
+     * @return \GravityMedia\Commander\Parameter\ParameterInterface[]
      */
     public function getCommandParameterList();
 

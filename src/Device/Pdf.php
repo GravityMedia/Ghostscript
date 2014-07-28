@@ -7,7 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
-use GravityMedia\Commander\Command\Parameter\Argument;
 use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
 
 /**
@@ -81,7 +80,7 @@ class Pdf extends AbstractDevice
      * Get option
      *
      * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -113,15 +112,15 @@ class Pdf extends AbstractDevice
         // @see http://ghostscript.com/doc/current/Ps2pdf.htm#Options
         $configuration = $this->getOption('configuration');
         if (in_array($configuration, array(self::CONFIGURATION_DEFAULT, self::CONFIGURATION_SCREEN, self::CONFIGURATION_EBOOK, self::CONFIGURATION_PRINTER, self::CONFIGURATION_PREPRESS))) {
-            $parameters->addParameter(new TokenOption('PDFSETTINGS', new Argument($configuration)));
+            array_push($parameters, new TokenOption('PDFSETTINGS', $configuration));
         }
         $processColorModel = $this->getOption('process-color-model');
         if (in_array($processColorModel, array(self::DEVICE_GRAY, self::DEVICE_RGB, self::DEVICE_CMYK))) {
-            $parameters->addParameter(new TokenOption('ProcessColorModel', new Argument($processColorModel)));
+            array_push($parameters, new TokenOption('ProcessColorModel', $processColorModel));
         }
 
         if (null !== $this->compatibilityLevel) {
-            $parameters->addParameter(new TokenOption('CompatibilityLevel', new Argument($this->compatibilityLevel)));
+            array_push($parameters, new TokenOption('CompatibilityLevel', $this->compatibilityLevel));
         }
         return $parameters;
     }

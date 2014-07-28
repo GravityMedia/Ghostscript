@@ -7,7 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Commander\Command\ParameterList;
 use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
 
 /**
@@ -37,15 +36,15 @@ class Interaction implements ParametersInterface
      */
     public function getCommandParameterList()
     {
-        $parameters = new ParameterList();
+        $parameters = array();
         if (true === $this->quiet) {
-            $parameters->addParameter(new TokenOption('QUIET'));
+            array_push($parameters, new TokenOption('QUIET'));
         }
         if (true === $this->batch) {
-            $parameters->addParameter(new TokenOption('BATCH'));
+            array_push($parameters, new TokenOption('BATCH'));
         }
         if (false === $this->pause) {
-            $parameters->addParameter(new TokenOption('NOPAUSE'));
+            array_push($parameters, new TokenOption('NOPAUSE'));
         }
         return $parameters;
     }

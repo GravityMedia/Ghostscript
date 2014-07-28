@@ -8,8 +8,9 @@
 namespace GravityMedia\Ghostscript;
 
 use GravityMedia\Commander\Command;
-use GravityMedia\Commander\Runner\Executable as Shell;
-use GravityMedia\Commander\Runner\ExitCode;
+use GravityMedia\Commander\Event\OutputEvent;
+use GravityMedia\Commander\Parameter;
+use GravityMedia\Commander\Runner\Exec as Runner;
 use GravityMedia\Ghostscript\Device\DeviceInterface as Device;
 use GravityMedia\Ghostscript\Parameters\ParametersInterface as Parameters;
 
@@ -24,11 +25,6 @@ class Ghostscript
      * The default Ghostscript command
      */
     const DEFAULT_GS_COMMAND = 'gs';
-
-    /**
-     * @var \GravityMedia\Commander\Runner\Executable
-     */
-    protected $shell;
 
     /**
      * @var array
@@ -51,6 +47,11 @@ class Ghostscript
     protected $joboptions;
 
     /**
+     * @var callable
+     */
+    private $errorOutputListener;
+
+    /**
      * The Ghostscript constructor method
      *
      * @param array $options
@@ -59,32 +60,30 @@ class Ghostscript
      */
     public function __construct(array $options = array())
     {
-        $this->shell = new Shell();
         $this->options = $options;
         $this->parameters = array();
+        $this->errorOutputListener = function (OutputEvent $event) {
+            throw new \RuntimeException(implode("\n", $event->getOutput()), $event->getExitCode()->getCode());
+        };
 
         $command = new Command($this->getOption('command', self::DEFAULT_GS_COMMAND), array(
             'redirections' => array(
                 '2>/dev/null'
             )
         ));
-        $command->addLongOption(new Command\Parameter\LongOption('version'));
-        $output = $this->shell->run($command)->getOutput();
-        $version = array_pop($output);
+        $command->addParameter(new Parameter\LongOption('version'));
 
-        if (version_compare('9.00', $version) > 0) {
-            throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
-        }
-    }
-
-    /**
-     * Get shell
-     *
-     * @return \GravityMedia\Commander\Runner\Executable
-     */
-    public function getShell()
-    {
-        return $this->shell;
+        $runner = new Runner();
+        $runner
+            ->addErrorOutputListener($this->errorOutputListener)
+            ->addOutputListener(function (OutputEvent $event) {
+                $output = $event->getOutput();
+                $version = array_pop($output);
+                if (version_compare('9.00', $version) > 0) {
+                    throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
+                }
+            })
+            ->run($command);
     }
 
     /**
@@ -167,11 +166,11 @@ class Ghostscript
 
         if (null !== $this->joboptions) {
             $command
-                ->addShortOption(new Command\Parameter\ShortOption('c', new Command\Parameter\Argument('save pop')))
-                ->addShortOption(new Command\Parameter\ShortOption('f', new Command\Parameter\Argument($this->joboptions)));
+                ->addParameter(new Parameter\ShortOption('c', 'save pop'))
+                ->addParameter(new Parameter\ShortOption('f', $this->joboptions));
         }
 
-        $command->addArgument(new Command\Parameter\Argument($inputFile));
+        $command->addParameter(new Parameter\Argument($inputFile));
 
         return $command;
     }
@@ -181,17 +180,15 @@ class Ghostscript
      *
      * @param \GravityMedia\Commander\Command $command
      *
-     * @return \GravityMedia\Ghostscript\Ghostscript
+     * @return \GravityMedia\Commander\Command
      * @throws \RuntimeException
      */
     public function process(Command $command)
     {
-        $this->shell->clearOutput()->run($command);
-
-        if (ExitCode::OK !== $this->shell->getExitCode()->getCode()) {
-            throw new \RuntimeException(implode("\n", $this->shell->getOutput()));
-        }
-
-        return $this;
+        $runner = new Runner();
+        $runner
+            ->addErrorOutputListener($this->errorOutputListener)
+            ->run($command);
+        return $command;
     }
 }

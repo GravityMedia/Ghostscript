@@ -7,7 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Commander\Command\ParameterList;
 use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
 
 /**
@@ -27,9 +26,9 @@ class Control implements ParametersInterface
      */
     public function getCommandParameterList()
     {
-        $parameters = new ParameterList();
+        $parameters = array();
         if (null !== $this->safer) {
-            $parameters->addParameter(new TokenOption($this->safer ? 'SAFER' : 'NOSAFER'));
+            array_push($parameters, new TokenOption($this->safer ? 'SAFER' : 'NOSAFER'));
         }
         return $parameters;
     }

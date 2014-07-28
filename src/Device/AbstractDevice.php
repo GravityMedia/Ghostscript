@@ -7,8 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
-use GravityMedia\Commander\Command\Parameter\Argument;
-use GravityMedia\Commander\Command\ParameterList;
 use GravityMedia\Ghostscript\Command\Parameter\StringOption;
 
 /**
@@ -28,10 +26,10 @@ abstract class AbstractDevice implements DeviceInterface
      */
     public function getCommandParameterList()
     {
-        $parameters = new ParameterList();
-        $parameters->addParameter(new StringOption('DEVICE', new Argument($this->getDeviceName())));
+        $parameters = array();
+        array_push($parameters, new StringOption('DEVICE', $this->getDeviceName()));
         if (null !== $this->outputFile) {
-            $parameters->addParameter(new StringOption('OutputFile', new Argument($this->outputFile)));
+            array_push($parameters, new StringOption('OutputFile', $this->outputFile));
         }
         return $parameters;
     }
