@@ -1,5 +1,9 @@
 #Ghostscript
 [![Project Status](http://stillmaintained.com/GravityMedia/Ghostscript.png)](http://stillmaintained.com/GravityMedia/Ghostscript)
+[![Latest Stable Version](https://poser.pugx.org/gravitymedia/ghostscript/v/stable.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
+[![Total Downloads](https://poser.pugx.org/gravitymedia/ghostscript/downloads.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
+[![Latest Unstable Version](https://poser.pugx.org/gravitymedia/ghostscript/v/unstable.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
+[![License](https://poser.pugx.org/gravitymedia/ghostscript/license.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
 [![Build Status](https://travis-ci.org/GravityMedia/Ghostscript.svg?branch=master)](https://travis-ci.org/GravityMedia/Ghostscript)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
