@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Console\Command;
+namespace GravityMedia\Ghostscript\Command;
 
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Parameters;
@@ -26,32 +26,13 @@ class GhostscriptCommand extends Command
      * This is mainly useful when a lot of commands extends one main command
      * where some things need to be initialized based on the input arguments and options.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-        $this->ghostscript = new Ghostscript();
-    }
 
-    /**
-     * Get ghostscript instance
-     *
-     * @return \GravityMedia\Ghostscript\Ghostscript
-     */
-    protected function getGhostscript()
-    {
-        return $this->ghostscript;
-    }
-
-    /**
-     * Apply default ghostscript parameters
-     *
-     * @return \GravityMedia\Ghostscript\Console\Command\GhostscriptCommand
-     */
-    protected function applyDefaultGhostscriptParameters()
-    {
         $interactionParameters = new Parameters\Interaction();
         $interactionParameters
             ->setQuiet(true)
@@ -62,11 +43,21 @@ class GhostscriptCommand extends Command
         $controlParameters
             ->setSafer(true);
 
-        $ghostscript = $this->getGhostscript();
+        $ghostscript = new Ghostscript();
         $ghostscript
             ->addParameters($interactionParameters)
             ->addParameters($controlParameters);
 
-        return $this;
+        $this->ghostscript = $ghostscript;
+    }
+
+    /**
+     * Get ghostscript instance
+     *
+     * @return \GravityMedia\Ghostscript\Ghostscript
+     */
+    protected function getGhostscript()
+    {
+        return $this->ghostscript;
     }
 }

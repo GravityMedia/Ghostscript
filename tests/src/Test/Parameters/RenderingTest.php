@@ -25,7 +25,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(true);
 
-        $this->assertContains('-dCOLORSCREEN', $rendering->getCommandParameterList());
+        $this->assertContains('-dCOLORSCREEN', $rendering->getParametersAsArguments());
     }
 
     /**
@@ -36,7 +36,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(false);
 
-        $this->assertContains('-dCOLORSCREEN=\'false\'', $rendering->getCommandParameterList());
+        $this->assertContains('-dCOLORSCREEN=\'false\'', $rendering->getParametersAsArguments());
     }
 
     /**
@@ -47,7 +47,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setColorscreen(0);
 
-        $this->assertContains('-dCOLORSCREEN=\'0\'', $rendering->getCommandParameterList());
+        $this->assertContains('-dCOLORSCREEN=\'0\'', $rendering->getParametersAsArguments());
     }
 
     /**
@@ -58,7 +58,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setDitherPpi(72);
 
-        $this->assertContains('-dDITHERPPI=\'72\'', $rendering->getCommandParameterList());
+        $this->assertContains('-dDITHERPPI=\'72\'', $rendering->getParametersAsArguments());
     }
 
     /**
@@ -69,7 +69,7 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setTextAlphaBits(4);
 
-        $this->assertContains('-dTextAlphaBits=\'4\'', $rendering->getCommandParameterList());
+        $this->assertContains('-dTextAlphaBits=\'4\'', $rendering->getParametersAsArguments());
     }
 
     /**
@@ -80,6 +80,6 @@ class RenderingTest extends GhostscriptTestCase
         $rendering = new Rendering();
         $rendering->setGraphicsAlphaBits(4);
 
-        $this->assertContains('-dGraphicsAlphaBits=\'4\'', $rendering->getCommandParameterList());
+        $this->assertContains('-dGraphicsAlphaBits=\'4\'', $rendering->getParametersAsArguments());
     }
 }

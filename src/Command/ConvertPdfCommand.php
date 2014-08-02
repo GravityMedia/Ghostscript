@@ -5,12 +5,13 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Console\Command;
+namespace GravityMedia\Ghostscript\Command;
 
 use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class ConvertPdfCommand extends GhostscriptCommand
 {
@@ -25,11 +26,10 @@ class ConvertPdfCommand extends GhostscriptCommand
                 'The input file'
             )
             ->addArgument(
-               'output',
-               InputArgument::REQUIRED,
-               'The output file'
-            )
-        ;
+                'output',
+                InputArgument::REQUIRED,
+                'The output file'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,17 +37,28 @@ class ConvertPdfCommand extends GhostscriptCommand
         $inputFile = $input->getArgument('input');
         $outputFile = $input->getArgument('output');
 
-        $pdfDevice = new PdfDevice(array(
-            'configuration' => PdfDevice::CONFIGURATION_DEFAULT
-        ));
+        $pdfDevice = new PdfDevice(
+            array(
+                'configuration' => PdfDevice::CONFIGURATION_DEFAULT
+            )
+        );
         $pdfDevice->setOutputFile($outputFile);
 
         $ghostscript = $this
-            ->applyDefaultGhostscriptParameters()
             ->getGhostscript()
             ->setDevice($pdfDevice);
 
+        $process = new Process($ghostscript->createCommander($inputFile));
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput(), $process->getExitCode());
+        }
+
         // debug
-        $output->writeln('<info>Command:</info> ' . $ghostscript->process($ghostscript->getCommand($inputFile)));
+        $output->writeln('<info>Command:</info> ' . $process->getCommandLine());
+        foreach (explode(PHP_EOL, $process->getOutput()) as $comment) {
+            $output->writeln('<comment>' . $comment . '</comment>');
+        }
     }
 }

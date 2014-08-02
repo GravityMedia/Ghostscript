@@ -24,7 +24,7 @@ class PdfTest extends GhostscriptTestCase
     {
         $pdf = new Pdf();
 
-        $this->assertContains('-sDEVICE=\'pdfwrite\'', $pdf->getCommandParameterList());
+        $this->assertContains('-sDEVICE=\'pdfwrite\'', $pdf->getDeviceOptionsAsArguments());
     }
 
     /**
@@ -46,7 +46,7 @@ class PdfTest extends GhostscriptTestCase
             'configuration' => Pdf::CONFIGURATION_DEFAULT
         ));
 
-        $this->assertContains('-dPDFSETTINGS=\'/default\'', $pdf->getCommandParameterList());
+        $this->assertContains('-dPDFSETTINGS=\'/default\'', $pdf->getDeviceOptionsAsArguments());
     }
 
     /**
@@ -58,7 +58,7 @@ class PdfTest extends GhostscriptTestCase
             'process-color-model' => Pdf::DEVICE_CMYK
         ));
 
-        $this->assertContains('-dProcessColorModel=\'/DeviceCMYK\'', $pdf->getCommandParameterList());
+        $this->assertContains('-dProcessColorModel=\'/DeviceCMYK\'', $pdf->getDeviceOptionsAsArguments());
     }
 
     /**
@@ -69,6 +69,6 @@ class PdfTest extends GhostscriptTestCase
         $pdf = new Pdf();
         $pdf->setCompatibilityLevel('1.4');
 
-        $this->assertContains('-dCompatibilityLevel=\'1.4\'', $pdf->getCommandParameterList());
+        $this->assertContains('-dCompatibilityLevel=\'1.4\'', $pdf->getDeviceOptionsAsArguments());
     }
 }

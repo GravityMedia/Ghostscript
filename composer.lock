@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ccff04722eeffe74e8fd9c9aeae40f2f",
+    "hash": "48ed49b20aba9c7c9e269d3647f72723",
     "packages": [
         {
             "name": "gravitymedia/commander",
@@ -12,19 +12,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GravityMedia/Commander.git",
-                "reference": "192b045c2cc3ab381aa58dc31b9ea6f5a0c37d27"
+                "reference": "dc39aeeaa8ac56b8418fa5a10430016434c3e65c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GravityMedia/Commander/zipball/192b045c2cc3ab381aa58dc31b9ea6f5a0c37d27",
-                "reference": "192b045c2cc3ab381aa58dc31b9ea6f5a0c37d27",
+                "url": "https://api.github.com/repos/GravityMedia/Commander/zipball/dc39aeeaa8ac56b8418fa5a10430016434c3e65c",
+                "reference": "dc39aeeaa8ac56b8418fa5a10430016434c3e65c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
-                "symfony/event-dispatcher": "2.5.*",
-                "symfony/finder": "2.5.*",
-                "symfony/process": "2.5.*"
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*",
+                "sami/sami": "2.0.*",
+                "symfony/finder": "2.5.*"
             },
             "type": "library",
             "autoload": {
@@ -42,8 +44,8 @@
                     "email": "daniel.schroeder@gravitymedia.de"
                 }
             ],
-            "description": "Object oriented program execution library for PHP",
-            "time": "2014-07-25 17:20:21"
+            "description": "Object oriented command builder library for PHP",
+            "time": "2014-07-31 19:49:25"
         },
         {
             "name": "symfony/console",
@@ -101,65 +103,6 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2014-07-15 14:15:12"
-        },
-        {
-            "name": "symfony/event-dispatcher",
-            "version": "v2.5.2",
-            "target-dir": "Symfony/Component/EventDispatcher",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "2215d2ef6fd7ab24d55576a3d924df575c741762"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/2215d2ef6fd7ab24d55576a3d924df575c741762",
-                "reference": "2215d2ef6fd7ab24d55576a3d924df575c741762",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~2.0",
-                "symfony/dependency-injection": "~2.0",
-                "symfony/stopwatch": "~2.2"
-            },
-            "suggest": {
-                "symfony/dependency-injection": "",
-                "symfony/http-kernel": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "symfony/finder",

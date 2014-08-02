@@ -1,5 +1,4 @@
 #Ghostscript
-[![Project Status](http://stillmaintained.com/GravityMedia/Ghostscript.png)](http://stillmaintained.com/GravityMedia/Ghostscript)
 [![Latest Stable Version](https://poser.pugx.org/gravitymedia/ghostscript/v/stable.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
 [![Total Downloads](https://poser.pugx.org/gravitymedia/ghostscript/downloads.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
 [![Latest Unstable Version](https://poser.pugx.org/gravitymedia/ghostscript/v/unstable.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
@@ -49,6 +48,7 @@ require 'vendor/autoload.php';
 use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Parameters;
+use Symfony\Component\Process\Process;
 
 $inputFile = '/path/to/input/file.pdf';
 $outputFile = '/path/to/output/file.pdf';
@@ -73,8 +73,10 @@ $ghostscript
     ->addParameters($controlParameters)
     ->setDevice($pdfDevice);
 
-$command = $ghostscript
-    ->getCommand($inputFile);
+$process = new Process($ghostscript->createCommander($inputFile));
+$process->run();
 
-$ghostscript->process($command);
+if (!$process->isSuccessful()) {
+    throw new \RuntimeException($process->getErrorOutput(), $process->getExitCode());
+}
 ```

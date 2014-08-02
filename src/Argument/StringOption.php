@@ -5,29 +5,29 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Command\Parameter;
+namespace GravityMedia\Ghostscript\Argument;
 
-use GravityMedia\Commander\Parameter\AbstractOption;
+use GravityMedia\Commander\Argument\AbstractOption;
 
 /**
- * The token option object
+ * The string option object
  *
  * @package GravityMedia\Ghostscript\Command\Parameter
  */
-class TokenOption extends AbstractOption
+class StringOption extends AbstractOption
 {
     /**
      * Prefix
      */
-    const PREFIX = '-d';
+    const PREFIX = '-s';
 
     /**
      * Constructor
      *
      * @param string $name
-     * @param null|string|\GravityMedia\Commander\Parameter\Argument $argument
+     * @param string|\GravityMedia\Commander\Argument\Argument $argument
      */
-    public function __construct($name, $argument = null)
+    public function __construct($name, $argument)
     {
         parent::__construct($name, $argument);
         $this->setDelimiter('=');

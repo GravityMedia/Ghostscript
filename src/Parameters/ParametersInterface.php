@@ -15,9 +15,9 @@ namespace GravityMedia\Ghostscript\Parameters;
 interface ParametersInterface
 {
     /**
-     * Get command parameter list
+     * Get parameters as arguments
      *
-     * @return \GravityMedia\Commander\Parameter\ParameterInterface[]
+     * @return \GravityMedia\Commander\Argument\ArgumentInterface[]
      */
-    public function getCommandParameterList();
+    public function getParametersAsArguments();
 }

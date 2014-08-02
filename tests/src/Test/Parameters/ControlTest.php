@@ -25,7 +25,7 @@ class ControlTest extends GhostscriptTestCase
         $control = new Control();
         $control->setSafer(true);
 
-        $this->assertContains('-dSAFER', $control->getCommandParameterList());
+        $this->assertContains('-dSAFER', $control->getParametersAsArguments());
     }
 
     /**
@@ -36,6 +36,6 @@ class ControlTest extends GhostscriptTestCase
         $control = new Control();
         $control->setSafer(false);
 
-        $this->assertContains('-dNOSAFER', $control->getCommandParameterList());
+        $this->assertContains('-dNOSAFER', $control->getParametersAsArguments());
     }
 }

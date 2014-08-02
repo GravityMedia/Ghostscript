@@ -7,7 +7,7 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
+use GravityMedia\Ghostscript\Argument;
 
 /**
  * Control parameters object
@@ -24,13 +24,13 @@ class Control implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function getCommandParameterList()
+    public function getParametersAsArguments()
     {
-        $parameters = array();
+        $arguments = array();
         if (null !== $this->safer) {
-            array_push($parameters, new TokenOption($this->safer ? 'SAFER' : 'NOSAFER'));
+            array_push($arguments, new Argument\TokenOption($this->safer ? 'SAFER' : 'NOSAFER'));
         }
-        return $parameters;
+        return $arguments;
     }
 
     /**

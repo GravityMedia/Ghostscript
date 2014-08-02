@@ -15,16 +15,16 @@ namespace GravityMedia\Ghostscript\Device;
 interface DeviceInterface
 {
     /**
-     * Get command parameter list
-     *
-     * @return \GravityMedia\Commander\Parameter\ParameterInterface[]
-     */
-    public function getCommandParameterList();
-
-    /**
      * Get device name
      *
      * @return string
      */
     public function getDeviceName();
+
+    /**
+     * Get device options as arguments
+     *
+     * @return \GravityMedia\Commander\Argument\ArgumentInterface[]
+     */
+    public function getDeviceOptionsAsArguments();
 }

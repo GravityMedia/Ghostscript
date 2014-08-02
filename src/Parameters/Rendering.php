@@ -7,7 +7,7 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
+use GravityMedia\Ghostscript\Argument;
 
 /**
  * Rendering parameters object
@@ -39,28 +39,28 @@ class Rendering implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function getCommandParameterList()
+    public function getParametersAsArguments()
     {
-        $parameters = array();
+        $arguments = array();
         if (null !== $this->colorscreen) {
             if ($this->colorscreen) {
-                array_push($parameters, new TokenOption('COLORSCREEN'));
+                array_push($arguments, new Argument\TokenOption('COLORSCREEN'));
             } elseif (false === $this->colorscreen || 'false' === $this->colorscreen) {
-                array_push($parameters, new TokenOption('COLORSCREEN', 'false'));
+                array_push($arguments, new Argument\TokenOption('COLORSCREEN', 'false'));
             } else {
-                array_push($parameters, new TokenOption('COLORSCREEN', '0'));
+                array_push($arguments, new Argument\TokenOption('COLORSCREEN', '0'));
             }
         }
         if (null !== $this->ditherPpi) {
-            array_push($parameters, new TokenOption('DITHERPPI', strval($this->ditherPpi)));
+            array_push($arguments, new Argument\TokenOption('DITHERPPI', strval($this->ditherPpi)));
         }
         if (null !== $this->textAlphaBits) {
-            array_push($parameters, new TokenOption('TextAlphaBits', strval($this->textAlphaBits)));
+            array_push($arguments, new Argument\TokenOption('TextAlphaBits', strval($this->textAlphaBits)));
         }
         if (null !== $this->graphicsAlphaBits) {
-            array_push($parameters, new TokenOption('GraphicsAlphaBits', strval($this->graphicsAlphaBits)));
+            array_push($arguments, new Argument\TokenOption('GraphicsAlphaBits', strval($this->graphicsAlphaBits)));
         }
-        return $parameters;
+        return $arguments;
     }
 
     /**

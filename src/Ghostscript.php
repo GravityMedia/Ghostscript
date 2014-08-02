@@ -7,12 +7,11 @@
 
 namespace GravityMedia\Ghostscript;
 
-use GravityMedia\Commander\Command;
-use GravityMedia\Commander\Event\OutputEvent;
-use GravityMedia\Commander\Parameter;
-use GravityMedia\Commander\Runner\Exec as Runner;
+use GravityMedia\Commander\Commander;
+use GravityMedia\Commander\Argument;
 use GravityMedia\Ghostscript\Device\DeviceInterface as Device;
 use GravityMedia\Ghostscript\Parameters\ParametersInterface as Parameters;
+use Symfony\Component\Process\Process;
 
 /**
  * The Ghostscript object
@@ -47,11 +46,6 @@ class Ghostscript
     protected $joboptions;
 
     /**
-     * @var callable
-     */
-    private $errorOutputListener;
-
-    /**
      * The Ghostscript constructor method
      *
      * @param array $options
@@ -62,28 +56,20 @@ class Ghostscript
     {
         $this->options = $options;
         $this->parameters = array();
-        $this->errorOutputListener = function (OutputEvent $event) {
-            throw new \RuntimeException(implode("\n", $event->getOutput()), $event->getExitCode()->getCode());
-        };
 
-        $command = new Command($this->getOption('command', self::DEFAULT_GS_COMMAND), array(
-            'redirections' => array(
-                '2>/dev/null'
-            )
-        ));
-        $command->addParameter(new Parameter\LongOption('version'));
+        $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
+        $commander->addArgument(new Argument\LongOption('version'));
 
-        $runner = new Runner();
-        $runner
-            ->addErrorOutputListener($this->errorOutputListener)
-            ->addOutputListener(function (OutputEvent $event) {
-                $output = $event->getOutput();
-                $version = array_pop($output);
-                if (version_compare('9.00', $version) > 0) {
-                    throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
-                }
-            })
-            ->run($command);
+        $process = new Process($commander);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput(), $process->getExitCode());
+        }
+
+        if (version_compare('9.00', $process->getOutput()) > 0) {
+            throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
+        }
     }
 
     /**
@@ -142,53 +128,36 @@ class Ghostscript
     }
 
     /**
-     * Get command
+     * Create commander object
      *
      * @param string $inputFile
      *
-     * @return \GravityMedia\Commander\Command
+     * @return \GravityMedia\Commander\Commander
      */
-    public function getCommand($inputFile)
+    public function createCommander($inputFile)
     {
-        $command = new Command($this->getOption('command', self::DEFAULT_GS_COMMAND));
+        $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
 
         foreach ($this->parameters as $parameters) {
-            foreach ($parameters->getCommandParameterList() as $parameter) {
-                $command->addParameter($parameter);
+            foreach ($parameters->getParametersAsArguments() as $argument) {
+                $commander->addArgument($argument);
             }
         }
 
         if ($this->device instanceof Device) {
-            foreach ($this->device->getCommandParameterList() as $parameter) {
-                $command->addParameter($parameter);
+            foreach ($this->device->getDeviceOptionsAsArguments() as $argument) {
+                $commander->addArgument($argument);
             }
         }
 
         if (null !== $this->joboptions) {
-            $command
-                ->addParameter(new Parameter\ShortOption('c', 'save pop'))
-                ->addParameter(new Parameter\ShortOption('f', $this->joboptions));
+            $commander
+                ->addArgument(new Argument\ShortOption('c', 'save pop'))
+                ->addArgument(new Argument\ShortOption('f', $this->joboptions));
         }
 
-        $command->addParameter(new Parameter\Argument($inputFile));
+        $commander->addArgument(new Argument\Argument($inputFile));
 
-        return $command;
-    }
-
-    /**
-     * Process input file
-     *
-     * @param \GravityMedia\Commander\Command $command
-     *
-     * @return \GravityMedia\Commander\Command
-     * @throws \RuntimeException
-     */
-    public function process(Command $command)
-    {
-        $runner = new Runner();
-        $runner
-            ->addErrorOutputListener($this->errorOutputListener)
-            ->run($command);
-        return $command;
+        return $commander;
     }
 }

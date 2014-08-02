@@ -24,7 +24,7 @@ class EpsTest extends GhostscriptTestCase
     {
         $eps = new Eps();
 
-        $this->assertContains('-sDEVICE=\'eps2write\'', $eps->getCommandParameterList());
+        $this->assertContains('-sDEVICE=\'eps2write\'', $eps->getDeviceOptionsAsArguments());
     }
 
     /**

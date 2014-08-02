@@ -7,7 +7,7 @@
 
 namespace GravityMedia\Ghostscript\Parameters;
 
-use GravityMedia\Ghostscript\Command\Parameter\TokenOption;
+use GravityMedia\Ghostscript\Argument;
 
 /**
  * Interaction parameters object
@@ -34,19 +34,19 @@ class Interaction implements ParametersInterface
     /**
      * @inheritdoc
      */
-    public function getCommandParameterList()
+    public function getParametersAsArguments()
     {
-        $parameters = array();
+        $arguments = array();
         if (true === $this->quiet) {
-            array_push($parameters, new TokenOption('QUIET'));
+            array_push($arguments, new Argument\TokenOption('QUIET'));
         }
         if (true === $this->batch) {
-            array_push($parameters, new TokenOption('BATCH'));
+            array_push($arguments, new Argument\TokenOption('BATCH'));
         }
         if (false === $this->pause) {
-            array_push($parameters, new TokenOption('NOPAUSE'));
+            array_push($arguments, new Argument\TokenOption('NOPAUSE'));
         }
-        return $parameters;
+        return $arguments;
     }
 
     /**

@@ -24,7 +24,7 @@ class PsTest extends GhostscriptTestCase
     {
         $ps = new Ps();
 
-        $this->assertContains('-sDEVICE=\'ps2write\'', $ps->getCommandParameterList());
+        $this->assertContains('-sDEVICE=\'ps2write\'', $ps->getDeviceOptionsAsArguments());
     }
 
     /**

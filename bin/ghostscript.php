@@ -16,5 +16,5 @@ while (!file_exists('vendor/autoload.php')) {
 require 'vendor/autoload.php';
 
 $application = new \Symfony\Component\Console\Application();
-$application->add(new \GravityMedia\Ghostscript\Console\Command\ConvertPdfCommand());
+$application->add(new \GravityMedia\Ghostscript\Command\ConvertPdfCommand());
 $application->run();
