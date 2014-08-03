@@ -29,8 +29,7 @@ class StringOption extends AbstractOption
      */
     public function __construct($name, $argument)
     {
-        parent::__construct($name, $argument);
-        $this->setDelimiter('=');
+        parent::__construct($name, $argument, '=');
     }
 
     /**

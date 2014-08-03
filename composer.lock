@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GravityMedia/Commander.git",
-                "reference": "dc39aeeaa8ac56b8418fa5a10430016434c3e65c"
+                "reference": "5bbcb083ce955b08fa1688946c6dbb6cc367f7d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GravityMedia/Commander/zipball/dc39aeeaa8ac56b8418fa5a10430016434c3e65c",
-                "reference": "dc39aeeaa8ac56b8418fa5a10430016434c3e65c",
+                "url": "https://api.github.com/repos/GravityMedia/Commander/zipball/5bbcb083ce955b08fa1688946c6dbb6cc367f7d0",
+                "reference": "5bbcb083ce955b08fa1688946c6dbb6cc367f7d0",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "Object oriented command builder library for PHP",
-            "time": "2014-07-31 19:49:25"
+            "time": "2014-08-03 08:55:42"
         },
         {
             "name": "symfony/console",

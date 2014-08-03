@@ -29,8 +29,7 @@ class TokenOption extends AbstractOption
      */
     public function __construct($name, $argument = null)
     {
-        parent::__construct($name, $argument);
-        $this->setDelimiter('=');
+        parent::__construct($name, $argument, '=');
     }
 
     /**

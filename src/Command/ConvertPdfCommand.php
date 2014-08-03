@@ -11,7 +11,6 @@ use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class ConvertPdfCommand extends GhostscriptCommand
 {
@@ -48,7 +47,7 @@ class ConvertPdfCommand extends GhostscriptCommand
             ->getGhostscript()
             ->setDevice($pdfDevice);
 
-        $process = new Process($ghostscript->createCommander($inputFile));
+        $process = $ghostscript->createProcess($inputFile);
         $process->run();
 
         if (!$process->isSuccessful()) {

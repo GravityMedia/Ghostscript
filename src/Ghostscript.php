@@ -128,13 +128,13 @@ class Ghostscript
     }
 
     /**
-     * Create commander object
+     * Create process object
      *
      * @param string $inputFile
      *
-     * @return \GravityMedia\Commander\Commander
+     * @return \Symfony\Component\Process\Process
      */
-    public function createCommander($inputFile)
+    public function createProcess($inputFile)
     {
         $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
 
@@ -156,8 +156,6 @@ class Ghostscript
                 ->addArgument(new Argument\ShortOption('f', $this->joboptions));
         }
 
-        $commander->addArgument(new Argument\Argument($inputFile));
-
-        return $commander;
+        return new Process($commander->addArgument(new Argument\Argument($inputFile)));
     }
 }

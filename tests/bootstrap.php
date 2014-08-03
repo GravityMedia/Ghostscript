@@ -6,4 +6,4 @@
  */
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->addPsr4('GravityMedia\\Ghostscript\\', __DIR__ . '/src');
+$loader->addPsr4('GravityMedia\\Ghostscript\\', __DIR__ . '/src/');

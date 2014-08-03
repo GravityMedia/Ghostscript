@@ -48,7 +48,6 @@ require 'vendor/autoload.php';
 use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Parameters;
-use Symfony\Component\Process\Process;
 
 $inputFile = '/path/to/input/file.pdf';
 $outputFile = '/path/to/output/file.pdf';
@@ -73,7 +72,7 @@ $ghostscript
     ->addParameters($controlParameters)
     ->setDevice($pdfDevice);
 
-$process = new Process($ghostscript->createCommander($inputFile));
+$process = $ghostscript->createProcess($inputFile);
 $process->run();
 
 if (!$process->isSuccessful()) {
