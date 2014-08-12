@@ -128,13 +128,13 @@ class Ghostscript
     }
 
     /**
-     * Create process object
+     * Build command
      *
      * @param string $inputFile
      *
-     * @return \Symfony\Component\Process\Process
+     * @return string
      */
-    public function createProcess($inputFile)
+    public function buildCommand($inputFile)
     {
         $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
 
@@ -156,6 +156,19 @@ class Ghostscript
                 ->addArgument(new Argument\ShortOption('f', $this->joboptions));
         }
 
-        return new Process($commander->addArgument(new Argument\Argument($inputFile)));
+        return (string)$commander
+            ->addArgument(new Argument\Argument($inputFile));
+    }
+
+    /**
+     * Create process object
+     *
+     * @param string $inputFile
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    public function createProcess($inputFile)
+    {
+        return new Process($this->buildCommand($inputFile));
     }
 }
