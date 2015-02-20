@@ -13,7 +13,7 @@
          verbose="true">
     <testsuites>
         <testsuite name="Ghostscript test suite">
-            <directory>tests/</directory>
+            <directory>tests/src/</directory>
         </testsuite>
     </testsuites>
 
