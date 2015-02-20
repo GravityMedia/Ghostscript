@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Test\Parameters;
+namespace GravityMedia\GhostscriptTest\Parameters;
 
 use GravityMedia\Ghostscript\Parameters\Interaction;
 use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
@@ -13,9 +13,9 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 /**
  * Interaction parameters test object
  *
- * @package GravityMedia\Ghostscript\Test\Parameters
+ * @package GravityMedia\GhostscriptTest\Parameters
  */
-class InteractionTest extends GhostscriptTestCase
+class InteractionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \GravityMedia\Ghostscript\Parameters\Interaction::setQuiet

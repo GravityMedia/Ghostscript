@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Test\Device;
+namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\Pdf;
 use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
@@ -13,9 +13,9 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 /**
  * PDF device test object
  *
- * @package GravityMedia\Ghostscript\Test\Device
+ * @package GravityMedia\GhostscriptTest\Device
  */
-class PdfTest extends GhostscriptTestCase
+class PdfTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \GravityMedia\Ghostscript\Device\Pdf::__construct

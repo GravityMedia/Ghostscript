@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Test\Device;
+namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\Eps;
 use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
@@ -13,9 +13,9 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 /**
  * EPS device test object
  *
- * @package GravityMedia\Ghostscript\Test\Device
+ * @package GravityMedia\GhostscriptTest\Device
  */
-class EpsTest extends GhostscriptTestCase
+class EpsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \GravityMedia\Ghostscript\Device\Eps::__construct

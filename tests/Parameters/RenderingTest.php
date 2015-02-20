@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Test\Parameters;
+namespace GravityMedia\GhostscriptTest\Parameters;
 
 use GravityMedia\Ghostscript\Parameters\Rendering;
 use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
@@ -13,9 +13,9 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 /**
  * Rendering parameters test object
  *
- * @package GravityMedia\Ghostscript\Test\Parameters
+ * @package GravityMedia\GhostscriptTest\Parameters
  */
-class RenderingTest extends GhostscriptTestCase
+class RenderingTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \GravityMedia\Ghostscript\Parameters\Rendering::setColorscreen

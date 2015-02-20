@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Test\Parameters;
+namespace GravityMedia\GhostscriptTest\Parameters;
 
 use GravityMedia\Ghostscript\Parameters\Control;
 use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
@@ -13,9 +13,9 @@ use GravityMedia\Ghostscript\Test\GhostscriptTestCase;
 /**
  * Other parameters test object
  *
- * @package GravityMedia\Ghostscript\Test\Parameters
+ * @package GravityMedia\GhostscriptTest\Parameters
  */
-class ControlTest extends GhostscriptTestCase
+class ControlTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \GravityMedia\Ghostscript\Parameters\Control::setSafer
