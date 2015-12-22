@@ -10,74 +10,44 @@ namespace GravityMedia\GhostscriptTest;
 use GravityMedia\Ghostscript\Ghostscript;
 
 /**
- * The Ghostscript test object
+ * The Ghostscript test class
  *
  * @package GravityMedia\GhostscriptTest
  */
 class GhostscriptTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     * @covers \GravityMedia\Ghostscript\Ghostscript::__construct
+     * @covers \GravityMedia\Ghostscript\Ghostscript::__construct()
+     *
+     * @uses   \GravityMedia\Ghostscript\Ghostscript::getOption()
      */
-    public function testShouldBeConstructable()
+    public function testCreateGhostscriptObject()
     {
-        new Ghostscript();
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Ghostscript', new Ghostscript());
     }
 
     /**
-     * @covers       \GravityMedia\Ghostscript\Ghostscript::__construct
-     * @dataProvider \GravityMedia\GhostscriptTest\GhostscriptTest::getInvalidConstructorArguments
+     * @covers       \GravityMedia\Ghostscript\Ghostscript::getOption()
      *
-     * @expectedException \RuntimeException
-     * @param array $options
-     */
-    public function testShouldThrowExceptionOnInvalidConstructorArguments(array $options)
-    {
-        new Ghostscript($options);
-    }
-
-    /**
-     * Data provider for \GravityMedia\GhostscriptTest\GhostscriptTest::testShouldThrowExceptionOnInvalidConstructorArguments
+     * @uses         \GravityMedia\Ghostscript\Ghostscript::__construct()
      *
-     * @return array
+     * @dataProvider provideOptions
      */
-    public function getInvalidConstructorArguments()
+    public function testGetOption(array $options, $name, $value)
     {
-        return array(
-            array(array(
-                'command' => 'wrong-gs-command'
-            ))
-        );
-    }
-
-    /**
-     * @covers       \GravityMedia\Ghostscript\Ghostscript::getOption
-     * @dataProvider \GravityMedia\GhostscriptTest\GhostscriptTest::getValidConstructorArguments
-     *
-     * @param array $options
-     */
-    public function testShouldReturnAnOptionFromValidConstructorArguments(array $options)
-    {
-        $key = 'command';
-        $expected = $options[$key];
         $ghostscript = new Ghostscript($options);
-        $actual = $ghostscript->getOption('command');
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($value, $ghostscript->getOption($name));
     }
 
     /**
-     * Data provider for \GravityMedia\GhostscriptTest\GhostscriptTest::testShouldThrowExceptionOnInvalidConstructorArguments
-     *
      * @return array
      */
-    public function getValidConstructorArguments()
+    public function provideOptions()
     {
-        return array(
-            array(array(
-                'command' => 'gs'
-            ))
-        );
+        return [
+            [[], 'foo', null],
+            [['foo' => 'bar'], 'foo', 'bar']
+        ];
     }
 }

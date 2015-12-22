@@ -5,19 +5,19 @@
     "authors": [
         {
             "name": "Daniel Schröder",
-            "email": "daniel.schroeder@gravitymedia.de"
+            "email": "daniel.schroeder@gravitymedia.de",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": ">=5.4",
-        "gravitymedia/commander": "~0.1",
-        "symfony/console": "~2.6",
-        "symfony/finder": "~2.6",
-        "symfony/process": "~2.6"
+        "symfony/process": "^2.8"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.5",
-        "sami/sami": "~3.0"
+        "phing/phing": "^2.13",
+        "phpunit/phpunit": "^4.8",
+        "sami/sami": "^3.1",
+        "symfony/finder": "^2.8"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +29,19 @@
             "GravityMedia\\GhostscriptTest\\": "tests/src/"
         }
     },
-    "bin": [
-        "bin/ghostscript"
-    ]
+    "scripts": {
+        "test": "php vendor/bin/phing test",
+        "doc": "php vendor/bin/phing doc"
+    },
+    "archive": {
+        "exclude": [
+            "/.*",
+            "/*.php",
+            "/build.*",
+            "/composer.*",
+            "/coverage.*",
+            "/phpunit.*",
+            "/tests"
+        ]
+    }
 }

@@ -1,11 +1,21 @@
 language: "php"
+
 php:
-    - "5.5"
     - "5.4"
+    - "5.5"
+    - "5.6"
     - "hhvm"
-install:
+
+before_install:
+    - "sudo apt-get update -qq"
+    - "sudo apt-get install -y ghostscript"
     - "composer self-update"
+
+install:
     - "composer install"
+
+script:
+    - "php vendor/bin/phpunit --coverage-clover=coverage.clover --coverage-text --verbose"
+
 after_script:
-    - "wget https://scrutinizer-ci.com/ocular.phar"
-    - "php ocular.phar code-coverage:upload --format=php-clover coverage.clover"
+    - "if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi"

@@ -1,7 +1,5 @@
 #Ghostscript
 
-Object oriented Ghostscript processing library for PHP
-
 [![Packagist](https://img.shields.io/packagist/v/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
 [![Downloads](https://img.shields.io/packagist/dt/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
 [![License](https://img.shields.io/packagist/l/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
@@ -10,73 +8,78 @@ Object oriented Ghostscript processing library for PHP
 [![Coverage](https://img.shields.io/scrutinizer/coverage/g/GravityMedia/Ghostscript.svg)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
 [![PHP Dependencies](https://www.versioneye.com/user/projects/54a6c39d27b014005400004b/badge.svg)](https://www.versioneye.com/user/projects/54a6c39d27b014005400004b)
 
+Ghostscript is an object oriented Ghostscript processing library for PHP.
+
 ##Requirements##
 
 This library has the following requirements:
 
- - PHP 5.4+
+ - PHP 5.4+ or HHVM
  - Ghostscript 9.00+
 
 ##Installation##
 
-Install composer in your project:
+Install Composer in your project:
 
 ```bash
 $ curl -s https://getcomposer.org/installer | php
 ```
 
-Create a `composer.json` file in your project root:
-
-```json
-{
-    "require": {
-        "gravitymedia/ghostscript": "dev-master"
-    }
-}
-```
-
-Install via composer:
+Add the package to your `composer.json` and install it via Composer:
 
 ```bash
-$ php composer.phar install
+$ php composer.phar require gravitymedia/ghostscript
 ```
 
 ##Usage##
 
-```php
-require 'vendor/autoload.php';
+This is a simple example how to convert an input PDF to an output PDF. 
 
-use GravityMedia\Ghostscript\Device\Pdf as PdfDevice;
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Parameters;
 
 $inputFile = '/path/to/input/file.pdf';
 $outputFile = '/path/to/output/file.pdf';
 
-$interactionParameters = new Parameters\Interaction();
-$interactionParameters
-    ->setQuiet(true)
-    ->setBatch(true)
-    ->setPause(false);
+$ghostscript = new Ghostscript([
+    'quiet' => false
+]);
 
-$controlParameters = new Parameters\Control();
-$controlParameters
-    ->setSafer(true);
+$device = $ghostscript->createPdfDevice($outputFile);
 
-$pdfDevice = new PdfDevice(array('configuration' => PdfDevice::CONFIGURATION_DEFAULT));
-$pdfDevice
-    ->setOutputFile($outputFile);
-
-$ghostscript = new Ghostscript();
-$ghostscript
-    ->addParameters($interactionParameters)
-    ->addParameters($controlParameters)
-    ->setDevice($pdfDevice);
-
-$process = $ghostscript->createProcess($inputFile);
+$process = $device->createProcess($inputFile);
 $process->run();
 
 if (!$process->isSuccessful()) {
-    throw new \RuntimeException($process->getErrorOutput(), $process->getExitCode());
+    throw new \RuntimeException($process->getErrorOutput());
 }
+
+print $process->getOutput();
 ```
+
+## Testing
+
+``` bash
+$ php composer.phar test
+```
+
+## Generating documentation
+
+``` bash
+$ php composer.phar doc
+```
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Credits
+
+- [Daniel Schröder](https://github.com/pCoLaSD)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

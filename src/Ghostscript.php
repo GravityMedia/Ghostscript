@@ -7,64 +7,48 @@
 
 namespace GravityMedia\Ghostscript;
 
-use GravityMedia\Commander\Commander;
-use GravityMedia\Commander\Argument;
-use GravityMedia\Ghostscript\Device\DeviceInterface as Device;
-use GravityMedia\Ghostscript\Parameters\ParametersInterface as Parameters;
-use Symfony\Component\Process\Process;
+use GravityMedia\Ghostscript\Devices\PdfWrite;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The Ghostscript object
+ * The Ghostscript class
  *
  * @package GravityMedia\Ghostscript
  */
 class Ghostscript
 {
     /**
-     * The default Ghostscript command
+     * The default binary
      */
-    const DEFAULT_GS_COMMAND = 'gs';
+    const DEFAULT_BINARY = 'gs';
 
     /**
+     * The options
+     *
      * @var array
      */
     protected $options;
 
     /**
-     * @var \GravityMedia\Ghostscript\Parameters\ParametersInterface[]
-     */
-    protected $parameters;
-
-    /**
-     * @var \GravityMedia\Ghostscript\Device\DeviceInterface
-     */
-    protected $device;
-
-    /**
-     * @var string
-     */
-    protected $joboptions;
-
-    /**
-     * The Ghostscript constructor method
+     * Create Ghostscript object
      *
      * @param array $options
      *
      * @throws \RuntimeException
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->options = $options;
-        $this->parameters = array();
 
-        $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
-        $commander->addArgument(new Argument\LongOption('version'));
+        $builder = new ProcessBuilder(['--version']);
+        $builder->setPrefix($this->getOption('bin', self::DEFAULT_BINARY));
+        $builder->addEnvironmentVariables($this->getOption('env', []));
 
-        $process = new Process($commander);
+        $process = $builder->getProcess();
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput(), $process->getExitCode());
+            throw new \RuntimeException($process->getErrorOutput());
         }
 
         if (version_compare('9.00', $process->getOutput()) > 0) {
@@ -75,100 +59,49 @@ class Ghostscript
     /**
      * Get option
      *
-     * @param string $key
-     * @param mixed $default
+     * @param string $name
+     * @param mixed  $default
      *
      * @return mixed
      */
-    public function getOption($key, $default = null)
+    public function getOption($name, $default = null)
     {
-        if (array_key_exists($key, $this->options)) {
-            return $this->options[$key];
+        if (array_key_exists($name, $this->options)) {
+            return $this->options[$name];
         }
+
         return $default;
     }
 
     /**
-     * Add parameters
+     * Create PDF device object
      *
-     * @param \GravityMedia\Ghostscript\Parameters\ParametersInterface $parameters
+     * @param null|string $outputFile
      *
-     * @return \GravityMedia\Ghostscript\Ghostscript
+     * @return PdfWrite
      */
-    public function addParameters(Parameters $parameters)
+    public function createPdfDevice($outputFile = null)
     {
-        $this->parameters[] = $parameters;
-        return $this;
-    }
+        $arguments = [
+            '-dSAFER',
+            '-dBATCH',
+            '-dNOPAUSE'
+        ];
 
-    /**
-     * Set device
-     *
-     * @param \GravityMedia\Ghostscript\Device\DeviceInterface $device
-     *
-     * @return \GravityMedia\Ghostscript\Ghostscript
-     */
-    public function setDevice(Device $device)
-    {
-        $this->device = $device;
-        return $this;
-    }
-
-    /**
-     * Set joboption
-     *
-     * @param string $joboptions
-     *
-     * @return \GravityMedia\Ghostscript\Ghostscript
-     */
-    public function setJoboptions($joboptions)
-    {
-        $this->joboptions = $joboptions;
-        return $this;
-    }
-
-    /**
-     * Build command
-     *
-     * @param string $inputFile
-     *
-     * @return string
-     */
-    public function buildCommand($inputFile)
-    {
-        $commander = new Commander($this->getOption('command', self::DEFAULT_GS_COMMAND));
-
-        foreach ($this->parameters as $parameters) {
-            foreach ($parameters->getParametersAsArguments() as $argument) {
-                $commander->addArgument($argument);
-            }
+        if ($this->getOption('quiet', true)) {
+            $arguments[] = '-q';
         }
 
-        if ($this->device instanceof Device) {
-            foreach ($this->device->getDeviceOptionsAsArguments() as $argument) {
-                $commander->addArgument($argument);
-            }
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($this->getOption('bin', self::DEFAULT_BINARY));
+        $builder->addEnvironmentVariables($this->getOption('env', []));
+
+        $device = new PdfWrite($builder, $arguments);
+
+        if (null !== $outputFile) {
+            $device->setOutputFile($outputFile);
         }
 
-        if (null !== $this->joboptions) {
-            $commander
-                ->addArgument(new Argument\ShortOption('c', 'save pop'))
-                ->addArgument(new Argument\ShortOption('f', $this->joboptions));
-        }
-
-        return (string)$commander
-            ->addArgument(new Argument\Argument($inputFile));
-    }
-
-    /**
-     * Create process object
-     *
-     * @param string $inputFile
-     *
-     * @return \Symfony\Component\Process\Process
-     */
-    public function createProcess($inputFile)
-    {
-        return new Process($this->buildCommand($inputFile));
+        return $device;
     }
 }

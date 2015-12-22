@@ -4,5 +4,6 @@
     <unboundedVersionInspectionSettings>
       <excludedPackages />
     </unboundedVersionInspectionSettings>
+    <customRepositories />
   </component>
 </project>
