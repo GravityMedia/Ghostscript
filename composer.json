@@ -33,13 +33,17 @@
         "test": "php vendor/bin/phing test",
         "doc": "php vendor/bin/phing doc"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
     "archive": {
         "exclude": [
             "/.*",
             "/*.php",
             "/build.*",
             "/composer.*",
-            "/coverage.*",
             "/phpunit.*",
             "/tests"
         ]

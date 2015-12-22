@@ -1,12 +1,12 @@
 #Ghostscript
 
-[![Packagist](https://img.shields.io/packagist/v/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
-[![Downloads](https://img.shields.io/packagist/dt/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
-[![License](https://img.shields.io/packagist/l/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
-[![Build](https://img.shields.io/travis/GravityMedia/Ghostscript.svg)](https://travis-ci.org/GravityMedia/Ghostscript)
-[![Code Quality](https://img.shields.io/scrutinizer/g/GravityMedia/Ghostscript.svg)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
-[![Coverage](https://img.shields.io/scrutinizer/coverage/g/GravityMedia/Ghostscript.svg)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/?branch=master)
-[![PHP Dependencies](https://www.versioneye.com/user/projects/54a6c39d27b014005400004b/badge.svg)](https://www.versioneye.com/user/projects/54a6c39d27b014005400004b)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
+[![Software License](https://img.shields.io/packagist/l/gravitymedia/ghostscript.svg)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/GravityMedia/Ghostscript.svg)](https://travis-ci.org/GravityMedia/Ghostscript)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/GravityMedia/Ghostscript.svg)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/GravityMedia/Ghostscript.svg)](https://scrutinizer-ci.com/g/GravityMedia/Ghostscript)
+[![Total Downloads](https://img.shields.io/packagist/dt/gravitymedia/ghostscript.svg)](https://packagist.org/packages/gravitymedia/ghostscript)
+[![Dependency Status](https://img.shields.io/versioneye/d/php/gravitymedia:ghostscript.svg)](https://www.versioneye.com/user/projects/54a6c25c27b014d85a000150)
 
 Ghostscript is an object oriented Ghostscript processing library for PHP.
 
