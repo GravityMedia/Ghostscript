@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AdfrendModule" default="test">
+    <property name="build.path" value="."/>
+    <property name="phpunit.binary" value="vendor/bin/phpunit"/>
+    <property name="sami.binary" value="vendor/bin/sami.php"/>
+    <property name="sami.config" value="sami-config.php"/>
+
+    <target name="test" description="Testing">
+        <exec
+            executable="${phpunit.binary}"
+            dir="${build.path}"
+            passthru="true"
+            checkreturn="false">
+            <arg value="--coverage-clover=coverage.clover"/>
+            <arg value="--coverage-text"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="doc" description="Generating documentation">
+        <exec
+            executable="${sami.binary}"
+            dir="${build.path}"
+            passthru="true"
+            checkreturn="false">
+            <arg value="update"/>
+            <arg value="--verbose"/>
+            <arg value="${sami.config}"/>
+        </exec>
+    </target>
+</project>
