@@ -13,31 +13,53 @@ use GravityMedia\Ghostscript\Ghostscript;
  * The Ghostscript test class
  *
  * @package GravityMedia\GhostscriptTest
+ *
+ * @covers  \GravityMedia\Ghostscript\Ghostscript
+ *
+ * @uses    \GravityMedia\Ghostscript\Process\Argument
+ * @uses    \GravityMedia\Ghostscript\Process\Arguments
+ * @uses    \GravityMedia\Ghostscript\Devices\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Devices\PdfWrite
+ * @uses    \GravityMedia\Ghostscript\Devices\DistillerParametersTrait
  */
 class GhostscriptTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers \GravityMedia\Ghostscript\Ghostscript::__construct()
-     *
-     * @uses   \GravityMedia\Ghostscript\Ghostscript::getOption()
-     */
     public function testCreateGhostscriptObject()
     {
         $this->assertInstanceOf('GravityMedia\Ghostscript\Ghostscript', new Ghostscript());
     }
 
     /**
-     * @covers       \GravityMedia\Ghostscript\Ghostscript::getOption()
-     *
-     * @uses         \GravityMedia\Ghostscript\Ghostscript::__construct()
-     *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Ghostscript version 9.00 or higher is required
+     */
+    public function testCreateGhostscriptObjectThrowsExceptionOnInvalidVersion()
+    {
+        $mock = $this->getMockBuilder('GravityMedia\Ghostscript\Ghostscript')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->expects($this->once())
+            ->method('getVersion')
+            ->will($this->returnValue('8.00'));
+
+        $class = new \ReflectionClass('GravityMedia\Ghostscript\Ghostscript');
+        $constructor = $class->getConstructor();
+        $constructor->invoke($mock);
+    }
+
+    /**
      * @dataProvider provideOptions
+     *
+     * @param array  $options
+     * @param string $name
+     * @param mixed  $value
      */
     public function testGetOption(array $options, $name, $value)
     {
-        $ghostscript = new Ghostscript($options);
+        $instance = new Ghostscript($options);
 
-        $this->assertSame($value, $ghostscript->getOption($name));
+        $this->assertSame($value, $instance->getOption($name));
     }
 
     /**
@@ -49,5 +71,43 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
             [[], 'foo', null],
             [['foo' => 'bar'], 'foo', 'bar']
         ];
+    }
+
+    public function testProcessBuilderCreation()
+    {
+        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createProcessBuilder');
+        $method->setAccessible(true);
+
+        $this->assertInstanceOf('Symfony\Component\Process\ProcessBuilder', $method->invoke(new Ghostscript()));
+    }
+
+    public function testGetVersion()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertRegExp('/^[0-9]\.[0-9]+$/', $instance->getVersion());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetVersionThrowsExceptionOnFailure()
+    {
+        new Ghostscript(['bin' => '/foo/bar/baz']);
+    }
+
+    public function testProcessArgumentsCreation()
+    {
+        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createProcessArguments');
+        $method->setAccessible(true);
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Arguments', $method->invoke(new Ghostscript()));
+    }
+
+    public function testPdfDeviceCreation()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Devices\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
     }
 }

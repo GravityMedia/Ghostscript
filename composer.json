@@ -1,6 +1,6 @@
 {
     "name": "gravitymedia/ghostscript",
-    "description": "Object oriented Ghostscript processing library for PHP",
+    "description": "Ghostscript is an object oriented Ghostscript binary wrapper for PHP.",
     "license": "MIT",
     "authors": [
         {
@@ -17,6 +17,7 @@
         "phing/phing": "^2.13",
         "phpunit/phpunit": "^4.8",
         "sami/sami": "^3.1",
+        "scrutinizer/ocular": "^1.3",
         "symfony/finder": "^2.8"
     },
     "autoload": {

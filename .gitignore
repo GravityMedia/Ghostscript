@@ -4,3 +4,4 @@ cache/
 vendor/
 composer.phar
 coverage.clover
+phpunit.xml

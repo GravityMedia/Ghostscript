@@ -2,20 +2,26 @@
 /**
  * This file is part of the Ghostscript package
  *
- * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
+ * @author Daniel Schrï¿½der <daniel.schroeder@gravitymedia.de>
  */
 
 namespace GravityMedia\Ghostscript\Devices;
 
+use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The PDF write device class
  *
- * @package GravityMedia\Ghostscript
+ * @package GravityMedia\Ghostscript\Devices
  */
 class PdfWrite extends AbstractDevice
 {
+    /**
+     * User distiller parameters
+     */
+    use DistillerParametersTrait;
+
     /**
      * The default compatibility level
      */
@@ -24,14 +30,13 @@ class PdfWrite extends AbstractDevice
     /**
      * Create PDF write device object
      *
-     * @param ProcessBuilder $builder
-     * @param array          $arguments
+     * @param ProcessBuilder   $builder
+     * @param ProcessArguments $arguments
      */
-    public function __construct(ProcessBuilder $builder, array $arguments = [])
+    public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
     {
-        parent::__construct($builder, $arguments);
+        parent::__construct($builder, $arguments->setArgument('-sDEVICE=pdfwrite'));
 
-        $this->setArgument('device', '-sDEVICE', 'pdfwrite');
         $this->setCompatibilityLevel(self::DEFAULT_COMPATIBILITY_LEVEL);
     }
 
@@ -42,7 +47,7 @@ class PdfWrite extends AbstractDevice
      */
     public function getOutputFile()
     {
-        return $this->getArgumentValue('output-file');
+        return $this->getArgumentValue('-sOutputFile');
     }
 
     /**
@@ -54,31 +59,7 @@ class PdfWrite extends AbstractDevice
      */
     public function setOutputFile($outputFile)
     {
-        $this->setArgument('output-file', '-sOutputFile', $outputFile);
-
-        return $this;
-    }
-
-    /**
-     * Get compatibility level
-     *
-     * @return null|string
-     */
-    public function getCompatibilityLevel()
-    {
-        return $this->getArgumentValue('compatibility-level');
-    }
-
-    /**
-     * Set compatibility level
-     *
-     * @param string $compatibilityLevel
-     *
-     * @return $this
-     */
-    public function setCompatibilityLevel($compatibilityLevel)
-    {
-        $this->setArgument('compatibility-level', '-dCompatibilityLevel', $compatibilityLevel);
+        $this->setArgument('-sOutputFile=' . $outputFile);
 
         return $this;
     }
