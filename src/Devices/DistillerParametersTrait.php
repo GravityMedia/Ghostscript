@@ -15,6 +15,27 @@ namespace GravityMedia\Ghostscript\Devices;
 trait DistillerParametersTrait
 {
     /**
+     * Available auto rotate pages values
+     *
+     * @var string[]
+     */
+    protected static $autoRotatePagesValues = [
+        DistillerParametersInterface::AUTO_ROTATE_PAGES_NONE,
+        DistillerParametersInterface::AUTO_ROTATE_PAGES_ALL,
+        DistillerParametersInterface::AUTO_ROTATE_PAGES_PAGE_BY_PAGE
+    ];
+
+    /**
+     * Available binding values
+     *
+     * @var string[]
+     */
+    protected static $bindingValues = [
+        DistillerParametersInterface::BINDING_LEFT,
+        DistillerParametersInterface::BINDING_RIGHT
+    ];
+
+    /**
      * Get argument value
      *
      * @param string $name
@@ -58,12 +79,7 @@ trait DistillerParametersTrait
      */
     public function setAutoRotatePages($autoRotatePages)
     {
-        if (!in_array($autoRotatePages, array(
-            DistillerParametersInterface::AUTO_ROTATE_PAGES_NONE,
-            DistillerParametersInterface::AUTO_ROTATE_PAGES_ALL,
-            DistillerParametersInterface::AUTO_ROTATE_PAGES_PAGE_BY_PAGE
-        ))
-        ) {
+        if (!in_array($autoRotatePages, static::$autoRotatePagesValues)) {
             throw new \InvalidArgumentException('Invalid auto rotate pages argument');
         }
 
@@ -98,11 +114,7 @@ trait DistillerParametersTrait
      */
     public function setBinding($binding)
     {
-        if (!in_array($binding, array(
-            DistillerParametersInterface::BINDING_LEFT,
-            DistillerParametersInterface::BINDING_RIGHT
-        ))
-        ) {
+        if (!in_array($binding, static::$bindingValues)) {
             throw new \InvalidArgumentException('Invalid binding argument');
         }
 
