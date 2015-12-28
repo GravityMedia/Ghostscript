@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ghostscript package
  *
- * @author Daniel Schr�der <daniel.schroeder@gravitymedia.de>
+ * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
 namespace GravityMedia\Ghostscript\Devices;
@@ -18,14 +18,49 @@ use Symfony\Component\Process\ProcessBuilder;
 class PdfWrite extends AbstractDevice
 {
     /**
-     * User distiller parameters
+     * Use distiller parameters
      */
     use DistillerParametersTrait;
 
     /**
+     * Use color image compression distiller parameters
+     */
+    use DistillerParameters\ColorImageCompressionTrait;
+
+    /**
+     * Use grayscale image compression distiller parameters
+     */
+    use DistillerParameters\GrayscaleImageCompressionTrait;
+
+    /**
+     * Use monochrome image compression distiller parameters
+     */
+    use DistillerParameters\MonochromeImageCompressionTrait;
+
+    /**
+     * Use page compression distiller parameters
+     */
+    use DistillerParameters\PageCompressionTrait;
+
+    /**
+     * Use font distiller parameters
+     */
+    use DistillerParameters\FontTrait;
+
+    /**
+     * Use color conversion distiller parameters
+     */
+    use DistillerParameters\ColorConversionTrait;
+
+    /**
+     * Use advanced distiller parameters
+     */
+    use DistillerParameters\AdvancedTrait;
+
+    /**
      * The default compatibility level
      */
-    const DEFAULT_COMPATIBILITY_LEVEL = '1.4';
+    const DEFAULT_COMPATIBILITY_LEVEL = 1.4;
 
     /**
      * Create PDF write device object

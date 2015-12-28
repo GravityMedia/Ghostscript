@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ghostscript package
  *
- * @author Daniel Schr�der <daniel.schroeder@gravitymedia.de>
+ * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
 namespace GravityMedia\Ghostscript\Process;

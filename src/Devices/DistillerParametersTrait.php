@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ghostscript package
  *
- * @author Daniel Schr�der <daniel.schroeder@gravitymedia.de>
+ * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
 namespace GravityMedia\Ghostscript\Devices;
@@ -21,7 +21,7 @@ trait DistillerParametersTrait
      *
      * @return string
      */
-    abstract function getArgumentValue($name);
+    abstract protected function getArgumentValue($name);
 
     /**
      * Set argument
@@ -30,206 +30,7 @@ trait DistillerParametersTrait
      *
      * @return $this
      */
-    abstract function setArgument($argument);
-
-    /**
-     * Get always embed
-     *
-     * @return array
-     */
-    public function getAlwaysEmbed()
-    {
-        $value = $this->getArgumentValue('-dAlwaysEmbed');
-        if (null === $value) {
-            return [];
-        }
-
-        return explode(' /', substr($value, 2, -1));
-    }
-
-    /**
-     * Set always embed
-     *
-     * @param array $alwaysEmbed
-     *
-     * @return $this
-     */
-    public function setAlwaysEmbed(array $alwaysEmbed)
-    {
-        $this->setArgument('-dAlwaysEmbed=[' . implode(' ', array_map(function ($fontName) {
-                return '/' . ltrim($fontName, '/');
-            }, $alwaysEmbed)) . ']');
-
-        return $this;
-    }
-
-    /**
-     * Whether to anti alias color images
-     *
-     * @return bool
-     */
-    public function isAntiAliasColorImages()
-    {
-        return filter_var($this->getArgumentValue('-dAntiAliasColorImages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set anti alias color images flag
-     *
-     * @param bool $antiAliasColorImages
-     *
-     * @return $this
-     */
-    public function setAntiAliasColorImages($antiAliasColorImages)
-    {
-        $this->setArgument('-dAntiAliasColorImages=' . ($antiAliasColorImages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether to anti alias gray images
-     *
-     * @return bool
-     */
-    public function isAntiAliasGrayImages()
-    {
-        return filter_var($this->getArgumentValue('-dAntiAliasGrayImages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set anti alias gray images flag
-     *
-     * @param bool $antiAliasGrayImages
-     *
-     * @return $this
-     */
-    public function setAntiAliasGrayImages($antiAliasGrayImages)
-    {
-        $this->setArgument('-dAntiAliasGrayImages=' . ($antiAliasGrayImages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether to anti alias mono images
-     *
-     * @return bool
-     */
-    public function isAntiAliasMonoImages()
-    {
-        return filter_var($this->getArgumentValue('-dAntiAliasMonoImages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set anti alias mono images flag
-     *
-     * @param bool $antiAliasMonoImages
-     *
-     * @return $this
-     */
-    public function setAntiAliasMonoImages($antiAliasMonoImages)
-    {
-        $this->setArgument('-dAntiAliasMonoImages=' . ($antiAliasMonoImages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether ASCII85 encode pages
-     *
-     * @return bool
-     */
-    public function isAscii85EncodePages()
-    {
-        return filter_var($this->getArgumentValue('-dASCII85EncodePages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set ASCII85 encode pages flag
-     *
-     * @param bool $ascii85EncodePages
-     *
-     * @return $this
-     */
-    public function setAscii85EncodePages($ascii85EncodePages)
-    {
-        $this->setArgument('-dASCII85EncodePages=' . ($ascii85EncodePages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether to auto filter color images
-     *
-     * @return bool
-     */
-    public function isAutoFilterColorImages()
-    {
-        return filter_var($this->getArgumentValue('-dAutoFilterColorImages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set auto filter color images flag
-     *
-     * @param bool $autoFilterColorImages
-     *
-     * @return $this
-     */
-    public function setAutoFilterColorImages($autoFilterColorImages)
-    {
-        $this->setArgument('-dAutoFilterColorImages=' . ($autoFilterColorImages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether to auto filter gray images
-     *
-     * @return bool
-     */
-    public function isAutoFilterGrayImages()
-    {
-        return filter_var($this->getArgumentValue('-dAutoFilterGrayImages'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set auto filter gray images flag
-     *
-     * @param bool $autoFilterGrayImages
-     *
-     * @return $this
-     */
-    public function setAutoFilterGrayImages($autoFilterGrayImages)
-    {
-        $this->setArgument('-dAutoFilterGrayImages=' . ($autoFilterGrayImages ? 'true' : 'false'));
-
-        return $this;
-    }
-
-    /**
-     * Whether to auto position EPS files
-     *
-     * @return bool
-     */
-    public function isAutoPositionEpsFiles()
-    {
-        return filter_var($this->getArgumentValue('-dAutoPositionEPSFiles'), FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Set auto position EPS files flag
-     *
-     * @param bool $autoPositionEpsFiles
-     *
-     * @return $this
-     */
-    public function setAutoPositionEpsFiles($autoPositionEpsFiles)
-    {
-        $this->setArgument('-dAutoPositionEPSFiles=' . ($autoPositionEpsFiles ? 'true' : 'false'));
-
-        return $this;
-    }
+    abstract protected function setArgument($argument);
 
     /**
      * Get auto rotate pages
@@ -240,12 +41,11 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dAutoRotatePages');
         if (null === $value) {
-            return null;
+            return DistillerParametersInterface::AUTO_ROTATE_PAGES_PAGE_BY_PAGE;
         }
 
         return substr($value, 1);
     }
-
 
     /**
      * Set auto rotate pages
@@ -267,7 +67,7 @@ trait DistillerParametersTrait
             throw new \InvalidArgumentException('Invalid auto rotate pages argument');
         }
 
-        $this->setArgument('-dAutoRotatePages=/' . $autoRotatePages);
+        $this->setArgument(sprintf('-dAutoRotatePages=/%s', $autoRotatePages));
 
         return $this;
     }
@@ -281,12 +81,11 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dBinding');
         if (null === $value) {
-            return null;
+            return DistillerParametersInterface::BINDING_LEFT;
         }
 
         return substr($value, 1);
     }
-
 
     /**
      * Set binding
@@ -307,134 +106,7 @@ trait DistillerParametersTrait
             throw new \InvalidArgumentException('Invalid binding argument');
         }
 
-        $this->setArgument('-dBinding=/' . $binding);
-
-        return $this;
-    }
-
-    /**
-     * Get cal CMYK profile
-     *
-     * @return null|string
-     */
-    public function getCalCmykProfile()
-    {
-        $value = $this->getArgumentValue('-dCalCMYKProfile');
-        if (null === $value) {
-            return null;
-        }
-
-        return substr($value, 1, -1);
-    }
-
-    /**
-     * Set cal CMYK profile
-     *
-     * @param string $valCmykProfile
-     *
-     * @return $this
-     */
-    public function setCalCmykProfile($valCmykProfile)
-    {
-        $this->setArgument('-dCalCMYKProfile=(' . $valCmykProfile . ')');
-
-        return $this;
-    }
-
-    /**
-     * Get cal gray profile
-     *
-     * @return null|string
-     */
-    public function getCalGrayProfile()
-    {
-        $value = $this->getArgumentValue('-dCalGrayProfile');
-        if (null === $value) {
-            return null;
-        }
-
-        return substr($value, 1, -1);
-    }
-
-    /**
-     * Set cal gray profile
-     *
-     * @param string $valGrayProfile
-     *
-     * @return $this
-     */
-    public function setCalGrayProfile($valGrayProfile)
-    {
-        $this->setArgument('-dCalGrayProfile=(' . $valGrayProfile . ')');
-
-        return $this;
-    }
-
-    /**
-     * Get cal RGB profile
-     *
-     * @return null|string
-     */
-    public function getCalRgbProfile()
-    {
-        $value = $this->getArgumentValue('-dCalRGBProfile');
-        if (null === $value) {
-            return null;
-        }
-
-        return substr($value, 1, -1);
-    }
-
-    /**
-     * Set cal RGB profile
-     *
-     * @param string $valRgbProfile
-     *
-     * @return $this
-     */
-    public function setCalRgbProfile($valRgbProfile)
-    {
-        $this->setArgument('-dCalRGBProfile=(' . $valRgbProfile . ')');
-
-        return $this;
-    }
-
-    /**
-     * Get cannot embed font policy
-     *
-     * @return string
-     */
-    public function getCannotEmbedFontPolicy()
-    {
-        $value = $this->getArgumentValue('-dCannotEmbedFontPolicy');
-        if (null === $value) {
-            return null;
-        }
-
-        return substr($value, 1);
-    }
-
-    /**
-     * Set cannot embed font policy
-     *
-     * @param string $cannotEmbedFontPolicy
-     *
-     * @param \InvalidArgumentException
-     *
-     * @return $this
-     */
-    public function setCannotEmbedFontPolicy($cannotEmbedFontPolicy)
-    {
-        if (!in_array($cannotEmbedFontPolicy, array(
-            DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_OK,
-            DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_WARNING,
-            DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_ERROR
-        ))
-        ) {
-            throw new \InvalidArgumentException('Invalid cannot embed font policy argument');
-        }
-
-        $this->setArgument('-dCannotEmbedFontPolicy=/' . $cannotEmbedFontPolicy);
+        $this->setArgument(sprintf('-dBinding=/%s', $binding));
 
         return $this;
     }
@@ -442,23 +114,260 @@ trait DistillerParametersTrait
     /**
      * Get compatibility level
      *
-     * @return null|string
+     * @return float
      */
     public function getCompatibilityLevel()
     {
-        return $this->getArgumentValue('-dCompatibilityLevel');
+        $value = $this->getArgumentValue('-dCompatibilityLevel');
+        if (null === $value) {
+            return 1.4;
+        }
+
+        return floatval($value);
     }
 
     /**
      * Set compatibility level
      *
-     * @param string $compatibilityLevel
+     * @param float $compatibilityLevel
      *
      * @return $this
      */
     public function setCompatibilityLevel($compatibilityLevel)
     {
-        $this->setArgument('-dCompatibilityLevel=' . $compatibilityLevel);
+        $this->setArgument(sprintf('-dCompatibilityLevel=%s', $compatibilityLevel));
+
+        return $this;
+    }
+
+    /**
+     * Get core dist version
+     *
+     * @return int
+     */
+    public function getCoreDistVersion()
+    {
+        $value = $this->getArgumentValue('-dCoreDistVersion');
+        if (null === $value) {
+            return 4000;
+        }
+
+        return intval($value);
+    }
+
+    /**
+     * Set core dist version
+     *
+     * @param int $coreDistVersion
+     *
+     * @return $this
+     */
+    public function setCoreDistVersion($coreDistVersion)
+    {
+        $this->setArgument(sprintf('-dCoreDistVersion=%s', $coreDistVersion));
+
+        return $this;
+    }
+
+    /**
+     * Whether to do thumbnails
+     *
+     * @return bool
+     */
+    public function getDoThumbnails()
+    {
+        $value = $this->getArgumentValue('-dDoThumbnails');
+        if (null === $value) {
+            return false;
+        }
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * Set do thumbnails flag
+     *
+     * @param bool $doThumbnails
+     *
+     * @return $this
+     */
+    public function setDoThumbnails($doThumbnails)
+    {
+        $this->setArgument(sprintf('-dDoThumbnails=%s', $doThumbnails ? 'true' : 'false'));
+
+        return $this;
+    }
+
+    /**
+     * Get end page
+     *
+     * @return int
+     */
+    public function getEndPage()
+    {
+        $value = $this->getArgumentValue('-dEndPage');
+        if (null === $value) {
+            return -1;
+        }
+
+        return intval($value);
+    }
+
+    /**
+     * Set end page
+     *
+     * @param int $endPage
+     *
+     * @return $this
+     */
+    public function setEndPage($endPage)
+    {
+        $this->setArgument(sprintf('-dEndPage=%s', $endPage));
+
+        return $this;
+    }
+
+    /**
+     * Get image memory
+     *
+     * @return int
+     */
+    public function getImageMemory()
+    {
+        $value = $this->getArgumentValue('-dImageMemory');
+        if (null === $value) {
+            return 524288;
+        }
+
+        return intval($value);
+    }
+
+    /**
+     * Set image memory
+     *
+     * @param int $imageMemory
+     *
+     * @return $this
+     */
+    public function setImageMemory($imageMemory)
+    {
+        $this->setArgument(sprintf('-dImageMemory=%s', $imageMemory));
+
+        return $this;
+    }
+
+    /**
+     * Get off optimizations
+     *
+     * @return int
+     */
+    public function getOffOptimizations()
+    {
+        $value = $this->getArgumentValue('-dOffOptimizations');
+        if (null === $value) {
+            return 0;
+        }
+
+        return intval($value);
+    }
+
+    /**
+     * Set off optimizations
+     *
+     * @param int $offOptimizations
+     *
+     * @return $this
+     */
+    public function setOffOptimizations($offOptimizations)
+    {
+        $this->setArgument(sprintf('-dOffOptimizations=%s', $offOptimizations));
+
+        return $this;
+    }
+
+    /**
+     * Whether to optimize
+     *
+     * @return bool
+     */
+    public function getOptimize()
+    {
+        $value = $this->getArgumentValue('-dOptimize');
+        if (null === $value) {
+            return false;
+        }
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * Set optimize flag
+     *
+     * @param bool $optimize
+     *
+     * @return $this
+     */
+    public function setOptimize($optimize)
+    {
+        $this->setArgument(sprintf('-dOptimize=%s', $optimize ? 'true' : 'false'));
+
+        return $this;
+    }
+
+    /**
+     * Get start page
+     *
+     * @return int
+     */
+    public function getStartPage()
+    {
+        $value = $this->getArgumentValue('-dStartPage');
+        if (null === $value) {
+            return 1;
+        }
+
+        return intval($value);
+    }
+
+    /**
+     * Set start page
+     *
+     * @param int $startPage
+     *
+     * @return $this
+     */
+    public function setStartPage($startPage)
+    {
+        $this->setArgument(sprintf('-dStartPage=%s', $startPage));
+
+        return $this;
+    }
+
+    /**
+     * Whether to use flate compression
+     *
+     * @return bool
+     */
+    public function getUseFlateCompression()
+    {
+        $value = $this->getArgumentValue('-dUseFlateCompression');
+        if (null === $value) {
+            return true;
+        }
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * Set use flate compression flag
+     *
+     * @param bool $useFlateCompression
+     *
+     * @return $this
+     */
+    public function setUseFlateCompression($useFlateCompression)
+    {
+        $this->setArgument(sprintf('-dUseFlateCompression=%s', $useFlateCompression ? 'true' : 'false'));
 
         return $this;
     }
