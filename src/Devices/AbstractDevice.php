@@ -21,7 +21,7 @@ abstract class AbstractDevice
     /**
      * The process builder object
      *
-     * @var Process
+     * @var ProcessBuilder
      */
     private $builder;
 
