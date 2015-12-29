@@ -7,6 +7,7 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
+use GravityMedia\Ghostscript\Process\Argument as ProcessArgument;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
@@ -45,6 +46,18 @@ abstract class AbstractDevice
     }
 
     /**
+     * Get Argument
+     *
+     * @param string $name
+     *
+     * @return null|ProcessArgument
+     */
+    protected function getArgument($name)
+    {
+        return $this->arguments->getArgument($name);
+    }
+
+    /**
      * Get argument value
      *
      * @param string $name
@@ -53,7 +66,7 @@ abstract class AbstractDevice
      */
     protected function getArgumentValue($name)
     {
-        $argument = $this->arguments->getArgument($name);
+        $argument = $this->getArgument($name);
         if (null === $argument) {
             return null;
         }
