@@ -31,12 +31,12 @@ class PdfWrite extends AbstractDevice
     /**
      * Use grayscale image compression distiller parameters
      */
-    use DistillerParameters\GrayscaleImageCompressionTrait;
+    use DistillerParameters\GrayImageCompressionTrait;
 
     /**
      * Use monochrome image compression distiller parameters
      */
-    use DistillerParameters\MonochromeImageCompressionTrait;
+    use DistillerParameters\MonoImageCompressionTrait;
 
     /**
      * Use page compression distiller parameters
@@ -59,11 +59,6 @@ class PdfWrite extends AbstractDevice
     use DistillerParameters\AdvancedTrait;
 
     /**
-     * The default compatibility level
-     */
-    const DEFAULT_COMPATIBILITY_LEVEL = 1.4;
-
-    /**
      * Create PDF write device object
      *
      * @param ProcessBuilder   $builder
@@ -73,7 +68,7 @@ class PdfWrite extends AbstractDevice
     {
         parent::__construct($builder, $arguments->setArgument('-sDEVICE=pdfwrite'));
 
-        $this->setCompatibilityLevel(self::DEFAULT_COMPATIBILITY_LEVEL);
+        $this->setPdfSettings(PdfSettings::__DEFAULT);
     }
 
     /**
@@ -107,12 +102,7 @@ class PdfWrite extends AbstractDevice
      */
     public function getPdfSettings()
     {
-        $value = $this->getArgumentValue('-dPDFSETTINGS');
-        if (null === $value) {
-            return PdfSettings::__DEFAULT;
-        }
-
-        return substr($value, 1);
+        return ltrim($this->getArgumentValue('-dPDFSETTINGS'), '/');
     }
 
     /**

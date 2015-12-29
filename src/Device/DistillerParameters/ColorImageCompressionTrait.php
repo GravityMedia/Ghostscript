@@ -23,7 +23,7 @@ trait ColorImageCompressionTrait
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -180,7 +180,7 @@ trait ColorImageCompressionTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -216,7 +216,7 @@ trait ColorImageCompressionTrait
             return ColorAndGrayImageFilter::DCT_ENCODE;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -307,7 +307,7 @@ trait ColorImageCompressionTrait
      */
     public function setDownsampleColorImages($downsampleColorImages)
     {
-        $this->setArgument(sprintf('-dDownsampleColorImages=%s', $downsampleColorImages ? 'true' : 'false'));;
+        $this->setArgument(sprintf('-dDownsampleColorImages=%s', $downsampleColorImages ? 'true' : 'false'));
 
         return $this;
     }

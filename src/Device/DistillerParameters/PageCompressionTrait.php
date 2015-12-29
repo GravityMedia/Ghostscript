@@ -19,7 +19,7 @@ trait PageCompressionTrait
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 

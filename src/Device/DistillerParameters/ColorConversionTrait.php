@@ -25,7 +25,7 @@ trait ColorConversionTrait
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -57,7 +57,7 @@ trait ColorConversionTrait
             return null;
         }
 
-        return substr($value, 1, -1);
+        return trim($value, '()');
     }
 
     /**
@@ -86,7 +86,7 @@ trait ColorConversionTrait
             return null;
         }
 
-        return substr($value, 1, -1);
+        return trim($value, '()');
     }
 
     /**
@@ -115,7 +115,7 @@ trait ColorConversionTrait
             return null;
         }
 
-        return substr($value, 1, -1);
+        return trim($value, '()');
     }
 
     /**
@@ -152,7 +152,7 @@ trait ColorConversionTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -246,7 +246,7 @@ trait ColorConversionTrait
             return DefaultRenderingIntent::__DEFAULT;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -346,7 +346,7 @@ trait ColorConversionTrait
             return null;
         }
 
-        return substr($value, 1, -1);
+        return trim($value, '()');
     }
 
     /**
@@ -375,7 +375,7 @@ trait ColorConversionTrait
             return TransferFunctionInfo::PRESERVE;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -417,7 +417,7 @@ trait ColorConversionTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**

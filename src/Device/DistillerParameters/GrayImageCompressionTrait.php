@@ -16,14 +16,14 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  */
-trait GrayscaleImageCompressionTrait
+trait GrayImageCompressionTrait
 {
     /**
      * Get argument value
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -79,7 +79,7 @@ trait GrayscaleImageCompressionTrait
      */
     public function isAutoFilterGrayImages()
     {
-        $value = filter_var($this->getArgumentValue('-dAutoFilterGrayImages'), FILTER_VALIDATE_BOOLEAN);
+        $value = $this->getArgumentValue('-dAutoFilterGrayImages');
         if (null === $value) {
             return true;
         }
@@ -244,7 +244,7 @@ trait GrayscaleImageCompressionTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -280,7 +280,7 @@ trait GrayscaleImageCompressionTrait
             return ColorAndGrayImageFilter::DCT_ENCODE;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**

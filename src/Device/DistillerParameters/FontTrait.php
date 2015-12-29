@@ -22,7 +22,7 @@ trait FontTrait
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -59,7 +59,7 @@ trait FontTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**

@@ -16,14 +16,14 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  */
-trait MonochromeImageCompressionTrait
+trait MonoImageCompressionTrait
 {
     /**
      * Get argument value
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -211,7 +211,7 @@ trait MonochromeImageCompressionTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -247,7 +247,7 @@ trait MonochromeImageCompressionTrait
             return MonoImageFilter::CCITT_FAX_ENCODE;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**

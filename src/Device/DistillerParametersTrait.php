@@ -12,7 +12,7 @@ use GravityMedia\Ghostscript\Enum\Binding;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The distiller parameters trait
+ * The general distiller parameters trait
  *
  * @package GravityMedia\Ghostscript\Devices
  */
@@ -23,7 +23,7 @@ trait DistillerParametersTrait
      *
      * @param string $name
      *
-     * @return string
+     * @return null|string
      */
     abstract protected function getArgumentValue($name);
 
@@ -63,7 +63,7 @@ trait DistillerParametersTrait
             }
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -99,7 +99,7 @@ trait DistillerParametersTrait
             return Binding::LEFT;
         }
 
-        return substr($value, 1);
+        return ltrim($value, '/');
     }
 
     /**
@@ -191,7 +191,7 @@ trait DistillerParametersTrait
      *
      * @return bool
      */
-    public function getDoThumbnails()
+    public function isDoThumbnails()
     {
         $value = $this->getArgumentValue('-dDoThumbnails');
         if (null === $value) {
@@ -312,7 +312,7 @@ trait DistillerParametersTrait
      *
      * @return bool
      */
-    public function getOptimize()
+    public function isOptimize()
     {
         $value = $this->getArgumentValue('-dOptimize');
         if (null === $value) {
@@ -378,7 +378,7 @@ trait DistillerParametersTrait
      *
      * @return bool
      */
-    public function getUseFlateCompression()
+    public function isUseFlateCompression()
     {
         $value = $this->getArgumentValue('-dUseFlateCompression');
         if (null === $value) {
