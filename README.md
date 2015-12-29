@@ -54,6 +54,7 @@ $ghostscript = new Ghostscript([
 
 // Create and configure the device
 $device = $ghostscript->createPdfDevice($outputFile);
+$device->setCompatibilityLevel(1.4);
 
 // Create process
 $process = $device->createProcess($inputFile);
