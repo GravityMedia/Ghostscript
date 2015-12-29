@@ -19,11 +19,11 @@ use Symfony\Component\Process\ProcessBuilder;
  *
  * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
  *
- * @uses    \GravityMedia\Ghostscript\Process\Argument
- * @uses    \GravityMedia\Ghostscript\Process\Arguments
+ * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
- * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
+ * @uses    \GravityMedia\Ghostscript\Process\Argument
+ * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
 class PdfWriteTest extends \PHPUnit_Framework_TestCase
 {

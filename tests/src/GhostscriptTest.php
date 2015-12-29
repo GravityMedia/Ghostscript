@@ -16,11 +16,12 @@ use GravityMedia\Ghostscript\Ghostscript;
  *
  * @covers  \GravityMedia\Ghostscript\Ghostscript
  *
+ * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
+ * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
- * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
- * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  */
 class GhostscriptTest extends \PHPUnit_Framework_TestCase
 {

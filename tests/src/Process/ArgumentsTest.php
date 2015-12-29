@@ -15,6 +15,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @package GravityMedia\GhostscriptTest\Process
  *
  * @covers  \GravityMedia\Ghostscript\Process\Arguments
+ *
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  */
 class ArgumentsTest extends \PHPUnit_Framework_TestCase
