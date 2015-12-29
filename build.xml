@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="AdfrendModule" default="test">
+<project name="Ghostscript" default="test">
     <property name="build.path" value="."/>
     <property name="phpunit.binary" value="vendor/bin/phpunit"/>
     <property name="sami.binary" value="vendor/bin/sami.php"/>
