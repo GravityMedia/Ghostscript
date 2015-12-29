@@ -32,10 +32,10 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDevice()
     {
-        $builder = new ProcessBuilder();
-        $arguments = new ProcessArguments();
+        $processBuilder = new ProcessBuilder();
+        $processArguments = new ProcessArguments();
 
-        return new PdfWrite($builder, $arguments);
+        return new PdfWrite($processBuilder, $processArguments);
     }
 
     public function testDeviceCreation()
