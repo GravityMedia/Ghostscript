@@ -196,7 +196,7 @@ trait DistillerParametersTrait
         $value = $this->getArgumentValue('-dDoThumbnails');
         if (null === $value) {
             switch ($this->getPdfSettings()) {
-                case PdfSettings::PREPRESS;
+                case PdfSettings::PREPRESS:
                     return true;
                 default:
                     return false;
