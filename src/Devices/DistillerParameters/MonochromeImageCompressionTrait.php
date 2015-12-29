@@ -7,7 +7,9 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
-use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
+use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
+use GravityMedia\Ghostscript\Enum\MonoImageFilter;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
  * The monochrome image compression distiller parameters trait
@@ -16,29 +18,6 @@ use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
  */
 trait MonochromeImageCompressionTrait
 {
-    /**
-     * Available monochrome image downsample type values
-     *
-     * @var string[]
-     */
-    protected static $monoImageDownsampleTypeValues = [
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_AVERAGE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_BICUBIC,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_NONE,
-    ];
-
-    /**
-     * Available monochrome image filter values
-     *
-     * @var string[]
-     */
-    protected static $monoImageFilterValues = [
-        DistillerParametersInterface::IMAGE_FILTER_CCITT_FAX_ENCODE,
-        DistillerParametersInterface::IMAGE_FILTER_FLATE_ENCODE,
-        DistillerParametersInterface::IMAGE_FILTER_RUN_LENGTH_ENCODE
-    ];
-
     /**
      * Get argument value
      *
@@ -56,6 +35,13 @@ trait MonochromeImageCompressionTrait
      * @return $this
      */
     abstract protected function setArgument($argument);
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
 
     /**
      * Whether to anti alias monochrome images
@@ -95,7 +81,13 @@ trait MonochromeImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dDownsampleMonoImages');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -211,7 +203,12 @@ trait MonochromeImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dMonoImageDownsampleType');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PREPRESS:
+                    return ImageDownsampleType::BICUBIC;
+                default:
+                    return ImageDownsampleType::SUBSAMPLE;
+            }
         }
 
         return substr($value, 1);
@@ -228,7 +225,8 @@ trait MonochromeImageCompressionTrait
      */
     public function setMonoImageDownsampleType($monoImageDownsampleType)
     {
-        if (!in_array($monoImageDownsampleType, static::$monoImageDownsampleTypeValues)) {
+        $monoImageDownsampleType = ltrim($monoImageDownsampleType, '/');
+        if (!in_array($monoImageDownsampleType, ImageDownsampleType::values())) {
             throw new \InvalidArgumentException('Invalid monochrome image downsample type argument');
         }
 
@@ -246,7 +244,7 @@ trait MonochromeImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dMonoImageFilter');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_FILTER_CCITT_FAX_ENCODE;
+            return MonoImageFilter::CCITT_FAX_ENCODE;
         }
 
         return substr($value, 1);
@@ -263,7 +261,8 @@ trait MonochromeImageCompressionTrait
      */
     public function setMonoImageFilter($monoImageFilter)
     {
-        if (!in_array($monoImageFilter, static::$monoImageFilterValues)) {
+        $monoImageFilter = ltrim($monoImageFilter, '/');
+        if (!in_array($monoImageFilter, MonoImageFilter::values())) {
             throw new \InvalidArgumentException('Invalid monochrome image filter argument');
         }
 
@@ -281,7 +280,13 @@ trait MonochromeImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dMonoImageResolution');
         if (null === $value) {
-            return 300;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return 1200;
+                default:
+                    return 300;
+            }
         }
 
         return intval($value);

@@ -7,6 +7,7 @@
 
 namespace GravityMedia\Ghostscript\Devices;
 
+use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -95,6 +96,42 @@ class PdfWrite extends AbstractDevice
     public function setOutputFile($outputFile)
     {
         $this->setArgument('-sOutputFile=' . $outputFile);
+
+        return $this;
+    }
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    public function getPdfSettings()
+    {
+        $value = $this->getArgumentValue('-dPDFSETTINGS');
+        if (null === $value) {
+            return PdfSettings::__DEFAULT;
+        }
+
+        return substr($value, 1);
+    }
+
+    /**
+     * Set PDF settings
+     *
+     * @param string $pdfSettings
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
+     */
+    public function setPdfSettings($pdfSettings)
+    {
+        $pdfSettings = ltrim($pdfSettings, '/');
+        if (!in_array($pdfSettings, PdfSettings::values())) {
+            throw new \InvalidArgumentException('Invalid PDF settings argument');
+        }
+
+        $this->setArgument(sprintf('-dPDFSETTINGS=/%s', $pdfSettings));
 
         return $this;
     }

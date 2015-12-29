@@ -7,6 +7,10 @@
 
 namespace GravityMedia\Ghostscript\Devices;
 
+use GravityMedia\Ghostscript\Enum\AutoRotatePages;
+use GravityMedia\Ghostscript\Enum\Binding;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
+
 /**
  * The distiller parameters trait
  *
@@ -14,27 +18,6 @@ namespace GravityMedia\Ghostscript\Devices;
  */
 trait DistillerParametersTrait
 {
-    /**
-     * Available auto rotate pages values
-     *
-     * @var string[]
-     */
-    protected static $autoRotatePagesValues = [
-        DistillerParametersInterface::AUTO_ROTATE_PAGES_NONE,
-        DistillerParametersInterface::AUTO_ROTATE_PAGES_ALL,
-        DistillerParametersInterface::AUTO_ROTATE_PAGES_PAGE_BY_PAGE
-    ];
-
-    /**
-     * Available binding values
-     *
-     * @var string[]
-     */
-    protected static $bindingValues = [
-        DistillerParametersInterface::BINDING_LEFT,
-        DistillerParametersInterface::BINDING_RIGHT
-    ];
-
     /**
      * Get argument value
      *
@@ -54,6 +37,13 @@ trait DistillerParametersTrait
     abstract protected function setArgument($argument);
 
     /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
+
+    /**
      * Get auto rotate pages
      *
      * @return string
@@ -62,7 +52,15 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dAutoRotatePages');
         if (null === $value) {
-            return DistillerParametersInterface::AUTO_ROTATE_PAGES_PAGE_BY_PAGE;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::EBOOK:
+                    return AutoRotatePages::ALL;
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return AutoRotatePages::NONE;
+                default:
+                    return AutoRotatePages::PAGE_BY_PAGE;
+            }
         }
 
         return substr($value, 1);
@@ -79,7 +77,8 @@ trait DistillerParametersTrait
      */
     public function setAutoRotatePages($autoRotatePages)
     {
-        if (!in_array($autoRotatePages, static::$autoRotatePagesValues)) {
+        $autoRotatePages = ltrim($autoRotatePages, '/');
+        if (!in_array($autoRotatePages, AutoRotatePages::values())) {
             throw new \InvalidArgumentException('Invalid auto rotate pages argument');
         }
 
@@ -97,7 +96,7 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dBinding');
         if (null === $value) {
-            return DistillerParametersInterface::BINDING_LEFT;
+            return Binding::LEFT;
         }
 
         return substr($value, 1);
@@ -114,7 +113,8 @@ trait DistillerParametersTrait
      */
     public function setBinding($binding)
     {
-        if (!in_array($binding, static::$bindingValues)) {
+        $binding = ltrim($binding, '/');
+        if (!in_array($binding, Binding::values())) {
             throw new \InvalidArgumentException('Invalid binding argument');
         }
 
@@ -132,7 +132,12 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dCompatibilityLevel');
         if (null === $value) {
-            return 1.4;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                    return 1.3;
+                default:
+                    return 1.4;
+            }
         }
 
         return floatval($value);
@@ -190,7 +195,12 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dDoThumbnails');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PREPRESS;
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -306,7 +316,15 @@ trait DistillerParametersTrait
     {
         $value = $this->getArgumentValue('-dOptimize');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);

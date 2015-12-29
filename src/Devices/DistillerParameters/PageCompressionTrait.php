@@ -37,7 +37,7 @@ trait PageCompressionTrait
      *
      * @return bool
      */
-    public function getCompressPages()
+    public function isCompressPages()
     {
         $value = $this->getArgumentValue('-dCompressPages');
         if (null === $value) {

@@ -7,7 +7,8 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
-use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
+use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
  * The font distiller parameters trait
@@ -16,17 +17,6 @@ use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
  */
 trait FontTrait
 {
-    /**
-     * Available cannot embed font policy values
-     *
-     * @var string[]
-     */
-    protected static $cannotEmbedFontPolicyValues = [
-        DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_OK,
-        DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_WARNING,
-        DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_ERROR
-    ];
-
     /**
      * Get argument value
      *
@@ -46,6 +36,13 @@ trait FontTrait
     abstract protected function setArgument($argument);
 
     /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
+
+    /**
      * Get cannot embed font policy
      *
      * @return string
@@ -54,7 +51,12 @@ trait FontTrait
     {
         $value = $this->getArgumentValue('-dCannotEmbedFontPolicy');
         if (null === $value) {
-            return DistillerParametersInterface::CANNOT_EMBED_FONT_POLICY_WARNING;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PREPRESS:
+                    return CannotEmbedFontPolicy::ERROR;
+                default:
+                    return CannotEmbedFontPolicy::WARNING;
+            }
         }
 
         return substr($value, 1);
@@ -71,7 +73,8 @@ trait FontTrait
      */
     public function setCannotEmbedFontPolicy($cannotEmbedFontPolicy)
     {
-        if (!in_array($cannotEmbedFontPolicy, static::$cannotEmbedFontPolicyValues)) {
+        $cannotEmbedFontPolicy = ltrim($cannotEmbedFontPolicy, '/');
+        if (!in_array($cannotEmbedFontPolicy, CannotEmbedFontPolicy::values())) {
             throw new \InvalidArgumentException('Invalid cannot embed font policy argument');
         }
 
@@ -89,7 +92,12 @@ trait FontTrait
     {
         $value = $this->getArgumentValue('-dEmbedAllFonts');
         if (null === $value) {
-            return true;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                    return false;
+                default:
+                    return true;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -143,7 +151,7 @@ trait FontTrait
      *
      * @return bool
      */
-    public function getSubsetFonts()
+    public function isSubsetFonts()
     {
         $value = $this->getArgumentValue('-dSubsetFonts');
         if (null === $value) {

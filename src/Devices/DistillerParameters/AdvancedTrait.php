@@ -7,6 +7,8 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
+use GravityMedia\Ghostscript\Enum\PdfSettings;
+
 /**
  * The advanced distiller parameters trait
  *
@@ -31,6 +33,13 @@ trait AdvancedTrait
      * @return $this
      */
     abstract protected function setArgument($argument);
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
 
     /**
      * Whether ASCII85 encode pages
@@ -99,7 +108,13 @@ trait AdvancedTrait
     {
         $value = $this->getArgumentValue('-dCreateJobTicket');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -360,7 +375,13 @@ trait AdvancedTrait
     {
         $value = $this->getArgumentValue('-dPreserveOPIComments');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);

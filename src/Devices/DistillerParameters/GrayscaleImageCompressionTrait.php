@@ -7,7 +7,9 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
-use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
+use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
+use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
  * The grayscale image compression distiller parameters trait
@@ -16,28 +18,6 @@ use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
  */
 trait GrayscaleImageCompressionTrait
 {
-    /**
-     * Available grayscale image downsample type values
-     *
-     * @var string[]
-     */
-    protected static $grayImageDownsampleTypeValues = [
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_AVERAGE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_BICUBIC,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_NONE,
-    ];
-
-    /**
-     * Available grayscale image filter values
-     *
-     * @var string[]
-     */
-    protected static $grayImageFilterValues = [
-        DistillerParametersInterface::IMAGE_FILTER_DCT_ENCODE,
-        DistillerParametersInterface::IMAGE_FILTER_FLATE_ENCODE
-    ];
-
     /**
      * Get argument value
      *
@@ -55,6 +35,13 @@ trait GrayscaleImageCompressionTrait
      * @return $this
      */
     abstract protected function setArgument($argument);
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
 
     /**
      * Whether to anti alias grayscale images
@@ -123,7 +110,13 @@ trait GrayscaleImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dDownsampleGrayImages');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -239,7 +232,16 @@ trait GrayscaleImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dGrayImageDownsampleType');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                    return ImageDownsampleType::AVERAGE;
+                case PdfSettings::EBOOK:
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return ImageDownsampleType::BICUBIC;
+                default:
+                    return ImageDownsampleType::SUBSAMPLE;
+            }
         }
 
         return substr($value, 1);
@@ -256,7 +258,8 @@ trait GrayscaleImageCompressionTrait
      */
     public function setGrayImageDownsampleType($grayImageDownsampleType)
     {
-        if (!in_array($grayImageDownsampleType, static::$grayImageDownsampleTypeValues)) {
+        $grayImageDownsampleType = ltrim($grayImageDownsampleType, '/');
+        if (!in_array($grayImageDownsampleType, ImageDownsampleType::values())) {
             throw new \InvalidArgumentException('Invalid grayscale image downsample type argument');
         }
 
@@ -274,7 +277,7 @@ trait GrayscaleImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dGrayImageFilter');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_FILTER_DCT_ENCODE;
+            return ColorAndGrayImageFilter::DCT_ENCODE;
         }
 
         return substr($value, 1);
@@ -291,7 +294,8 @@ trait GrayscaleImageCompressionTrait
      */
     public function setGrayImageFilter($grayImageFilter)
     {
-        if (!in_array($grayImageFilter, static::$grayImageDownsampleTypeValues)) {
+        $grayImageFilter = ltrim($grayImageFilter, '/');
+        if (!in_array($grayImageFilter, ColorAndGrayImageFilter::values())) {
             throw new \InvalidArgumentException('Invalid grayscale image filter argument');
         }
 
@@ -309,7 +313,15 @@ trait GrayscaleImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dGrayImageResolution');
         if (null === $value) {
-            return 72;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::EBOOK:
+                    return 150;
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return 300;
+                default:
+                    return 72;
+            }
         }
 
         return intval($value);

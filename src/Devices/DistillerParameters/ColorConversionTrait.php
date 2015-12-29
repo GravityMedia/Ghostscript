@@ -7,7 +7,11 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
-use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
+use GravityMedia\Ghostscript\Enum\ColorConversionStrategy;
+use GravityMedia\Ghostscript\Enum\DefaultRenderingIntent;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
+use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
+use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
 
 /**
  * The color conversion distiller parameters trait
@@ -16,53 +20,6 @@ use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
  */
 trait ColorConversionTrait
 {
-    /**
-     * Available color conversion strategy values
-     *
-     * @var string[]
-     */
-    protected static $colorConversionStrategyValues = [
-        DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_LEAVE_COLOR_UNCHANGED,
-        DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_USE_DEVICE_INDEPENDENT_COLOR,
-        DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_GRAY,
-        DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_RGB,
-        DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_CMYK
-    ];
-
-    /**
-     * Available default rendering intent values
-     *
-     * @var string[]
-     */
-    protected static $defaultRenderingIntentValues = [
-        DistillerParametersInterface::DEFAULT_RENDERING_INTENT_DEFAULT,
-        DistillerParametersInterface::DEFAULT_RENDERING_INTENT_PERCEPTUAL,
-        DistillerParametersInterface::DEFAULT_RENDERING_INTENT_SATURATION,
-        DistillerParametersInterface::DEFAULT_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-        DistillerParametersInterface::DEFAULT_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC
-    ];
-
-    /**
-     * Available transfer function info values
-     *
-     * @var string[]
-     */
-    protected static $transferFunctionInfoValues = [
-        DistillerParametersInterface::TRANSFER_FUNCTION_INFO_PRESERVE,
-        DistillerParametersInterface::TRANSFER_FUNCTION_INFO_REMOVE,
-        DistillerParametersInterface::TRANSFER_FUNCTION_INFO_APPLY
-    ];
-
-    /**
-     * Available UCR and BG info values
-     *
-     * @var string[]
-     */
-    protected static $ucrAndBgInfoValues = [
-        DistillerParametersInterface::UCR_AND_BG_INFO_PRESERVE,
-        DistillerParametersInterface::UCR_AND_BG_INFO_REMOVE
-    ];
-
     /**
      * Get argument value
      *
@@ -80,6 +37,13 @@ trait ColorConversionTrait
      * @return $this
      */
     abstract protected function setArgument($argument);
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
 
     /**
      * Get cal CMYK profile
@@ -177,7 +141,15 @@ trait ColorConversionTrait
     {
         $value = $this->getArgumentValue('-dColorConversionStrategy');
         if (null === $value) {
-            return DistillerParametersInterface::COLOR_CONVERSION_STRATEGY_LEAVE_COLOR_UNCHANGED;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                    return ColorConversionStrategy::SRGB;
+                case PdfSettings::PRINTER:
+                    return ColorConversionStrategy::USE_DEVICE_INDEPENDENT_COLOR;
+                default:
+                    return ColorConversionStrategy::LEAVE_COLOR_UNCHANGED;
+            }
         }
 
         return substr($value, 1);
@@ -194,7 +166,8 @@ trait ColorConversionTrait
      */
     public function setColorConversionStrategy($colorConversionStrategy)
     {
-        if (!in_array($colorConversionStrategy, static::$colorConversionStrategyValues)) {
+        $colorConversionStrategy = ltrim($colorConversionStrategy, '/');
+        if (!in_array($colorConversionStrategy, ColorConversionStrategy::values())) {
             throw new \InvalidArgumentException('Invalid color conversion strategy argument');
         }
 
@@ -270,7 +243,7 @@ trait ColorConversionTrait
     {
         $value = $this->getArgumentValue('-dDefaultRenderingIntent');
         if (null === $value) {
-            return DistillerParametersInterface::DEFAULT_RENDERING_INTENT_DEFAULT;
+            return DefaultRenderingIntent::__DEFAULT;
         }
 
         return substr($value, 1);
@@ -287,40 +260,12 @@ trait ColorConversionTrait
      */
     public function setDefaultRenderingIntent($defaultRenderingIntent)
     {
-        if (!in_array($defaultRenderingIntent, static::$defaultRenderingIntentValues)) {
+        $defaultRenderingIntent = ltrim($defaultRenderingIntent, '/');
+        if (!in_array($defaultRenderingIntent, DefaultRenderingIntent::values())) {
             throw new \InvalidArgumentException('Invalid default rendering intent argument');
         }
 
         $this->setArgument(sprintf('-dDefaultRenderingIntent=/%s', $defaultRenderingIntent));
-
-        return $this;
-    }
-
-    /**
-     * Get sRGB profile
-     *
-     * @return null|string
-     */
-    public function getsRgbProfile()
-    {
-        $value = $this->getArgumentValue('-dsRGBProfile');
-        if (null === $value) {
-            return null;
-        }
-
-        return substr($value, 1, -1);
-    }
-
-    /**
-     * Set sRGB profile
-     *
-     * @param string $sRgbProfile
-     *
-     * @return $this
-     */
-    public function setsRgbProfile($sRgbProfile)
-    {
-        $this->setArgument(sprintf('-dsRGBProfile=(%s)', $sRgbProfile));
 
         return $this;
     }
@@ -363,7 +308,13 @@ trait ColorConversionTrait
     {
         $value = $this->getArgumentValue('-dPreserveOverprintSettings');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -384,6 +335,35 @@ trait ColorConversionTrait
     }
 
     /**
+     * Get sRGB profile
+     *
+     * @return null|string
+     */
+    public function getSRgbProfile()
+    {
+        $value = $this->getArgumentValue('-dsRGBProfile');
+        if (null === $value) {
+            return null;
+        }
+
+        return substr($value, 1, -1);
+    }
+
+    /**
+     * Set sRGB profile
+     *
+     * @param string $sRgbProfile
+     *
+     * @return $this
+     */
+    public function setSRgbProfile($sRgbProfile)
+    {
+        $this->setArgument(sprintf('-dsRGBProfile=(%s)', $sRgbProfile));
+
+        return $this;
+    }
+
+    /**
      * Get transfer function info
      *
      * @return string
@@ -392,7 +372,7 @@ trait ColorConversionTrait
     {
         $value = $this->getArgumentValue('-dTransferFunctionInfo');
         if (null === $value) {
-            return DistillerParametersInterface::DEFAULT_RENDERING_INTENT_DEFAULT;
+            return TransferFunctionInfo::PRESERVE;
         }
 
         return substr($value, 1);
@@ -409,7 +389,8 @@ trait ColorConversionTrait
      */
     public function setTransferFunctionInfo($transferFunctionInfo)
     {
-        if (!in_array($transferFunctionInfo, static::$transferFunctionInfoValues)) {
+        $transferFunctionInfo = ltrim($transferFunctionInfo, '/');
+        if (!in_array($transferFunctionInfo, TransferFunctionInfo::values())) {
             throw new \InvalidArgumentException('Invalid transfer function info argument');
         }
 
@@ -427,7 +408,13 @@ trait ColorConversionTrait
     {
         $value = $this->getArgumentValue('-dUCRandBGInfo');
         if (null === $value) {
-            return DistillerParametersInterface::UCR_AND_BG_INFO_REMOVE;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return UcrAndBgInfo::PRESERVE;
+                default:
+                    return UcrAndBgInfo::REMOVE;
+            }
         }
 
         return substr($value, 1);
@@ -444,7 +431,8 @@ trait ColorConversionTrait
      */
     public function setUcrAndBgInfo($ucrAndBgInfo)
     {
-        if (!in_array($ucrAndBgInfo, static::$ucrAndBgInfoValues)) {
+        $ucrAndBgInfo = ltrim($ucrAndBgInfo, '/');
+        if (!in_array($ucrAndBgInfo, UcrAndBgInfo::values())) {
             throw new \InvalidArgumentException('Invalid UCR and BG info argument');
         }
 

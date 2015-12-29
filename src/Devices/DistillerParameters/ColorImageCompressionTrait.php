@@ -7,7 +7,9 @@
 
 namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
 
-use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
+use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
+use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
+use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
  * The color image compression distiller parameters trait
@@ -16,28 +18,6 @@ use GravityMedia\Ghostscript\Devices\DistillerParametersInterface;
  */
 trait ColorImageCompressionTrait
 {
-    /**
-     * Available color image downsample type values
-     *
-     * @var string[]
-     */
-    protected static $colorImageDownsampleTypeValues = [
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_AVERAGE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_BICUBIC,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE,
-        DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_NONE,
-    ];
-
-    /**
-     * Available color image filter values
-     *
-     * @var string[]
-     */
-    protected static $colorImageFilterValues = [
-        DistillerParametersInterface::IMAGE_FILTER_DCT_ENCODE,
-        DistillerParametersInterface::IMAGE_FILTER_FLATE_ENCODE
-    ];
-
     /**
      * Get argument value
      *
@@ -55,6 +35,13 @@ trait ColorImageCompressionTrait
      * @return $this
      */
     abstract protected function setArgument($argument);
+
+    /**
+     * Get PDF settings
+     *
+     * @return string
+     */
+    abstract public function getPdfSettings();
 
     /**
      * Whether to anti alias color images
@@ -181,7 +168,16 @@ trait ColorImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dColorImageDownsampleType');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_DOWNSAMPLE_TYPE_SUBSAMPLE;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                case PdfSettings::PRINTER:
+                    return ImageDownsampleType::AVERAGE;
+                case PdfSettings::PREPRESS:
+                    return ImageDownsampleType::BICUBIC;
+                default:
+                    return ImageDownsampleType::SUBSAMPLE;
+            }
         }
 
         return substr($value, 1);
@@ -198,7 +194,8 @@ trait ColorImageCompressionTrait
      */
     public function setColorImageDownsampleType($colorImageDownsampleType)
     {
-        if (!in_array($colorImageDownsampleType, static::$colorImageDownsampleTypeValues)) {
+        $colorImageDownsampleType = ltrim($colorImageDownsampleType, '/');
+        if (!in_array($colorImageDownsampleType, ImageDownsampleType::values())) {
             throw new \InvalidArgumentException('Invalid color image downsample type argument');
         }
 
@@ -216,7 +213,7 @@ trait ColorImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dColorImageFilter');
         if (null === $value) {
-            return DistillerParametersInterface::IMAGE_FILTER_DCT_ENCODE;
+            return ColorAndGrayImageFilter::DCT_ENCODE;
         }
 
         return substr($value, 1);
@@ -233,7 +230,8 @@ trait ColorImageCompressionTrait
      */
     public function setColorImageFilter($colorImageFilter)
     {
-        if (!in_array($colorImageFilter, static::$colorImageFilterValues)) {
+        $colorImageFilter = ltrim($colorImageFilter, '/');
+        if (!in_array($colorImageFilter, ColorAndGrayImageFilter::values())) {
             throw new \InvalidArgumentException('Invalid color image filter argument');
         }
 
@@ -251,7 +249,15 @@ trait ColorImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dColorImageResolution');
         if (null === $value) {
-            return 72;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::EBOOK:
+                    return 150;
+                case PdfSettings::PRINTER:
+                case PdfSettings::PREPRESS:
+                    return 300;
+                default:
+                    return 72;
+            }
         }
 
         return intval($value);
@@ -280,7 +286,13 @@ trait ColorImageCompressionTrait
     {
         $value = $this->getArgumentValue('-dDownsampleColorImages');
         if (null === $value) {
-            return false;
+            switch ($this->getPdfSettings()) {
+                case PdfSettings::SCREEN:
+                case PdfSettings::EBOOK:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
