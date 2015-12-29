@@ -5,9 +5,9 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\GhostscriptTest\Devices;
+namespace GravityMedia\GhostscriptTest\Device;
 
-use GravityMedia\Ghostscript\Devices\PdfWrite;
+use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
@@ -17,12 +17,12 @@ use Symfony\Component\Process\ProcessBuilder;
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
- * @covers  \GravityMedia\Ghostscript\Devices\PdfWrite
+ * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
  *
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
- * @uses    \GravityMedia\Ghostscript\Devices\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Devices\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  */
 class PdfWriteTest extends \PHPUnit_Framework_TestCase
@@ -40,7 +40,7 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
 
     public function testDeviceCreation()
     {
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Devices\PdfWrite', $this->createDevice());
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $this->createDevice());
     }
 
     public function testOutputFileArgument()

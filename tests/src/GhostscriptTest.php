@@ -18,9 +18,9 @@ use GravityMedia\Ghostscript\Ghostscript;
  *
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
- * @uses    \GravityMedia\Ghostscript\Devices\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Devices\PdfWrite
- * @uses    \GravityMedia\Ghostscript\Devices\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
+ * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  */
 class GhostscriptTest extends \PHPUnit_Framework_TestCase
 {
@@ -108,6 +108,6 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Devices\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
     }
 }

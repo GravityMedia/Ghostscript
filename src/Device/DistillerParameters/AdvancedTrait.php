@@ -5,14 +5,14 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
+namespace GravityMedia\Ghostscript\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
  * The advanced distiller parameters trait
  *
- * @package GravityMedia\Ghostscript\Devices\DistillerParameters
+ * @package GravityMedia\Ghostscript\Device\DistillerParameters
  */
 trait AdvancedTrait
 {

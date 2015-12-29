@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
+namespace GravityMedia\Ghostscript\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\MonoImageFilter;
@@ -14,7 +14,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
 /**
  * The monochrome image compression distiller parameters trait
  *
- * @package GravityMedia\Ghostscript\Devices\DistillerParameters
+ * @package GravityMedia\Ghostscript\Device\DistillerParameters
  */
 trait MonochromeImageCompressionTrait
 {

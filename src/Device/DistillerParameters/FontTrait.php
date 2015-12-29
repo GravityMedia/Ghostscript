@@ -5,7 +5,7 @@
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
 
-namespace GravityMedia\Ghostscript\Devices\DistillerParameters;
+namespace GravityMedia\Ghostscript\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
@@ -13,7 +13,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
 /**
  * The font distiller parameters trait
  *
- * @package GravityMedia\Ghostscript\Devices\DistillerParameters
+ * @package GravityMedia\Ghostscript\Device\DistillerParameters
  */
 trait FontTrait
 {
