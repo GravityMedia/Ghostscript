@@ -76,13 +76,13 @@ $process->run(function ($type, $buffer) {
 
 Clone this repository, install Composer and all dependencies:
 
-``` bash
+```bash
 $ php composer.phar install
 ```
 
 Run the test suite:
 
-``` bash
+```bash
 $ php composer.phar test
 ```
 
@@ -90,13 +90,13 @@ $ php composer.phar test
 
 Clone this repository, install Composer and all dependencies:
 
-``` bash
+```bash
 $ php composer.phar install
 ```
 
 Generate the documentation to the `build/docs` directory:
 
-``` bash
+```bash
 $ php composer.phar doc
 ```
 
