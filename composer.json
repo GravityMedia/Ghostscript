@@ -1,11 +1,17 @@
 {
     "name": "gravitymedia/ghostscript",
     "description": "Ghostscript is an object oriented Ghostscript binary wrapper for PHP.",
+    "keywords": [
+        "gravitymedia",
+        "ghostscript"
+    ],
+    "homepage": "https://github.com/GravityMedia/Ghostscript",
     "license": "MIT",
     "authors": [
         {
             "name": "Daniel Schröder",
             "email": "daniel.schroeder@gravitymedia.de",
+            "homepage": "https://github.com/pCoLaSD",
             "role": "Developer"
         }
     ],
