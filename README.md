@@ -25,7 +25,7 @@ Install Composer in your project:
 $ curl -s https://getcomposer.org/installer | php
 ```
 
-Add the package to your `composer.json` and install it via Composer:
+Require the package via Composer:
 
 ```bash
 $ php composer.phar require gravitymedia/ghostscript
@@ -33,7 +33,7 @@ $ php composer.phar require gravitymedia/ghostscript
 
 ## Usage
 
-This is a simple example how to convert an input PDF to an output PDF. 
+This is a simple usage example how to convert an input PDF to an output PDF. 
 
 ```php
 // Initialize autoloader
