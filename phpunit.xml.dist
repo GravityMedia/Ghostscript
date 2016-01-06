@@ -2,6 +2,8 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
          colors="true"
          convertErrorsToExceptions="true"
          forceCoversAnnotation="true"
@@ -34,11 +36,10 @@
         <server name="HTTP_HOST" value="phpunit.local"/>
     </php>
     <testsuites>
-        <testsuite name="Ghostscript test suite">
-            <directory>tests/src/</directory>
+        <testsuite name="Ghostscript Test Suite">
+            <directory>tests/src</directory>
         </testsuite>
     </testsuites>
-
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
