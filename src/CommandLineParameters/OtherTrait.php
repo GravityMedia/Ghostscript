@@ -16,6 +16,15 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
 trait OtherTrait
 {
     /**
+     * Whether argument is set
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    abstract protected function hasArgument($name);
+
+    /**
      * Get argument value
      *
      * @param string $name
@@ -79,16 +88,54 @@ trait OtherTrait
 
     This mode should be used with caution, and .setsafe should be run prior to running any PostScript file with unknown contents.
 
--dSAFER
-    Disables the deletefile and renamefile operators, and the ability to open piped commands (%pipe%cmd) at all. Only %stdout and %stderr can be opened for writing. Disables reading of files other than %stdin, those given as a command line argument, or those contained on one of the paths given by LIBPATH and FONTPATH and specified by the system params /FontResourceDir and /GenericResourceDir.
+*/
 
-    This mode also sets the .LockSafetyParams parameter of the default device, or the device specified with the -sDEVICE= switch to protect against programs that attempt to write to files using the OutputFile device parameter. Note that since the device parameters specified on the command line (including OutputFile) are set prior to SAFER mode, the -sOutputFile=... on the command line is unrestricted.
+    /**
+     * Whether SAFER flag is set
+     *
+     * @return bool
+     */
+    public function isSafer()
+    {
+        return $this->hasArgument('-dSAFER');
+    }
 
-    SAFER mode also prevents changing the /GenericResourceDir, /FontResourceDir and either the /SystemParamsPassword or the /StartJobPassword.
+    /**
+     * Set SAFER flag
+     *
+     * Disables the deletefile and renamefile operators, and the ability to open piped commands (%pipe%cmd) at all. Only
+     * %stdout and %stderr can be opened for writing. Disables reading of files other than %stdin, those given as a
+     * command line argument, or those contained on one of the paths given by LIBPATH and FONTPATH and specified by the
+     * system params /FontResourceDir and /GenericResourceDir.
+     *
+     * This mode also sets the .LockSafetyParams parameter of the default device, or the device specified with the
+     * -sDEVICE= switch to protect against programs that attempt to write to files using the OutputFile device
+     * parameter. Note that since the device parameters specified on the command line (including OutputFile) are set
+     * prior to SAFER mode, the -sOutputFile=... on the command line is unrestricted.
+     *
+     * SAFER mode also prevents changing the /GenericResourceDir, /FontResourceDir and either the /SystemParamsPassword
+     * or the /StartJobPassword.
+     *
+     * Note: While SAFER mode is not the default, in a subsequent release of Ghostscript, SAFER mode will be the default
+     * thus scripts or programs that need to open files or set restricted parameters will require the -dNOSAFER command
+     * line option.
+     *
+     * When running -dNOSAFER it is possible to perform a save, followed by .setsafe, execute a file or procedure in
+     * SAFER mode, then use restore to return to NOSAFER mode. In order to prevent the save object from being restored
+     * by the foreign file or procedure, the .runandhide operator should be used to hide the save object from the
+     * restricted procedure.
+     *
+     * @return $this
+     */
+    public function setSafer()
+    {
+        $this->setArgument('-dSAFER');
 
-    Note: While SAFER mode is not the default, in a subsequent release of Ghostscript, SAFER mode will be the default thus scripts or programs that need to open files or set restricted parameters will require the -dNOSAFER command line option.
+        return $this;
+    }
 
-    When running -dNOSAFER it is possible to perform a save, followed by .setsafe, execute a file or procedure in SAFER mode, then use restore to return to NOSAFER mode. In order to prevent the save object from being restored by the foreign file or procedure, the .runandhide operator should be used to hide the save object from the restricted procedure.
+    /*
+     * TODO
 
 -dPreBandThreshold=true/false
     If the target device is a halftone device, then images that are normally stored in the command list during banded output will be halftoned during the command list writing phase, if the resulting image will result in a smaller command list. The decision to halftone depends upon the output and source resolution as well as the output and source color space.
