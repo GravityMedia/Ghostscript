@@ -138,6 +138,11 @@ class Ghostscript
     public function createPdfDevice($outputFile = null)
     {
         $builder = $this->createProcessBuilder();
+
+        if (($timeout = $this->getOption('timeout', -1)) != -1) {
+            $builder->setTimeout($timeout);
+        }
+
         $arguments = $this->createProcessArguments([
             '-dSAFER',
             '-dBATCH',

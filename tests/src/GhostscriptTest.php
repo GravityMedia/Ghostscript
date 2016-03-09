@@ -111,4 +111,25 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
     }
+
+    /**
+     * @dataProvider provideTimeout
+     */
+    public function testTimeoutOption($value, $result)
+    {
+        $instance = new Ghostscript(['timeout' => $value]);
+        $device = $instance->createPdfDevice('/path/to/output/file.pdf');
+        $process = $device->createProcess(__DIR__ . '/../data/input.pdf');
+
+        $this->assertEquals($result, $process->getTimeout());
+    }
+
+    public function provideTimeout()
+    {
+        return [
+            [42, 42],
+            [0, null],
+            [null, null],
+        ];
+    }
 }
