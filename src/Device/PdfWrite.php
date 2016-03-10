@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -142,6 +143,37 @@ class PdfWrite extends AbstractDevice
         }
 
         $this->setArgument(sprintf('-dPDFSETTINGS=/%s', $pdfSettings));
+
+        return $this;
+    }
+
+    /**
+     * Get process color model
+     *
+     * @return string
+     */
+    public function getProcessColorModel()
+    {
+        return ltrim($this->getArgumentValue('-dProcessColorModel'), '/');
+    }
+
+    /**
+     * Set process color model
+     *
+     * @param string $processColorModel
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
+     */
+    public function setProcessColorModel($processColorModel)
+    {
+        $processColorModel = ltrim($processColorModel, '/');
+        if (!in_array($processColorModel, ProcessColorModel::values())) {
+            throw new \InvalidArgumentException('Invalid process color model argument');
+        }
+
+        $this->setArgument(sprintf('-dProcessColorModel=/%s', $processColorModel));
 
         return $this;
     }
