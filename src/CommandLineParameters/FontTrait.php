@@ -59,10 +59,34 @@ trait FontTrait
 
 -sFONTMAP=filename1;filename2;...
     Specifies alternate name or names for the Fontmap file. Note that the names are separated by ":" on Unix systems, by ";" on MS Windows systems, and by "," on VMS systems, just as for search paths.
+*/
 
--sFONTPATH=dir1;dir2;...
-    Specifies a list of directories that will be scanned when looking for fonts not found on the search path, overriding the environment variable GS_FONTPATH.
+    /**
+     * Get FONTPATH parameter value
+     *
+     * @return string|null
+     */
+    public function getFontPath()
+    {
+        return $this->getArgumentValue('-sFONTPATH');
+    }
 
+    /**
+     * Set FONTPATH parameter
+     *
+     * @param string $fontPath Specifies a list of directories that will be scanned when looking for fonts not found on
+     * the search path, overriding the environment variable GS_FONTPATH.
+     *
+     * @return $this
+     */
+    public function setFontPath($fontPath)
+    {
+        $this->setArgument(sprintf('-sFONTPATH=%s', $fontPath));
+
+        return $this;
+    }
+
+    /*
 -sSUBSTFONT=fontname
     Causes the given font to be substituted for all unknown fonts, instead of using the normal intelligent substitution algorithm. Also, in this case, the font returned by findfont is the actual font named fontname, not a copy of the font with its FontName changed to the requested one. THIS OPTION SHOULD NOT BE USED WITH HIGH LEVEL DEVICES, such as pdfwrite, because it prevents such devices from providing the original font names in the output document. The font specified (fontname) will be embedded instead, limiting all future users of the document to the same approximate rendering.
 
