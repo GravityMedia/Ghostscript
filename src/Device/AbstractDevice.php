@@ -91,15 +91,15 @@ abstract class AbstractDevice
     /**
      * Create process object
      *
-     * @param string $inputFile
+     * @param string $inputFile either a path to an existing file or a dash (-) to read input from stdin
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException if $inputFile does not exist
      *
      * @return Process
      */
     public function createProcess($inputFile)
     {
-        if (!is_file($inputFile)) {
+        if ('-' != $inputFile && !is_file($inputFile)) {
             throw new \RuntimeException('Input file does not exist');
         }
 
