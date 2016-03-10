@@ -96,6 +96,26 @@ class PdfWrite extends AbstractDevice
     }
 
     /**
+     * Whether output file is stdout.
+     *
+     * @return bool
+     */
+    public function isOutputStdout()
+    {
+        return $this->getOutputFile() == '-';
+    }
+
+    /**
+     * Set stdout as output.
+     *
+     * @return $this
+     */
+    public function setOutputStdout()
+    {
+        return $this->setOutputFile('-');
+    }
+
+    /**
      * Get PDF settings
      *
      * @return string
