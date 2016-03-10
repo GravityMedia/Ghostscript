@@ -20,6 +20,11 @@ use Symfony\Component\Process\ProcessBuilder;
 abstract class AbstractDevice
 {
     /**
+     * PostScript commands to be executed via command line when using this device.
+     */
+    const POSTSCRIPT_COMMANDS = '';
+
+    /**
      * The process builder object
      *
      * @var ProcessBuilder
@@ -104,7 +109,7 @@ abstract class AbstractDevice
         }
 
         $arguments = array_values($this->arguments->toArray());
-        array_push($arguments, '-f', $inputFile);
+        array_push($arguments, '-c', static::POSTSCRIPT_COMMANDS, '-f', $inputFile);
 
         return $this->builder->setArguments($arguments)->getProcess();
     }
