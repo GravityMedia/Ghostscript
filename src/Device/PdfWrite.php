@@ -63,7 +63,7 @@ class PdfWrite extends AbstractDevice
      * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
      * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
      * the pdfwrite device.
-     * @see http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
+     * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
      */
     const POSTSCRIPT_COMMANDS = '.setpdfwrite';
 

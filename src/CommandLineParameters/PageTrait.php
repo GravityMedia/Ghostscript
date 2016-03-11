@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The page parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#Page_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#Page_parameters
  */
 trait PageTrait
 {

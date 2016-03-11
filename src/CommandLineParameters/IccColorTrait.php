@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The ICC color parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#ICC_color_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#ICC_color_parameters
  */
 trait IccColorTrait
 {

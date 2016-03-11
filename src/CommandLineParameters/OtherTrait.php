@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The other parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#Other_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#Other_parameters
  */
 trait OtherTrait
 {

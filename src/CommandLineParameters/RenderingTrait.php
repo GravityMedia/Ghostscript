@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The rendering parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#Rendering_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#Rendering_parameters
  */
 trait RenderingTrait
 {

@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The font-related parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#Font_related_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#Font_related_parameters
  */
 trait FontTrait
 {

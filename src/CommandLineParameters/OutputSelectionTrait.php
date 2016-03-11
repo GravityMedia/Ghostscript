@@ -11,7 +11,7 @@ namespace GravityMedia\Ghostscript\CommandLineParameters;
  * The device and output selection parameters trait
  *
  * @package GravityMedia\Ghostscript\CommandLineParameters
- * @see http://ghostscript.com/doc/current/Use.htm#Output_selection_parameters
+ * @link http://ghostscript.com/doc/current/Use.htm#Output_selection_parameters
  */
 trait OutputSelectionTrait
 {
