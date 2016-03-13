@@ -9,6 +9,7 @@ namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -20,6 +21,7 @@ use Symfony\Component\Process\ProcessBuilder;
  * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
  *
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
+ * @uses    \GravityMedia\Ghostscript\Enum\ProcessColorModel
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Process\Argument
@@ -50,6 +52,15 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($device->getOutputFile());
         $this->assertSame($outputFile, $device->setOutputFile($outputFile)->getOutputFile());
+    }
+
+    public function testOutputStdoutArgument()
+    {
+        $device = $this->createDevice();
+        $this->assertFalse($device->isOutputStdout());
+
+        $device->setOutputStdout();
+        $this->assertTrue($device->isOutputStdout());
     }
 
     /**
@@ -85,5 +96,36 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
     public function testPdfSettingsSetterThrowsExceptionOnInvalidArgument()
     {
         $this->createDevice()->setPdfSettings('/foo');
+    }
+
+    /**
+     * @dataProvider provideProcessColorModel
+     *
+     * @param string $processColorModel
+     */
+    public function testProcessColorModelArgument($processColorModel)
+    {
+        $device = $this->createDevice();
+        $this->assertSame($processColorModel, $device->setProcessColorModel($processColorModel)->getProcessColorModel());
+    }
+
+    /**
+     * @return string[]
+     */
+    public function provideProcessColorModel()
+    {
+        return [
+            [ProcessColorModel::DEVICE_RGB],
+            [ProcessColorModel::DEVICE_CMYK],
+            [ProcessColorModel::DEVICE_GRAY]
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testProcessColorModelSetterThrowsExceptionOnInvalidArgument()
+    {
+        $this->createDevice()->setProcessColorModel('/foo');
     }
 }
