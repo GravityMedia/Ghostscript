@@ -94,6 +94,36 @@ abstract class AbstractDevice
     }
 
     /**
+     * Set a generic command line parameter with a string value
+     *
+     * @param string $param the parameter name
+     * @param string $value the parameter value
+     *
+     * @return $this
+     */
+    public function setStringParameter($param, $value)
+    {
+        $this->setArgument(sprintf('-s%s=%s', $param, $value));
+
+        return $this;
+    }
+
+    /**
+     * Set a generic command line parameter with a token value
+     *
+     * @param string $param the parameter name
+     * @param mixed $value the parameter value
+     *
+     * @return $this
+     */
+    public function setTokenParameter($param, $value)
+    {
+        $this->setArgument(sprintf('-d%s=%s', $param, $value));
+
+        return $this;
+    }
+
+    /**
      * Create process object
      *
      * @param string $inputFile either a path to an existing file or a dash (-) to read input from stdin
