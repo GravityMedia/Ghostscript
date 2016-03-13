@@ -82,6 +82,9 @@ class Ghostscript
         $processBuilder = new ProcessBuilder($arguments);
         $processBuilder->setPrefix($this->getOption('bin', self::DEFAULT_BINARY));
         $processBuilder->addEnvironmentVariables($this->getOption('env', []));
+        if (($timeout = $this->getOption('timeout', -1)) != -1) {
+            $processBuilder->setTimeout($timeout);
+        }
 
         return $processBuilder;
     }
@@ -138,10 +141,6 @@ class Ghostscript
     public function createPdfDevice($outputFile = null)
     {
         $builder = $this->createProcessBuilder();
-
-        if (($timeout = $this->getOption('timeout', -1)) != -1) {
-            $builder->setTimeout($timeout);
-        }
 
         $arguments = $this->createProcessArguments([
             '-dSAFER',
