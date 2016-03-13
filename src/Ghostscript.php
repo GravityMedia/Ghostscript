@@ -7,6 +7,7 @@
 
 namespace GravityMedia\Ghostscript;
 
+use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
@@ -155,5 +156,18 @@ class Ghostscript
         }
 
         return $device;
+    }
+
+    /**
+     * Create null device object
+     *
+     * @return NoDisplay
+     */
+    public function createNullDevice()
+    {
+        $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
+
+        return new NoDisplay($builder, $arguments);
     }
 }
