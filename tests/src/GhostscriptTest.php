@@ -19,6 +19,7 @@ use GravityMedia\Ghostscript\Ghostscript;
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
@@ -110,6 +111,13 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $instance = new Ghostscript();
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
+    }
+
+    public function testNullDeviceCreation()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNullDevice());
     }
 
     /**

@@ -84,6 +84,42 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('/Bar', $argument->getValue());
     }
 
+    public function testStringParameterSetter()
+    {
+        $processBuilder = new ProcessBuilder();
+        $processArguments = new ProcessArguments();
+
+        /** @var AbstractDevice $device */
+        $device = $this->getMockForAbstractClass(
+            'GravityMedia\Ghostscript\Device\AbstractDevice',
+            [$processBuilder, $processArguments]
+        );
+
+        $device->setStringParameter('Foo', 'Bar');
+
+        $argument = $processArguments->getArgument('-sFoo');
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $argument);
+        $this->assertSame('Bar', $argument->getValue());
+    }
+
+    public function testTokenParameterSetter()
+    {
+        $processBuilder = new ProcessBuilder();
+        $processArguments = new ProcessArguments();
+
+        /** @var AbstractDevice $device */
+        $device = $this->getMockForAbstractClass(
+            'GravityMedia\Ghostscript\Device\AbstractDevice',
+            [$processBuilder, $processArguments]
+        );
+
+        $device->setTokenParameter('Foo', 42);
+
+        $argument = $processArguments->getArgument('-dFoo');
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $argument);
+        $this->assertEquals(42, $argument->getValue());
+    }
+
     public function testProcessCreation()
     {
         $this->assertInstanceOf(
