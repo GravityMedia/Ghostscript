@@ -19,6 +19,7 @@ use GravityMedia\Ghostscript\Ghostscript;
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
@@ -118,6 +119,13 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $instance = new Ghostscript();
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNullDevice());
+    }
+
+    public function testBboxDeviceCreation()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $instance->createBboxDevice());
     }
 
     /**

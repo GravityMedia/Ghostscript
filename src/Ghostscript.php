@@ -7,6 +7,7 @@
 
 namespace GravityMedia\Ghostscript;
 
+use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
@@ -169,5 +170,23 @@ class Ghostscript
         $arguments = $this->createProcessArguments();
 
         return new NoDisplay($builder, $arguments);
+    }
+
+    /**
+     * Create bounding box info device object
+     *
+     * @return BoundingBoxInfo
+     */
+    public function createBboxDevice()
+    {
+        $builder = $this->createProcessBuilder();
+
+        $arguments = $this->createProcessArguments([
+            '-dSAFER',
+            '-dBATCH',
+            '-dNOPAUSE'
+        ]);
+
+        return new BoundingBoxInfo($builder, $arguments);
     }
 }
