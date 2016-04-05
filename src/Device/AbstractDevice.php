@@ -39,6 +39,20 @@ abstract class AbstractDevice
     private $arguments;
 
     /**
+     * List of input files
+     *
+     * @var array
+     */
+    private $inputFiles = [];
+
+    /**
+     * Whether to read input from stdin
+     *
+     * @var bool
+     */
+    private $inputStdin = false;
+
+    /**
      * Create abstract device object
      *
      * @param ProcessBuilder   $builder
@@ -124,6 +138,37 @@ abstract class AbstractDevice
     }
 
     /**
+     * Add an input file
+     *
+     * @param string $inputFile a path to an existing file
+     *
+     * @throws \RuntimeException if $inputFile does not exist
+     *
+     * @return $this
+     */
+    public function addInputFile($inputFile)
+    {
+        if (!is_file($inputFile)) {
+            throw new \RuntimeException('Input file does not exist');
+        }
+        $this->inputFiles[] = $inputFile;
+
+        return $this;
+    }
+
+    /**
+     * Add an stdin as input file
+     *
+     * @return $this
+     */
+    public function addInputStdin()
+    {
+        $this->inputStdin = true;
+
+        return $this;
+    }
+
+    /**
      * Create process object
      *
      * @param string $inputFile either a path to an existing file or a dash (-) to read input from stdin
@@ -132,14 +177,22 @@ abstract class AbstractDevice
      *
      * @return Process
      */
-    public function createProcess($inputFile)
+    public function createProcess($inputFile = null)
     {
-        if ('-' != $inputFile && !is_file($inputFile)) {
-            throw new \RuntimeException('Input file does not exist');
+        if ('-' == $inputFile) {
+            $this->addInputStdin();
+        } elseif ($inputFile) {
+            $this->addInputFile($inputFile);
         }
 
         $arguments = array_values($this->arguments->toArray());
-        array_push($arguments, '-c', static::POSTSCRIPT_COMMANDS, '-f', $inputFile);
+        array_push($arguments, '-c', static::POSTSCRIPT_COMMANDS, '-f');
+        if (count($this->inputFiles)) {
+            $arguments = array_merge($arguments, $this->inputFiles);
+        }
+        if ($this->inputStdin) {
+            array_push($arguments, '-');
+        }
 
         return $this->builder->setArguments($arguments)->getProcess();
     }

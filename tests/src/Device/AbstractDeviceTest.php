@@ -128,11 +128,62 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testProcessCommandLine()
+    {
+        $inputFile = __DIR__.'/../../data/input.pdf';
+        $this->assertEquals(
+            "'-c' '' '-f' '$inputFile'",
+            $this->createDevice()->createProcess($inputFile)->getCommandLine()
+        );
+    }
+
+    public function testProcessCommandLineWithAddingInputFileBefore()
+    {
+        $inputFile = __DIR__.'/../../data/input.pdf';
+        $this->assertEquals(
+            "'-c' '' '-f' '$inputFile'",
+            $this->createDevice()->addInputFile($inputFile)->createProcess()->getCommandLine()
+        );
+    }
+
+    public function testProcessCommandLineWithStdin()
+    {
+        $this->assertEquals(
+            "'-c' '' '-f' '-'",
+            $this->createDevice()->createProcess('-')->getCommandLine()
+        );
+    }
+
+    public function testProcessCommandLineWithAddingStdinInputBefore()
+    {
+        $this->assertEquals(
+            "'-c' '' '-f' '-'",
+            $this->createDevice()->addInputStdin()->createProcess()->getCommandLine()
+        );
+    }
+
+    public function testProcessCommandLineStdinIsLastInput()
+    {
+        $inputFile = __DIR__.'/../../data/input.pdf';
+        $this->assertEquals(
+            "'-c' '' '-f' '$inputFile' '-'",
+            $this->createDevice()->addInputStdin()->addInputFile($inputFile)->createProcess()->getCommandLine()
+        );
+    }
+
     /**
      * @expectedException \RuntimeException
      */
     public function testProcessCreationThrowsExceptionOnMissingInputFile()
     {
         $this->createDevice()->createProcess('/path/to/input/file.pdf');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddingMissingInputFileThrowsException()
+    {
+        $this->createDevice()->addInputFile('/path/to/input/file.pdf');
     }
 }
