@@ -5,7 +5,7 @@
  * @author Simon Schrape <s.schrape@epubli.com>
  */
 
-namespace GravityMedia\Ghostscript;
+namespace GravityMedia\Ghostscript\Device;
 
 /**
  * The general Ghostscript command line options trait

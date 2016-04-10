@@ -5,16 +5,16 @@
  * @author Simon Schrape <s.schrape@epubli.com>
  */
 
-namespace GravityMedia\GhostscriptTest\CommandLineParameters;
+namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
-use GravityMedia\Ghostscript\CommandLineParameters\OtherTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
 
 /**
  * The other parameters trait test class
  *
- * @package GravityMedia\GhostscriptTest\CommandLineParameters
+ * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
  *
- * @covers \GravityMedia\Ghostscript\CommandLineParameters\OtherTrait
+ * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
  */
 class OtherTraitTest extends \PHPUnit_Framework_TestCase
 {

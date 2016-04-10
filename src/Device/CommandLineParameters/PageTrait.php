@@ -5,12 +5,12 @@
  * @author Simon Schrape <s.schrape@epubli.com>
  */
 
-namespace GravityMedia\Ghostscript\CommandLineParameters;
+namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
  * The page parameters trait
  *
- * @package GravityMedia\Ghostscript\CommandLineParameters
+ * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  * @link http://ghostscript.com/doc/current/Use.htm#Page_parameters
  */
 trait PageTrait

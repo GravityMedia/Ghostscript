@@ -5,16 +5,16 @@
  * @author Simon Schrape <s.schrape@epubli.com>
  */
 
-namespace GravityMedia\GhostscriptTest\CommandLineParameters;
+namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
-use GravityMedia\Ghostscript\CommandLineParameters\FontTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
 
 /**
  * The font-related parameters trait test class
  *
- * @package GravityMedia\GhostscriptTest\CommandLineParameters
+ * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
  *
- * @covers \GravityMedia\Ghostscript\CommandLineParameters\FontTrait
+ * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
  */
 class FontTraitTest extends \PHPUnit_Framework_TestCase
 {

@@ -5,16 +5,16 @@
  * @author Simon Schrape <s.schrape@epubli.com>
  */
 
-namespace GravityMedia\GhostscriptTest\CommandLineParameters;
+namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
-use GravityMedia\Ghostscript\CommandLineParameters\InteractionTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait;
 
 /**
  * The interaction-related parameters trait test class
  *
- * @package GravityMedia\GhostscriptTest\CommandLineParameters
+ * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
  *
- * @covers \GravityMedia\Ghostscript\CommandLineParameters\InteractionTrait
+ * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
  */
 class InteractionTraitTest extends \PHPUnit_Framework_TestCase
 {
