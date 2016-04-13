@@ -21,6 +21,7 @@ use GravityMedia\Ghostscript\Ghostscript;
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
+ * @uses    \GravityMedia\Ghostscript\Device\PdfInfo
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
@@ -119,6 +120,19 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $instance = new Ghostscript();
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNullDevice());
+    }
+
+    public function testPdfInfoDeviceCreation()
+    {
+        $instance = new Ghostscript();
+        $pdfInfoPath = 'path/to/pdf_info.ps';
+        $pdfInfo = $instance->createPdfInfoDevice($pdfInfoPath);
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
+
+        $field = new \ReflectionProperty('GravityMedia\Ghostscript\Device\PdfInfo', 'pdfInfoPath');
+        $field->setAccessible(true);
+        $this->assertEquals($pdfInfoPath, $field->getValue($pdfInfo));
     }
 
     public function testBboxDeviceCreation()
