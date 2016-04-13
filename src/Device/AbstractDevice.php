@@ -193,7 +193,18 @@ abstract class AbstractDevice
         if ($this->inputStdin) {
             array_push($arguments, '-');
         }
+        $this->resetInput();
 
         return $this->builder->setArguments($arguments)->getProcess();
+    }
+
+    /**
+     * Reset the input-related fields of this device.
+     * Future processes created from this device will have their own input parameters.
+     */
+    private function resetInput()
+    {
+        $this->inputFiles = [];
+        $this->inputStdin = false;
     }
 }
