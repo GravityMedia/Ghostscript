@@ -9,6 +9,7 @@ namespace GravityMedia\Ghostscript;
 
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Device\NoDisplay;
+use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
@@ -170,6 +171,20 @@ class Ghostscript
         $arguments = $this->createProcessArguments();
 
         return new NoDisplay($builder, $arguments);
+    }
+
+    /**
+     * Create PDF info device object
+     *
+     * @param string $pdfInfoPath Path to toolbin/pdf_info.ps 
+     * @return PdfInfo
+     */
+    public function createPdfInfoDevice($pdfInfoPath)
+    {
+        $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
+
+        return new PdfInfo($builder, $arguments, $pdfInfoPath);
     }
 
     /**
