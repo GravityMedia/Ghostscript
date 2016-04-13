@@ -7,6 +7,15 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
+use GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait;
+use GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait;
 use GravityMedia\Ghostscript\Process\Argument as ProcessArgument;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\Process;
@@ -19,6 +28,56 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 abstract class AbstractDevice
 {
+    /**
+     * Use command line options
+     */
+    use CommandLineOptionsTrait;
+
+    /**
+     * Use rendering parameters
+     */
+    use RenderingTrait;
+
+    /**
+     * Use page parameters
+     */
+    use PageTrait;
+
+    /**
+     * Use font-related parameters
+     */
+    use FontTrait;
+
+    /**
+     * Use resource-related parameters
+     */
+    use ResourceTrait;
+
+    /**
+     * Use interaction parameters
+     */
+    use InteractionTrait;
+
+    /**
+     * Use device and output selection parameters
+     */
+    use OutputSelectionTrait;
+
+    /**
+     * Use EPS parameters
+     */
+    use EpsTrait;
+
+    /**
+     * Use ICC color parameters
+     */
+    use IccColorTrait;
+
+    /**
+     * Use other parameters
+     */
+    use OtherTrait;
+
     /**
      * PostScript commands to be executed via command line when using this device.
      */
@@ -55,7 +114,7 @@ abstract class AbstractDevice
     /**
      * Create abstract device object
      *
-     * @param ProcessBuilder   $builder
+     * @param ProcessBuilder $builder
      * @param ProcessArguments $arguments
      */
     public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
@@ -74,6 +133,18 @@ abstract class AbstractDevice
     protected function getArgument($name)
     {
         return $this->arguments->getArgument($name);
+    }
+
+    /**
+     * Whether argument is set
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function hasArgument($name)
+    {
+        return $this->getArgument($name) !== null;
     }
 
     /**

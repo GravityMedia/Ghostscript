@@ -144,14 +144,13 @@ class Ghostscript
     public function createPdfDevice($outputFile = null)
     {
         $builder = $this->createProcessBuilder();
-
-        $arguments = $this->createProcessArguments([
-            '-dSAFER',
-            '-dBATCH',
-            '-dNOPAUSE'
-        ]);
+        $arguments = $this->createProcessArguments();
 
         $device = new PdfWrite($builder, $arguments);
+        $device
+            ->setSafer()
+            ->setBatch()
+            ->setNoPause();
 
         if (null !== $outputFile) {
             $device->setOutputFile($outputFile);
@@ -195,13 +194,14 @@ class Ghostscript
     public function createBboxDevice()
     {
         $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
 
-        $arguments = $this->createProcessArguments([
-            '-dSAFER',
-            '-dBATCH',
-            '-dNOPAUSE'
-        ]);
+        $device = new BoundingBoxInfo($builder, $arguments);
+        $device
+            ->setSafer()
+            ->setBatch()
+            ->setNoPause();
 
-        return new BoundingBoxInfo($builder, $arguments);
+        return $device;
     }
 }
