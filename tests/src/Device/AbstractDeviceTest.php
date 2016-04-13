@@ -18,6 +18,15 @@ use Symfony\Component\Process\ProcessBuilder;
  *
  * @covers  \GravityMedia\Ghostscript\Device\AbstractDevice
  *
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
@@ -52,6 +61,16 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
         $argument = $method->invoke($device, '-dFoo');
         $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $argument);
         $this->assertSame('/Bar', $argument->getValue());
+    }
+
+    public function testArgumentTester()
+    {
+        $device = $this->createDevice(['-dFoo=/Bar']);
+        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Device\AbstractDevice', 'hasArgument');
+        $method->setAccessible(true);
+
+        $this->assertFalse($method->invoke($device, '-dBar'));
+        $this->assertTrue($method->invoke($device, '-dFoo'));
     }
 
     public function testArgumentValueGetter()
@@ -168,6 +187,21 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             "'-c' '' '-f' '$inputFile' '-'",
             $this->createDevice()->addInputStdin()->addInputFile($inputFile)->createProcess()->getCommandLine()
+        );
+    }
+
+    public function testConsecutiveProcessCommandLines()
+    {
+        $inputFile = __DIR__.'/../../data/input.pdf';
+        $device = $this->createDevice();
+        $this->assertEquals(
+            "'-c' '' '-f' '$inputFile' '-'",
+            $device->addInputFile($inputFile)->addInputStdin()->createProcess()->getCommandLine()
+        );
+        // Second process created from same device has no input set.
+        $this->assertEquals(
+            "'-c' '' '-f'",
+            $device->createProcess()->getCommandLine()
         );
     }
 

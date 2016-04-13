@@ -18,6 +18,15 @@ use GravityMedia\Ghostscript\Ghostscript;
  *
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
