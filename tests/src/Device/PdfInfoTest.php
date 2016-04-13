@@ -7,7 +7,6 @@
 
 namespace GravityMedia\GhostscriptTest\Device;
 
-use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
@@ -30,12 +29,14 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
 
     private $arguments;
 
-    private $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
+    private $pdfInfoPath;
 
-    private $inputFile = __DIR__ . '/../../data/input.pdf';
+    private $inputFile;
 
     public function setUp()
     {
+        $this->pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
+        $this->inputFile = __DIR__ . '/../../data/input.pdf';
         $this->arguments = new ProcessArguments();
         $this->builder = new ProcessBuilder();
         $this->builder->setPrefix('gs');
@@ -45,8 +46,8 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
     {
         $pdfInfo = new PdfInfo($this->builder, $this->arguments, $this->pdfInfoPath);
 
-        $this->assertInstanceOf(PdfInfo::class, $pdfInfo);
-        $this->assertInstanceOf(NoDisplay::class, $pdfInfo);
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $pdfInfo);
 
         $field = new \ReflectionProperty('GravityMedia\Ghostscript\Device\PdfInfo', 'pdfInfoPath');
         $field->setAccessible(true);

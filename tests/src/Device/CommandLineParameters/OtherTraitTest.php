@@ -21,7 +21,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testFilterImage()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dFILTERIMAGE')->willReturn(false);
         $this->assertFalse($trait->isFilterImage());
 
@@ -32,7 +32,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testFilterText()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dFILTERTEXT')->willReturn(false);
         $this->assertFalse($trait->isFilterText());
 
@@ -43,7 +43,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testFilterVector()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dFILTERVECTOR')->willReturn(false);
         $this->assertFalse($trait->isFilterVector());
 
@@ -54,7 +54,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testDelayBind()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dDELAYBIND')->willReturn(false);
         $this->assertFalse($trait->isDelayBind());
 
@@ -65,7 +65,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testDoPdfMarks()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dDOPDFMARKS')->willReturn(false);
         $this->assertFalse($trait->isDoPdfMarks());
 
@@ -76,7 +76,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testJobServer()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dJOBSERVER')->willReturn(false);
         $this->assertFalse($trait->isJobServer());
 
@@ -87,7 +87,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testNoBind()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dNOBIND')->willReturn(false);
         $this->assertFalse($trait->isNoBind());
 
@@ -98,7 +98,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testNoCache()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dNOCACHE')->willReturn(false);
         $this->assertFalse($trait->isNoCache());
 
@@ -109,7 +109,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testNoGc()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dNOGC')->willReturn(false);
         $this->assertFalse($trait->isNoGc());
 
@@ -120,7 +120,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testNoOuterSave()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dNOOUTERSAVE')->willReturn(false);
         $this->assertFalse($trait->isNoOuterSave());
 
@@ -131,7 +131,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testNoSafer()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dNOSAFER')->willReturn(false);
         $this->assertFalse($trait->isNoSafer());
 
@@ -142,7 +142,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testSafer()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dSAFER')->willReturn(false);
         $this->assertFalse($trait->isSafer());
 
@@ -153,7 +153,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testPreBandThreshold()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->exactly(3))->method('getArgumentValue')
             ->with('-dPreBandThreshold')->willReturnOnConsecutiveCalls(null, true, false);
         $trait->expects($this->exactly(2))->method('setArgument')
@@ -168,7 +168,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testStrict()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dSTRICT')->willReturn(false);
         $this->assertFalse($trait->isStrict());
 
@@ -179,7 +179,7 @@ class OtherTraitTest extends \PHPUnit_Framework_TestCase
     public function testWriteSystemDict()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait');
         $trait->expects($this->once())->method('hasArgument')->with('-dWRITESYSTEMDICT')->willReturn(false);
         $this->assertFalse($trait->isWriteSystemDict());
 

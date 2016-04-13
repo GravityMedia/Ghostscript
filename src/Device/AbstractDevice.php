@@ -252,7 +252,7 @@ abstract class AbstractDevice
     {
         if ('-' == $inputFile) {
             $this->addInputStdin();
-        } elseif ($inputFile) {
+        } elseif (null !== $inputFile) {
             $this->addInputFile($inputFile);
         }
 

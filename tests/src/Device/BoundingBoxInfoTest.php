@@ -8,7 +8,6 @@
 namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
-use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -32,9 +31,9 @@ class BoundingBoxInfoTest extends \PHPUnit_Framework_TestCase
 
         $bboxInfo = new BoundingBoxInfo($processBuilder, $processArguments);
 
-        $this->assertInstanceOf(BoundingBoxInfo::class, $bboxInfo);
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $bboxInfo);
         $arg = $processArguments->getArgument('-sDEVICE');
-        $this->assertInstanceOf(Argument::class, $arg);
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $arg);
         $this->assertEquals('bbox', $arg->getValue());
     }
 }

@@ -21,7 +21,7 @@ class FontTraitTest extends \PHPUnit_Framework_TestCase
     public function testFontPath()
     {
         /** @var FontTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait(FontTrait::class);
+        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait');
         $trait->expects($this->once())->method('getArgumentValue')->with('-sFONTPATH')->willReturn(null);
         $this->assertNull($trait->getFontPath());
 
