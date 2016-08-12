@@ -17,8 +17,8 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait;
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Argument as ProcessArgument;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Argument;
+use GravityMedia\Ghostscript\Process\Arguments;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -94,7 +94,7 @@ abstract class AbstractDevice
     /**
      * The arguments object
      *
-     * @var ProcessArguments
+     * @var Arguments
      */
     private $arguments;
 
@@ -116,9 +116,9 @@ abstract class AbstractDevice
      * Create abstract device object
      *
      * @param Ghostscript      $ghostscript
-     * @param ProcessArguments $arguments
+     * @param Arguments $arguments
      */
-    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
     {
         $this->ghostscript = $ghostscript;
         $this->arguments = $arguments;
@@ -129,7 +129,7 @@ abstract class AbstractDevice
      *
      * @param string $name
      *
-     * @return null|ProcessArgument
+     * @return null|Argument
      */
     protected function getArgument($name)
     {

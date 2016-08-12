@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
  * The PDF info device class
@@ -31,11 +31,11 @@ class PdfInfo extends NoDisplay
     /**
      * Create PDF info device object
      *
-     * @param Ghostscript      $ghostscript
-     * @param ProcessArguments $arguments
-     * @param string           $pdfInfoPath Path to toolbin/pdf_info.ps
+     * @param Ghostscript $ghostscript
+     * @param Arguments   $arguments
+     * @param string      $pdfInfoPath Path to toolbin/pdf_info.ps
      */
-    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments, $pdfInfoPath)
+    public function __construct(Ghostscript $ghostscript, Arguments $arguments, $pdfInfoPath)
     {
         parent::__construct($ghostscript, $arguments);
 
@@ -50,7 +50,7 @@ class PdfInfo extends NoDisplay
     public function createProcess($inputFile = null)
     {
         // the PDF file to be examined must be provided as parameter -sFile=...
-        $this->setStringParameter('File', $inputFile);
+        $this->setArgument(sprintf('-sFile=%s', $inputFile));
 
         // the pdf_info.ps script will be read as input to gs
         return parent::createProcess($this->pdfInfoPath);

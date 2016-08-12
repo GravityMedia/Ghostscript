@@ -105,13 +105,13 @@ class Ghostscript
      */
     protected function createArguments()
     {
-        $processArguments = new Arguments();
+        $arguments = new Arguments();
 
         if ($this->getOption('quiet', true)) {
-            $processArguments->addArgument('-q');
+            $arguments->addArgument('-q');
         }
 
-        return $processArguments;
+        return $arguments;
     }
 
     /**

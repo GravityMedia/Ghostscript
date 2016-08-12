@@ -10,7 +10,7 @@ namespace GravityMedia\Ghostscript\Device;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
  * The PDF write device class
@@ -71,10 +71,10 @@ class PdfWrite extends AbstractDevice
     /**
      * Create PDF write device object
      *
-     * @param Ghostscript      $ghostscript
-     * @param ProcessArguments $arguments
+     * @param Ghostscript $ghostscript
+     * @param Arguments   $arguments
      */
-    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
     {
         parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=pdfwrite'));
 

@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
  * The bounding box info device class
@@ -22,10 +22,10 @@ class BoundingBoxInfo extends AbstractDevice
     /**
      * Create bounding box info device object
      *
-     * @param Ghostscript      $ghostscript
-     * @param ProcessArguments $arguments
+     * @param Ghostscript $ghostscript
+     * @param Arguments   $arguments
      */
-    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
     {
         parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=bbox'));
     }
