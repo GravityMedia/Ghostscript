@@ -20,6 +20,7 @@ use Symfony\Component\Process\Process;
  *
  * @covers  \GravityMedia\Ghostscript\Device\AbstractDevice
  *
+ * @uses    \GravityMedia\Ghostscript\Ghostscript
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait

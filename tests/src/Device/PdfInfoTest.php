@@ -18,6 +18,7 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
  *
  * @covers  \GravityMedia\Ghostscript\Device\PdfInfo
  *
+ * @uses    \GravityMedia\Ghostscript\Ghostscript
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Process\Argument

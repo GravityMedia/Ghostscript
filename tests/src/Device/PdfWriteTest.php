@@ -20,6 +20,7 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
  *
  * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
  *
+ * @uses    \GravityMedia\Ghostscript\Ghostscript
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Enum\ProcessColorModel
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice

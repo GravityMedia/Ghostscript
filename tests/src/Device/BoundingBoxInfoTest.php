@@ -10,7 +10,6 @@ namespace GravityMedia\GhostscriptTest\Device;
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The bounding box info device test class
@@ -19,6 +18,7 @@ use Symfony\Component\Process\ProcessBuilder;
  *
  * @covers  \GravityMedia\Ghostscript\Device\BoundingBoxInfo
  *
+ * @uses    \GravityMedia\Ghostscript\Ghostscript
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments

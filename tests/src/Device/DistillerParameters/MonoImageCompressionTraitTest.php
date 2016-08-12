@@ -8,8 +8,8 @@
 namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait;
-use GravityMedia\Ghostscript\Enum\MonoImageFilter;
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
+use GravityMedia\Ghostscript\Enum\MonoImageFilter;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
