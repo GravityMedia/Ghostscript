@@ -7,6 +7,9 @@
 
 namespace GravityMedia\Ghostscript;
 
+use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
+use GravityMedia\Ghostscript\Device\NoDisplay;
+use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
@@ -82,6 +85,9 @@ class Ghostscript
         $processBuilder = new ProcessBuilder($arguments);
         $processBuilder->setPrefix($this->getOption('bin', self::DEFAULT_BINARY));
         $processBuilder->addEnvironmentVariables($this->getOption('env', []));
+        if (($timeout = $this->getOption('timeout', -1)) != -1) {
+            $processBuilder->setTimeout($timeout);
+        }
 
         return $processBuilder;
     }
@@ -138,17 +144,63 @@ class Ghostscript
     public function createPdfDevice($outputFile = null)
     {
         $builder = $this->createProcessBuilder();
-        $arguments = $this->createProcessArguments([
-            '-dSAFER',
-            '-dBATCH',
-            '-dNOPAUSE'
-        ]);
+        $arguments = $this->createProcessArguments();
 
         $device = new PdfWrite($builder, $arguments);
+        $device
+            ->setSafer()
+            ->setBatch()
+            ->setNoPause();
 
         if (null !== $outputFile) {
             $device->setOutputFile($outputFile);
         }
+
+        return $device;
+    }
+
+    /**
+     * Create null device object
+     *
+     * @return NoDisplay
+     */
+    public function createNullDevice()
+    {
+        $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
+
+        return new NoDisplay($builder, $arguments);
+    }
+
+    /**
+     * Create PDF info device object
+     *
+     * @param string $pdfInfoPath Path to toolbin/pdf_info.ps 
+     * @return PdfInfo
+     */
+    public function createPdfInfoDevice($pdfInfoPath)
+    {
+        $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
+
+        return new PdfInfo($builder, $arguments, $pdfInfoPath);
+    }
+
+    /**
+     * Create bounding box info device object
+     *
+     * @return BoundingBoxInfo
+     */
+    public function createBboxDevice()
+    {
+        $builder = $this->createProcessBuilder();
+        $arguments = $this->createProcessArguments();
+
+        $device = new BoundingBoxInfo($builder, $arguments);
+        $device
+            ->setSafer()
+            ->setBatch()
+            ->setNoPause();
 
         return $device;
     }

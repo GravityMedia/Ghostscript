@@ -18,7 +18,19 @@ use GravityMedia\Ghostscript\Ghostscript;
  *
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait
+ * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
+ * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
+ * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
+ * @uses    \GravityMedia\Ghostscript\Device\PdfInfo
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
@@ -110,5 +122,53 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $instance = new Ghostscript();
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
+    }
+
+    public function testNullDeviceCreation()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNullDevice());
+    }
+
+    public function testPdfInfoDeviceCreation()
+    {
+        $instance = new Ghostscript();
+        $pdfInfoPath = 'path/to/pdf_info.ps';
+        $pdfInfo = $instance->createPdfInfoDevice($pdfInfoPath);
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
+
+        $field = new \ReflectionProperty('GravityMedia\Ghostscript\Device\PdfInfo', 'pdfInfoPath');
+        $field->setAccessible(true);
+        $this->assertEquals($pdfInfoPath, $field->getValue($pdfInfo));
+    }
+
+    public function testBboxDeviceCreation()
+    {
+        $instance = new Ghostscript();
+
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $instance->createBboxDevice());
+    }
+
+    /**
+     * @dataProvider provideTimeout
+     */
+    public function testTimeoutOption($value, $result)
+    {
+        $instance = new Ghostscript(['timeout' => $value]);
+        $device = $instance->createPdfDevice('/path/to/output/file.pdf');
+        $process = $device->createProcess(__DIR__ . '/../data/input.pdf');
+
+        $this->assertEquals($result, $process->getTimeout());
+    }
+
+    public function provideTimeout()
+    {
+        return [
+            [42, 42],
+            [0, null],
+            [null, null],
+        ];
     }
 }

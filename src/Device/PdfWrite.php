@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -59,6 +60,14 @@ class PdfWrite extends AbstractDevice
     use DistillerParameters\AdvancedTrait;
 
     /**
+     * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
+     * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
+     * the pdfwrite device.
+     * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
+     */
+    const POSTSCRIPT_COMMANDS = '.setpdfwrite';
+
+    /**
      * Create PDF write device object
      *
      * @param ProcessBuilder   $builder
@@ -96,6 +105,26 @@ class PdfWrite extends AbstractDevice
     }
 
     /**
+     * Whether output file is stdout.
+     *
+     * @return bool
+     */
+    public function isOutputStdout()
+    {
+        return $this->getOutputFile() == '-';
+    }
+
+    /**
+     * Set stdout as output.
+     *
+     * @return $this
+     */
+    public function setOutputStdout()
+    {
+        return $this->setOutputFile('-');
+    }
+
+    /**
      * Get PDF settings
      *
      * @return string
@@ -122,6 +151,37 @@ class PdfWrite extends AbstractDevice
         }
 
         $this->setArgument(sprintf('-dPDFSETTINGS=/%s', $pdfSettings));
+
+        return $this;
+    }
+
+    /**
+     * Get process color model
+     *
+     * @return string
+     */
+    public function getProcessColorModel()
+    {
+        return ltrim($this->getArgumentValue('-dProcessColorModel'), '/');
+    }
+
+    /**
+     * Set process color model
+     *
+     * @param string $processColorModel
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
+     */
+    public function setProcessColorModel($processColorModel)
+    {
+        $processColorModel = ltrim($processColorModel, '/');
+        if (!in_array($processColorModel, ProcessColorModel::values())) {
+            throw new \InvalidArgumentException('Invalid process color model argument');
+        }
+
+        $this->setArgument(sprintf('-dProcessColorModel=/%s', $processColorModel));
 
         return $this;
     }
