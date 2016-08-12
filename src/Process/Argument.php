@@ -8,28 +8,28 @@
 namespace GravityMedia\Ghostscript\Process;
 
 /**
- * The process argument class
+ * The argument class.
  *
  * @package GravityMedia\Ghostscript\Process
  */
 class Argument
 {
     /**
-     * The name
+     * The name.
      *
      * @var string
      */
     protected $name;
 
     /**
-     * The value
+     * The value.
      *
      * @var mixed
      */
     protected $value;
 
     /**
-     * Create process argument object
+     * Create argument object.
      *
      * @param string $name
      * @param mixed  $value
@@ -41,7 +41,7 @@ class Argument
     }
 
     /**
-     * Create process argument object from string
+     * Create argument object from string.
      *
      * @param string $argument
      *
@@ -60,7 +60,7 @@ class Argument
     }
 
     /**
-     * Return process argument as string
+     * Return argument object as string.
      *
      * @return string
      */
@@ -74,7 +74,7 @@ class Argument
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -84,7 +84,7 @@ class Argument
     }
 
     /**
-     * Whether the argument has a value
+     * Return whether the argument has a value.
      *
      * @return bool
      */
@@ -94,7 +94,7 @@ class Argument
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return mixed
      */
@@ -104,7 +104,7 @@ class Argument
     }
 
     /**
-     * Set value
+     * Set value.
      *
      * @param mixed $value
      *

@@ -8,21 +8,21 @@
 namespace GravityMedia\Ghostscript\Process;
 
 /**
- * The process arguments class
+ * The arguments class.
  *
  * @package GravityMedia\Ghostscript\Process
  */
 class Arguments
 {
     /**
-     * The arguments
+     * The argument objects.
      *
      * @var Argument[]
      */
     protected $arguments;
 
     /**
-     * Create process arguments object
+     * Create arguments object.
      */
     public function __construct()
     {
@@ -30,9 +30,9 @@ class Arguments
     }
 
     /**
-     * Return process arguments as array
+     * Return arguments as array of strings.
      *
-     * @return array
+     * @return string[]
      */
     public function toArray()
     {
@@ -42,7 +42,7 @@ class Arguments
     }
 
     /**
-     * Convert argument to process argument
+     * Convert argument to argument object.
      *
      * @param string|Argument $argument
      *
@@ -64,7 +64,25 @@ class Arguments
     }
 
     /**
-     * Add process argument
+     * Get argument object.
+     *
+     * @param string $name
+     *
+     * @return Argument|null
+     */
+    public function getArgument($name)
+    {
+        $hash = $this->hashName($name);
+
+        if (isset($this->arguments[$hash])) {
+            return $this->arguments[$hash];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add argument.
      *
      * @param string|Argument $argument
      *
@@ -80,7 +98,7 @@ class Arguments
     }
 
     /**
-     * Add process arguments
+     * Add all arguments.
      *
      * @param array $arguments
      *
@@ -98,7 +116,7 @@ class Arguments
     }
 
     /**
-     * Hash the name
+     * Hash the name.
      *
      * @param string $name
      *
@@ -110,7 +128,7 @@ class Arguments
     }
 
     /**
-     * Set process argument
+     * Set argument.
      *
      * @param string|Argument $argument
      *
@@ -121,6 +139,7 @@ class Arguments
     public function setArgument($argument)
     {
         $argument = $this->convertArgument($argument);
+
         $hash = $this->hashName($argument->getName());
 
         $this->arguments[$hash] = $argument;
@@ -129,7 +148,7 @@ class Arguments
     }
 
     /**
-     * Set process arguments
+     * Set all arguments.
      *
      * @param array $arguments
      *
@@ -144,23 +163,5 @@ class Arguments
         }
 
         return $this;
-    }
-
-    /**
-     * Get process argument
-     *
-     * @param string $name
-     *
-     * @return Argument|null
-     */
-    public function getArgument($name)
-    {
-        $hash = $this->hashName($name);
-
-        if (isset($this->arguments[$hash])) {
-            return $this->arguments[$hash];
-        }
-
-        return null;
     }
 }

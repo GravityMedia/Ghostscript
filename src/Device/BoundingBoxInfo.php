@@ -7,27 +7,26 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The bounding box (bbox) info device class
- * @link http://ghostscript.com/doc/current/Devices.htm#Bounding_box_output
+ * The bounding box info device class
+ *
+ * @link    http://ghostscript.com/doc/current/Devices.htm#Bounding_box_output
  *
  * @package GravityMedia\Ghostscript\Devices
  */
 class BoundingBoxInfo extends AbstractDevice
 {
-    const POSTSCRIPT_COMMANDS = '';
-
     /**
-     * Create bounding box (bbox) info device object
+     * Create bounding box info device object
      *
-     * @param ProcessBuilder   $builder
+     * @param Ghostscript      $ghostscript
      * @param ProcessArguments $arguments
      */
-    public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
     {
-        parent::__construct($builder, $arguments->setArgument('-sDEVICE=bbox'));
+        parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=bbox'));
     }
 }

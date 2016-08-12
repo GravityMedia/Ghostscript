@@ -8,8 +8,8 @@
 namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\PdfInfo;
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The pdf info device test class
@@ -25,7 +25,7 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class PdfInfoTest extends \PHPUnit_Framework_TestCase
 {
-    private $builder;
+    private $ghostscript;
 
     private $arguments;
 
@@ -38,13 +38,12 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
         $this->pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
         $this->inputFile = __DIR__ . '/../../data/input.pdf';
         $this->arguments = new ProcessArguments();
-        $this->builder = new ProcessBuilder();
-        $this->builder->setPrefix('gs');
+        $this->ghostscript = new Ghostscript();
     }
 
     public function testDeviceCreation()
     {
-        $pdfInfo = new PdfInfo($this->builder, $this->arguments, $this->pdfInfoPath);
+        $pdfInfo = new PdfInfo($this->ghostscript, $this->arguments, $this->pdfInfoPath);
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $pdfInfo);
@@ -58,8 +57,8 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
     {
         $pdfInfoPath = $this->pdfInfoPath;
         $inputFile = $this->inputFile;
-        
-        $pdfInfo = new PdfInfo($this->builder, $this->arguments, $pdfInfoPath);
+
+        $pdfInfo = new PdfInfo($this->ghostscript, $this->arguments, $pdfInfoPath);
         $process = $pdfInfo->createProcess($inputFile);
 
         $expectedCommandLine = "'gs' '-dNODISPLAY' '-sFile=$inputFile' '-c' '' '-f' '$pdfInfoPath'";

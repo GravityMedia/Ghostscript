@@ -86,14 +86,6 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testProcessBuilderCreation()
-    {
-        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createProcessBuilder');
-        $method->setAccessible(true);
-
-        $this->assertInstanceOf('Symfony\Component\Process\ProcessBuilder', $method->invoke(new Ghostscript()));
-    }
-
     public function testGetVersion()
     {
         $instance = new Ghostscript();
@@ -111,7 +103,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
 
     public function testProcessArgumentsCreation()
     {
-        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createProcessArguments');
+        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createArguments');
         $method->setAccessible(true);
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Arguments', $method->invoke(new Ghostscript()));
@@ -128,7 +120,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNullDevice());
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNoDisplayDevice());
     }
 
     public function testPdfInfoDeviceCreation()
@@ -148,7 +140,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $instance->createBboxDevice());
+        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $instance->createBoundingBoxInfoDevice());
     }
 
     /**

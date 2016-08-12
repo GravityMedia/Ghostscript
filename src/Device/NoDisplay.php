@@ -7,26 +7,24 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The null device class
+ * The no display device class
  *
  * @package GravityMedia\Ghostscript\Devices
  */
 class NoDisplay extends AbstractDevice
 {
-    const POSTSCRIPT_COMMANDS = '';
-
     /**
-     * Create null device object
+     * Create no display device object
      *
-     * @param ProcessBuilder   $builder
+     * @param Ghostscript      $ghostscript
      * @param ProcessArguments $arguments
      */
-    public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
     {
-        parent::__construct($builder, $arguments->setArgument('-dNODISPLAY'));
+        parent::__construct($ghostscript, $arguments->setArgument('-dNODISPLAY'));
     }
 }

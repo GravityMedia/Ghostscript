@@ -16,6 +16,7 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait;
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Argument as ProcessArgument;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use Symfony\Component\Process\Process;
@@ -84,11 +85,11 @@ abstract class AbstractDevice
     const POSTSCRIPT_COMMANDS = '';
 
     /**
-     * The process builder object
+     * The Ghostscript object
      *
-     * @var ProcessBuilder
+     * @var Ghostscript
      */
-    private $builder;
+    protected $ghostscript;
 
     /**
      * The arguments object
@@ -114,12 +115,12 @@ abstract class AbstractDevice
     /**
      * Create abstract device object
      *
-     * @param ProcessBuilder $builder
+     * @param Ghostscript      $ghostscript
      * @param ProcessArguments $arguments
      */
-    public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
     {
-        $this->builder = $builder;
+        $this->ghostscript = $ghostscript;
         $this->arguments = $arguments;
     }
 
@@ -197,7 +198,7 @@ abstract class AbstractDevice
      * Set a generic command line parameter with a token value
      *
      * @param string $param the parameter name
-     * @param mixed $value the parameter value
+     * @param mixed  $value the parameter value
      *
      * @return $this
      */
@@ -266,7 +267,12 @@ abstract class AbstractDevice
         }
         $this->resetInput();
 
-        return $this->builder->setArguments($arguments)->getProcess();
+        $processBuilder = new ProcessBuilder($arguments);
+        $processBuilder->setPrefix($this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY));
+        $processBuilder->addEnvironmentVariables($this->ghostscript->getOption('env', []));
+        $processBuilder->setTimeout($this->ghostscript->getOption('timeout', 60));
+
+        return $processBuilder->getProcess();
     }
 
     /**

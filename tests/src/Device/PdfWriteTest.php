@@ -10,8 +10,8 @@ namespace GravityMedia\GhostscriptTest\Device;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The PDF write device test class
@@ -34,10 +34,10 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDevice()
     {
-        $processBuilder = new ProcessBuilder();
+        $ghostscript = new Ghostscript();
         $processArguments = new ProcessArguments();
 
-        return new PdfWrite($processBuilder, $processArguments);
+        return new PdfWrite($ghostscript, $processArguments);
     }
 
     public function testDeviceCreation()

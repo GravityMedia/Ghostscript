@@ -9,8 +9,8 @@ namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The PDF write device class
@@ -63,6 +63,7 @@ class PdfWrite extends AbstractDevice
      * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
      * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
      * the pdfwrite device.
+     *
      * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
      */
     const POSTSCRIPT_COMMANDS = '.setpdfwrite';
@@ -70,12 +71,12 @@ class PdfWrite extends AbstractDevice
     /**
      * Create PDF write device object
      *
-     * @param ProcessBuilder   $builder
+     * @param Ghostscript      $ghostscript
      * @param ProcessArguments $arguments
      */
-    public function __construct(ProcessBuilder $builder, ProcessArguments $arguments)
+    public function __construct(Ghostscript $ghostscript, ProcessArguments $arguments)
     {
-        parent::__construct($builder, $arguments->setArgument('-sDEVICE=pdfwrite'));
+        parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=pdfwrite'));
 
         $this->setPdfSettings(PdfSettings::__DEFAULT);
     }

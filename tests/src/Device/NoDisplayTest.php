@@ -8,8 +8,8 @@
 namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\NoDisplay;
+use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The null device test class
@@ -26,10 +26,10 @@ class NoDisplayTest extends \PHPUnit_Framework_TestCase
 {
     public function testDeviceCreation()
     {
-        $processBuilder = new ProcessBuilder();
+        $ghostscript = new Ghostscript();
         $processArguments = new ProcessArguments();
 
-        $noDisplay = new NoDisplay($processBuilder, $processArguments);
+        $noDisplay = new NoDisplay($ghostscript, $processArguments);
 
         $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $noDisplay);
         $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $processArguments->getArgument('-dNODISPLAY'));

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ghostscript package
+ * This file is part of the Ghostscript package.
  *
  * @author Daniel Schröder <daniel.schroeder@gravitymedia.de>
  */
@@ -11,11 +11,11 @@ use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use Symfony\Component\Process\ProcessBuilder;
+use GravityMedia\Ghostscript\Process\Arguments;
+use Symfony\Component\Process\Process;
 
 /**
- * The Ghostscript class
+ * The Ghostscript class.
  *
  * @package GravityMedia\Ghostscript
  */
@@ -27,21 +27,21 @@ class Ghostscript
     const DEFAULT_BINARY = 'gs';
 
     /**
-     * The options
+     * The versions.
+     *
+     * @var string[]
+     */
+    protected static $versions = [];
+
+    /**
+     * The options.
      *
      * @var array
      */
     protected $options;
 
     /**
-     * The version
-     *
-     * @var string
-     */
-    protected $version;
-
-    /**
-     * Create Ghostscript object
+     * Create Ghostscript object.
      *
      * @param array $options
      *
@@ -57,7 +57,7 @@ class Ghostscript
     }
 
     /**
-     * Get option
+     * Get option.
      *
      * @param string $name
      * @param mixed  $default
@@ -74,26 +74,7 @@ class Ghostscript
     }
 
     /**
-     * Create process builder object
-     *
-     * @param array $arguments
-     *
-     * @return ProcessBuilder
-     */
-    protected function createProcessBuilder(array $arguments = [])
-    {
-        $processBuilder = new ProcessBuilder($arguments);
-        $processBuilder->setPrefix($this->getOption('bin', self::DEFAULT_BINARY));
-        $processBuilder->addEnvironmentVariables($this->getOption('env', []));
-        if (($timeout = $this->getOption('timeout', -1)) != -1) {
-            $processBuilder->setTimeout($timeout);
-        }
-
-        return $processBuilder;
-    }
-
-    /**
-     * Get version
+     * Get version.
      *
      * @throws \RuntimeException
      *
@@ -101,31 +82,30 @@ class Ghostscript
      */
     public function getVersion()
     {
-        if (null === $this->version) {
-            $process = $this->createProcessBuilder(['--version'])->getProcess();
+        $binary = $this->getOption('bin', static::DEFAULT_BINARY);
+
+        if (!isset(static::$versions[$binary])) {
+            $process = new Process($binary . ' --version');
             $process->run();
 
             if (!$process->isSuccessful()) {
                 throw new \RuntimeException($process->getErrorOutput());
             }
 
-            $this->version = $process->getOutput();
+            static::$versions[$binary] = $process->getOutput();
         }
 
-        return $this->version;
+        return static::$versions[$binary];
     }
 
     /**
-     * Create process arguments object
+     * Create arguments object.
      *
-     * @param array $arguments
-     *
-     * @return ProcessArguments
+     * @return Arguments
      */
-    protected function createProcessArguments(array $arguments = [])
+    protected function createArguments()
     {
-        $processArguments = new ProcessArguments();
-        $processArguments->addArguments($arguments);
+        $processArguments = new Arguments();
 
         if ($this->getOption('quiet', true)) {
             $processArguments->addArgument('-q');
@@ -135,7 +115,7 @@ class Ghostscript
     }
 
     /**
-     * Create PDF device object
+     * Create PDF device object.
      *
      * @param null|string $outputFile
      *
@@ -143,10 +123,7 @@ class Ghostscript
      */
     public function createPdfDevice($outputFile = null)
     {
-        $builder = $this->createProcessBuilder();
-        $arguments = $this->createProcessArguments();
-
-        $device = new PdfWrite($builder, $arguments);
+        $device = new PdfWrite($this, $this->createArguments());
         $device
             ->setSafer()
             ->setBatch()
@@ -160,43 +137,35 @@ class Ghostscript
     }
 
     /**
-     * Create null device object
+     * Create no display device object.
      *
      * @return NoDisplay
      */
-    public function createNullDevice()
+    public function createNoDisplayDevice()
     {
-        $builder = $this->createProcessBuilder();
-        $arguments = $this->createProcessArguments();
-
-        return new NoDisplay($builder, $arguments);
+        return new NoDisplay($this, $this->createArguments());
     }
 
     /**
-     * Create PDF info device object
+     * Create PDF info device object.
      *
-     * @param string $pdfInfoPath Path to toolbin/pdf_info.ps 
+     * @param string $pdfInfoPath Path to toolbin/pdf_info.ps
+     *
      * @return PdfInfo
      */
     public function createPdfInfoDevice($pdfInfoPath)
     {
-        $builder = $this->createProcessBuilder();
-        $arguments = $this->createProcessArguments();
-
-        return new PdfInfo($builder, $arguments, $pdfInfoPath);
+        return new PdfInfo($this, $this->createArguments(), $pdfInfoPath);
     }
 
     /**
-     * Create bounding box info device object
+     * Create bounding box info device object.
      *
      * @return BoundingBoxInfo
      */
-    public function createBboxDevice()
+    public function createBoundingBoxInfoDevice()
     {
-        $builder = $this->createProcessBuilder();
-        $arguments = $this->createProcessArguments();
-
-        $device = new BoundingBoxInfo($builder, $arguments);
+        $device = new BoundingBoxInfo($this, $this->createArguments());
         $device
             ->setSafer()
             ->setBatch()
