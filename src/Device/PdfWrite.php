@@ -20,42 +20,42 @@ use GravityMedia\Ghostscript\Process\Arguments;
 class PdfWrite extends AbstractDevice
 {
     /**
-     * Use distiller parameters
+     * Use distiller options
      */
     use DistillerParametersTrait;
 
     /**
-     * Use color image compression distiller parameters
+     * Use color image compression distiller options
      */
     use DistillerParameters\ColorImageCompressionTrait;
 
     /**
-     * Use grayscale image compression distiller parameters
+     * Use grayscale image compression distiller options
      */
     use DistillerParameters\GrayImageCompressionTrait;
 
     /**
-     * Use monochrome image compression distiller parameters
+     * Use monochrome image compression distiller options
      */
     use DistillerParameters\MonoImageCompressionTrait;
 
     /**
-     * Use page compression distiller parameters
+     * Use page compression distiller options
      */
     use DistillerParameters\PageCompressionTrait;
 
     /**
-     * Use font distiller parameters
+     * Use font distiller options
      */
     use DistillerParameters\FontTrait;
 
     /**
-     * Use color conversion distiller parameters
+     * Use color conversion distiller options
      */
     use DistillerParameters\ColorConversionTrait;
 
     /**
-     * Use advanced distiller parameters
+     * Use advanced distiller options
      */
     use DistillerParameters\AdvancedTrait;
 

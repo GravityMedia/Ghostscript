@@ -15,6 +15,8 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  * The general distiller parameters trait
  *
  * @package GravityMedia\Ghostscript\Devices
+ *
+ * @link    http://ghostscript.com/doc/current/Ps2pdf.htm
  */
 trait DistillerParametersTrait
 {

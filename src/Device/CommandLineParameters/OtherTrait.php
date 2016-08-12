@@ -11,7 +11,8 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
  * The other parameters trait
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
- * @link http://ghostscript.com/doc/current/Use.htm#Other_parameters
+ *
+ * @link    http://ghostscript.com/doc/current/Use.htm#Other_parameters
  */
 trait OtherTrait
 {
@@ -185,16 +186,16 @@ trait OtherTrait
      * ordinarily run under a job server. The -dNOOUTERSAVE switch is ignored if -dJOBSERVER is specified since job
      * servers always execute the input PostScript under a save level, although the exitserver operator can be used to
      * escape from the encapsulated job and execute as if the -dNOOUTERSAVE was specified.
-     * 
+     *
      * This also requires that the input be from stdin, otherwise an error will result
      * (Error: /invalidrestore in --restore--).
-     * 
+     *
      * Example usage is:
-     * 
+     *
      * gs ... -dJOBSERVER - < inputfile.ps
      * -or-
      * cat inputfile.ps | gs ... -dJOBSERVER -
-     * 
+     *
      * Note: The ^D does not result in an end-of-file action on stdin as it may on some PostScript printers that rely on
      * TBCP (Tagged Binary Communication Protocol) to cause an out-of-band ^D to signal EOF in a stream input data. This
      * means that direct file actions on stdin such as flushfile and closefile will affect processing of data beyond the
@@ -325,7 +326,7 @@ trait OtherTrait
      * cannot operate in SAFER mode. If Ghostscript is started with -dNOSAFER or -dDELAYSAFER, PostScript programs are
      * allowed to read, write, rename or delete any files in the system that are not protected by operating system
      * permissions.
-     * 
+     *
      * This mode should be used with caution, and .setsafe should be run prior to running any PostScript file with
      * unknown contents.
      *

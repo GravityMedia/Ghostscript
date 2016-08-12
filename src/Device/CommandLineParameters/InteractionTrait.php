@@ -11,7 +11,8 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
  * The interaction-related parameters trait
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
- * @link http://ghostscript.com/doc/current/Use.htm#Interaction_related_parameters
+ *
+ * @link    http://ghostscript.com/doc/current/Use.htm#Interaction_related_parameters
  */
 trait InteractionTrait
 {
@@ -214,6 +215,7 @@ trait InteractionTrait
      * with C function calls such as fwrite or fputs.
      *
      * @param string $filename file to redirect PostScript %stdout to
+     *
      * @return $this
      */
     public function setStdout($filename)

@@ -8,12 +8,13 @@
 namespace GravityMedia\Ghostscript\Device;
 
 /**
- * The general Ghostscript command line options trait
+ * The general Ghostscript command line parameters trait
  *
  * @package GravityMedia\Ghostscript
+ *
  * @link    http://ghostscript.com/doc/current/Use.htm#General_switches
  */
-trait CommandLineOptionsTrait
+trait CommandLineParametersTrait
 {
     /**
      * Get argument value

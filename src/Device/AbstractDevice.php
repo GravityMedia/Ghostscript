@@ -32,7 +32,7 @@ abstract class AbstractDevice
     /**
      * Use command line options
      */
-    use CommandLineOptionsTrait;
+    use CommandLineParametersTrait;
 
     /**
      * Use rendering parameters
