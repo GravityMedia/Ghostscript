@@ -60,15 +60,6 @@ class PdfWrite extends AbstractDevice
     use DistillerParameters\AdvancedTrait;
 
     /**
-     * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
-     * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
-     * the pdfwrite device.
-     *
-     * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
-     */
-    const POSTSCRIPT_COMMANDS = '.setpdfwrite';
-
-    /**
      * Create PDF write device object
      *
      * @param Ghostscript $ghostscript
@@ -185,5 +176,24 @@ class PdfWrite extends AbstractDevice
         $this->setArgument(sprintf('-dProcessColorModel=/%s', $processColorModel));
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createProcess($input = null)
+    {
+        $input = $this->sanitizeInput($input);
+
+        $code = $input->getPostScriptCode();
+        if (null === $code) {
+            $code = '';
+        }
+
+        if (false === strstr($code, '.setpdfwrite')) {
+            $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
+        }
+
+        return parent::createProcess($input);
     }
 }

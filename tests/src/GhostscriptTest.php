@@ -16,6 +16,7 @@ use GravityMedia\Ghostscript\Ghostscript;
  *
  * @covers  \GravityMedia\Ghostscript\Ghostscript
  *
+ * @uses    \GravityMedia\Ghostscript\Input
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait

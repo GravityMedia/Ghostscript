@@ -19,6 +19,7 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
  * @covers  \GravityMedia\Ghostscript\Device\PdfInfo
  *
  * @uses    \GravityMedia\Ghostscript\Ghostscript
+ * @uses    \GravityMedia\Ghostscript\Input
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Process\Argument
@@ -62,7 +63,7 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
         $pdfInfo = new PdfInfo($this->ghostscript, $this->arguments, $pdfInfoPath);
         $process = $pdfInfo->createProcess($inputFile);
 
-        $expectedCommandLine = "'gs' '-dNODISPLAY' '-sFile=$inputFile' '-c' '' '-f' '$pdfInfoPath'";
+        $expectedCommandLine = "'gs' '-dNODISPLAY' '-sFile=$inputFile' '-f' '$pdfInfoPath'";
         $this->assertEquals($expectedCommandLine, $process->getCommandLine());
     }
 }

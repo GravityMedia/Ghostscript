@@ -17,6 +17,7 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait;
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
 use Symfony\Component\Process\Process;
@@ -80,16 +81,11 @@ abstract class AbstractDevice
     use OtherTrait;
 
     /**
-     * PostScript commands to be executed via command line when using this device.
-     */
-    const POSTSCRIPT_COMMANDS = '';
-
-    /**
      * The Ghostscript object
      *
      * @var Ghostscript
      */
-    protected $ghostscript;
+    private $ghostscript;
 
     /**
      * The arguments object
@@ -99,24 +95,10 @@ abstract class AbstractDevice
     private $arguments;
 
     /**
-     * List of input files
-     *
-     * @var array
-     */
-    private $inputFiles = [];
-
-    /**
-     * Whether to read input from stdin
-     *
-     * @var bool
-     */
-    private $inputStdin = false;
-
-    /**
      * Create abstract device object
      *
-     * @param Ghostscript      $ghostscript
-     * @param Arguments $arguments
+     * @param Ghostscript $ghostscript
+     * @param Arguments   $arguments
      */
     public function __construct(Ghostscript $ghostscript, Arguments $arguments)
     {
@@ -145,7 +127,7 @@ abstract class AbstractDevice
      */
     protected function hasArgument($name)
     {
-        return $this->getArgument($name) !== null;
+        return null !== $this->getArgument($name);
     }
 
     /**
@@ -180,108 +162,74 @@ abstract class AbstractDevice
     }
 
     /**
-     * Set a generic command line parameter with a string value
+     * Sanitize input.
      *
-     * @param string $param the parameter name
-     * @param string $value the parameter value
+     * @param mixed $input
      *
-     * @return $this
+     * @return Input
      */
-    public function setStringParameter($param, $value)
+    protected function sanitizeInput($input)
     {
-        $this->setArgument(sprintf('-s%s=%s', $param, $value));
-
-        return $this;
-    }
-
-    /**
-     * Set a generic command line parameter with a token value
-     *
-     * @param string $param the parameter name
-     * @param mixed  $value the parameter value
-     *
-     * @return $this
-     */
-    public function setTokenParameter($param, $value)
-    {
-        $this->setArgument(sprintf('-d%s=%s', $param, $value));
-
-        return $this;
-    }
-
-    /**
-     * Add an input file
-     *
-     * @param string $inputFile a path to an existing file
-     *
-     * @throws \RuntimeException if $inputFile does not exist
-     *
-     * @return $this
-     */
-    public function addInputFile($inputFile)
-    {
-        if (!is_file($inputFile)) {
-            throw new \RuntimeException('Input file does not exist');
+        if (null === $input) {
+            $input = $this->ghostscript->getOption('input', new Input());
         }
-        $this->inputFiles[] = $inputFile;
 
-        return $this;
-    }
+        if ($input instanceof Input) {
+            return $input;
+        }
 
-    /**
-     * Add an stdin as input file
-     *
-     * @return $this
-     */
-    public function addInputStdin()
-    {
-        $this->inputStdin = true;
+        $instance = new Input();
 
-        return $this;
+        if (is_resource($input)) {
+            return $instance->setProcessInput($input);
+        }
+
+        if (file_exists($input)) {
+            return $instance->addFile($input);
+        }
+
+        return $instance->setPostScriptCode((string)$input);
     }
 
     /**
      * Create process object
      *
-     * @param string $inputFile either a path to an existing file or a dash (-) to read input from stdin
+     * @param mixed $input
      *
-     * @throws \RuntimeException if $inputFile does not exist
+     * @throws \RuntimeException
      *
      * @return Process
      */
-    public function createProcess($inputFile = null)
+    public function createProcess($input = null)
     {
-        if ('-' == $inputFile) {
-            $this->addInputStdin();
-        } elseif (null !== $inputFile) {
-            $this->addInputFile($inputFile);
+        $input = $this->sanitizeInput($input);
+        $arguments = array_values($this->arguments->toArray());
+
+        if (null !== $input->getPostScriptCode()) {
+            array_push($arguments, '-c', $input->getPostScriptCode());
         }
 
-        $arguments = array_values($this->arguments->toArray());
-        array_push($arguments, '-c', static::POSTSCRIPT_COMMANDS, '-f');
-        if (count($this->inputFiles)) {
-            $arguments = array_merge($arguments, $this->inputFiles);
+        if (count($input->getFiles()) > 0) {
+            array_push($arguments, '-f');
+            foreach ($input->getFiles() as $file) {
+                if (!is_file($file)) {
+                    throw new \RuntimeException('Input file does not exist');
+                }
+
+                array_push($arguments, $file);
+            }
         }
-        if ($this->inputStdin) {
+
+        if (null !== $input->getProcessInput()) {
             array_push($arguments, '-');
         }
-        $this->resetInput();
 
         $processBuilder = new ProcessBuilder($arguments);
         $processBuilder->setPrefix($this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY));
         $processBuilder->addEnvironmentVariables($this->ghostscript->getOption('env', []));
         $processBuilder->setTimeout($this->ghostscript->getOption('timeout', 60));
+        $processBuilder->setInput($input->getProcessInput());
 
         return $processBuilder->getProcess();
-    }
-
-    /**
-     * Reset the input-related fields of this device.
-     * Future processes created from this device will have their own input parameters.
-     */
-    private function resetInput()
-    {
-        $this->inputFiles = [];
-        $this->inputStdin = false;
     }
 }

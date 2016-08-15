@@ -21,6 +21,7 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
  * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
  *
  * @uses    \GravityMedia\Ghostscript\Ghostscript
+ * @uses    \GravityMedia\Ghostscript\Input
  * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
  * @uses    \GravityMedia\Ghostscript\Enum\ProcessColorModel
  * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
@@ -128,5 +129,15 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
     public function testProcessColorModelSetterThrowsExceptionOnInvalidArgument()
     {
         $this->createDevice()->setProcessColorModel('/foo');
+    }
+
+    public function testProcessCreation()
+    {
+        $process = $this->createDevice()->createProcess();
+
+        $this->assertEquals(
+            "'gs' '-sDEVICE=pdfwrite' '-dPDFSETTINGS=/default' '-c' '.setpdfwrite'",
+            $process->getCommandLine()
+        );
     }
 }

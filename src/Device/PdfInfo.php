@@ -43,14 +43,14 @@ class PdfInfo extends NoDisplay
     }
 
     /**
-     * @param string $inputFile Path to PDF file to be examined
+     * @param string $input Path to PDF file to be examined
      *
      * @return \Symfony\Component\Process\Process
      */
-    public function createProcess($inputFile = null)
+    public function createProcess($input = null)
     {
         // the PDF file to be examined must be provided as parameter -sFile=...
-        $this->setArgument(sprintf('-sFile=%s', $inputFile));
+        $this->setArgument(sprintf('-sFile=%s', $input));
 
         // the pdf_info.ps script will be read as input to gs
         return parent::createProcess($this->pdfInfoPath);
