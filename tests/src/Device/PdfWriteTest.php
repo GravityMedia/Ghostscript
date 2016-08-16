@@ -32,6 +32,23 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 class PdfWriteTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Returns an OS independent representation of the commandline.
+     *
+     * @param string $commandline
+     *
+     * @return mixed
+     */
+    protected function quoteCommandLine($commandline)
+    {
+        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
+            return str_replace('"', '\'', $commandline);
+
+        }
+
+        return $commandline;
+    }
+
+    /**
      * @return PdfWrite
      */
     protected function createDevice()
@@ -137,7 +154,7 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             "'gs' '-sDEVICE=pdfwrite' '-dPDFSETTINGS=/default' '-c' '.setpdfwrite'",
-            $process->getCommandLine()
+            $this->quoteCommandLine($process->getCommandLine())
         );
     }
 }

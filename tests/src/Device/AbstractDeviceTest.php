@@ -37,6 +37,23 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Returns an OS independent representation of the commandline.
+     *
+     * @param string $commandline
+     *
+     * @return mixed
+     */
+    protected function quoteCommandLine($commandline)
+    {
+        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
+            return str_replace('"', '\'', $commandline);
+
+        }
+
+        return $commandline;
+    }
+
+    /**
      * @param array $arguments
      *
      * @return AbstractDevice
@@ -105,7 +122,7 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
     {
         $process = $this->createDevice()->createProcess();
 
-        $this->assertEquals("'gs'", $process->getCommandLine());
+        $this->assertEquals("'gs'", $this->quoteCommandLine($process->getCommandLine()));
     }
 
     public function testProcessCreationWithInput()
@@ -121,8 +138,8 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
 
         $process = $this->createDevice()->createProcess($input);
 
-        $this->assertEquals("'gs' '-c' '$code' '-f' '$file' '-'", $process->getCommandLine());
-        $this->assertEquals($input, $process->getInput());
+        $this->assertEquals("'gs' '-c' '$code' '-f' '$file' '-'", $this->quoteCommandLine($process->getCommandLine()));
+        $this->assertEquals($processInput, $process->getInput());
 
         fclose($processInput);
     }
@@ -133,7 +150,7 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
 
         $process = $this->createDevice()->createProcess($input);
 
-        $this->assertEquals("'gs' '-c' '$input'", $process->getCommandLine());
+        $this->assertEquals("'gs' '-c' '$input'", $this->quoteCommandLine($process->getCommandLine()));
     }
 
     public function testProcessCreationWithFileInput()
@@ -142,7 +159,7 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
 
         $process = $this->createDevice()->createProcess($input);
 
-        $this->assertEquals("'gs' '-f' '$input'", $process->getCommandLine());
+        $this->assertEquals("'gs' '-f' '$input'", $this->quoteCommandLine($process->getCommandLine()));
     }
 
     public function testProcessCreationWithResourceInput()
@@ -151,7 +168,7 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
 
         $process = $this->createDevice()->createProcess($input);
 
-        $this->assertEquals("'gs' '-'", $process->getCommandLine());
+        $this->assertEquals("'gs' '-'", $this->quoteCommandLine($process->getCommandLine()));
         $this->assertEquals($input, $process->getInput());
 
         fclose($input);
