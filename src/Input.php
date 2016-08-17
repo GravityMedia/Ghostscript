@@ -7,6 +7,8 @@
 
 namespace GravityMedia\Ghostscript;
 
+use Symfony\Component\Process\ProcessUtils;
+
 /**
  * The input class.
  *
@@ -17,7 +19,7 @@ class Input
     /**
      * The process input.
      *
-     * @var mixed
+     * @var null|string|resource
      */
     private $processInput;
 
@@ -38,7 +40,7 @@ class Input
     /**
      * Get process input.
      *
-     * @return mixed
+     * @return null|string|resource
      */
     public function getProcessInput()
     {
@@ -50,11 +52,13 @@ class Input
      *
      * @param mixed $processInput
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function setProcessInput($processInput)
     {
-        $this->processInput = $processInput;
+        $this->processInput = ProcessUtils::validateInput(__METHOD__, $processInput);
 
         return $this;
     }
@@ -98,20 +102,6 @@ class Input
     }
 
     /**
-     * Set files.
-     *
-     * @param string[] $files
-     *
-     * @return $this
-     */
-    public function setFiles(array $files)
-    {
-        $this->files = $files;
-
-        return $this;
-    }
-
-    /**
      * Add file.
      *
      * @param string $file
@@ -125,6 +115,20 @@ class Input
         }
 
         $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Set files.
+     *
+     * @param string[] $files
+     *
+     * @return $this
+     */
+    public function setFiles(array $files)
+    {
+        $this->files = $files;
 
         return $this;
     }

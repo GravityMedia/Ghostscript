@@ -11,7 +11,7 @@ use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The font distiller parameters trait
+ * The font distiller parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  *

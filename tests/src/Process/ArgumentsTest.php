@@ -7,10 +7,11 @@
 
 namespace GravityMedia\GhostscriptTest\Process;
 
+use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The arguments test class
+ * The arguments test class.
  *
  * @package GravityMedia\GhostscriptTest\Process
  *
@@ -32,7 +33,7 @@ class ArgumentsTest extends \PHPUnit_Framework_TestCase
      */
     public function testArgumentConversionThrowsExceptionOnInvalidArgument()
     {
-        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Process\Arguments', 'convertArgument');
+        $method = new \ReflectionMethod(Arguments::class, 'convertArgument');
         $method->setAccessible(true);
 
         $method->invoke(new Arguments(), 0);
@@ -95,7 +96,7 @@ class ArgumentsTest extends \PHPUnit_Framework_TestCase
         $instance = new Arguments();
         $instance->setArgument('foo=bar');
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $instance->getArgument('foo'));
+        $this->assertInstanceOf(Argument::class, $instance->getArgument('foo'));
         $this->assertSame('bar', $instance->getArgument('foo')->getValue());
         $this->assertNull($instance->getArgument('bar'));
     }

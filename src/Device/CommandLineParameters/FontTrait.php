@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
- * The font-related parameters trait
+ * The font-related parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  *
@@ -17,7 +17,7 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 trait FontTrait
 {
     /**
-     * Get argument value
+     * Get argument value.
      *
      * @param string $name
      *
@@ -26,7 +26,7 @@ trait FontTrait
     abstract protected function getArgumentValue($name);
 
     /**
-     * Set argument
+     * Set argument.
      *
      * @param string $argument
      *

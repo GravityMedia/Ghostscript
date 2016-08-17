@@ -12,7 +12,7 @@ use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The color image compression distiller parameters trait
+ * The color image compression distiller parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  *

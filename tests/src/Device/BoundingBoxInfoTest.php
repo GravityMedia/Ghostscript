@@ -9,10 +9,11 @@ namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Argument;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The bounding box info device test class
+ * The bounding box info device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
@@ -28,13 +29,15 @@ class BoundingBoxInfoTest extends \PHPUnit_Framework_TestCase
     public function testDeviceCreation()
     {
         $ghostscript = new Ghostscript();
-        $processArguments = new ProcessArguments();
+        $arguments = new Arguments();
 
-        $bboxInfo = new BoundingBoxInfo($ghostscript, $processArguments);
+        $device = new BoundingBoxInfo($ghostscript, $arguments);
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $bboxInfo);
-        $arg = $processArguments->getArgument('-sDEVICE');
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $arg);
-        $this->assertEquals('bbox', $arg->getValue());
+        $this->assertInstanceOf(BoundingBoxInfo::class, $device);
+
+        $argument = $arguments->getArgument('-sDEVICE');
+
+        $this->assertInstanceOf(Argument::class, $argument);
+        $this->assertEquals('bbox', $argument->getValue());
     }
 }

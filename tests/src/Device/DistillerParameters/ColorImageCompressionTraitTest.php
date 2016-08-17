@@ -13,7 +13,7 @@ use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The color image compression distiller parameters test class
+ * The color image compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -31,7 +31,7 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForDefaultValue($pdfSettings)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorImageCompressionTrait');
+        $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -51,7 +51,7 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorImageCompressionTrait');
+        $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -114,7 +114,10 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($colorImageDownsampleType, $trait->getColorImageDownsampleType());
 
         $trait = $this->createTraitForArgumentValue('/' . $colorImageDownsampleType);
-        $this->assertSame($colorImageDownsampleType, $trait->setColorImageDownsampleType($colorImageDownsampleType)->getColorImageDownsampleType());
+        $this->assertSame(
+            $colorImageDownsampleType,
+            $trait->setColorImageDownsampleType($colorImageDownsampleType)->getColorImageDownsampleType()
+        );
     }
 
     /**
@@ -137,7 +140,7 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testColorImageDownsampleTypeArgumentThrowsException()
     {
         /** @var ColorImageCompressionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorImageCompressionTrait');
+        $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 
         $trait->setColorImageDownsampleType('/Foo');
     }
@@ -156,7 +159,10 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testColorImageFilterArgument($transferFunctionInfo)
     {
         $trait = $this->createTraitForArgumentValue('/' . $transferFunctionInfo);
-        $this->assertSame($transferFunctionInfo, $trait->setColorImageFilter($transferFunctionInfo)->getColorImageFilter());
+        $this->assertSame(
+            $transferFunctionInfo,
+            $trait->setColorImageFilter($transferFunctionInfo)->getColorImageFilter()
+        );
     }
 
     /**
@@ -176,7 +182,7 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testColorImageFilterArgumentThrowsException()
     {
         /** @var ColorImageCompressionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorImageCompressionTrait');
+        $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 
         $trait->setColorImageFilter('/Foo');
     }
@@ -193,7 +199,10 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($colorImageResolution, $trait->getColorImageResolution());
 
         $trait = $this->createTraitForArgumentValue($colorImageResolution);
-        $this->assertSame($colorImageResolution, $trait->setColorImageResolution($colorImageResolution)->getColorImageResolution());
+        $this->assertSame(
+            $colorImageResolution,
+            $trait->setColorImageResolution($colorImageResolution)->getColorImageResolution()
+        );
     }
 
     /**
@@ -222,7 +231,10 @@ class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($downsampleColorImages, $trait->isDownsampleColorImages());
 
         $trait = $this->createTraitForArgumentValue($downsampleColorImages);
-        $this->assertSame($downsampleColorImages, $trait->setDownsampleColorImages($downsampleColorImages)->isDownsampleColorImages());
+        $this->assertSame(
+            $downsampleColorImages,
+            $trait->setDownsampleColorImages($downsampleColorImages)->isDownsampleColorImages()
+        );
     }
 
     /**

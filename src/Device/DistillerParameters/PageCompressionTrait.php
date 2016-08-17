@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\DistillerParameters;
 
 /**
- * The page compression distiller parameters trait
+ * The page compression distiller parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  *

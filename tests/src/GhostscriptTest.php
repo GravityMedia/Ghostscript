@@ -7,7 +7,12 @@
 
 namespace GravityMedia\GhostscriptTest;
 
+use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
+use GravityMedia\Ghostscript\Device\NoDisplay;
+use GravityMedia\Ghostscript\Device\PdfInfo;
+use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
  * The Ghostscript test class
@@ -40,7 +45,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateGhostscriptObject()
     {
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Ghostscript', new Ghostscript());
+        $this->assertInstanceOf(Ghostscript::class, new Ghostscript());
     }
 
     /**
@@ -49,7 +54,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGhostscriptObjectThrowsExceptionOnInvalidVersion()
     {
-        $mock = $this->getMockBuilder('GravityMedia\Ghostscript\Ghostscript')
+        $mock = $this->getMockBuilder(Ghostscript::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -57,7 +62,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
             ->method('getVersion')
             ->will($this->returnValue('8.00'));
 
-        $class = new \ReflectionClass('GravityMedia\Ghostscript\Ghostscript');
+        $class = new \ReflectionClass(Ghostscript::class);
         $constructor = $class->getConstructor();
         $constructor->invoke($mock);
     }
@@ -104,24 +109,24 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
 
     public function testProcessArgumentsCreation()
     {
-        $method = new \ReflectionMethod('GravityMedia\Ghostscript\Ghostscript', 'createArguments');
+        $method = new \ReflectionMethod(Ghostscript::class, 'createArguments');
         $method->setAccessible(true);
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Arguments', $method->invoke(new Ghostscript()));
+        $this->assertInstanceOf(Arguments::class, $method->invoke(new Ghostscript()));
     }
 
     public function testPdfDeviceCreation()
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfWrite', $instance->createPdfDevice('/path/to/output/file.pdf'));
+        $this->assertInstanceOf(PdfWrite::class, $instance->createPdfDevice());
     }
 
     public function testNullDeviceCreation()
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $instance->createNoDisplayDevice());
+        $this->assertInstanceOf(NoDisplay::class, $instance->createNoDisplayDevice());
     }
 
     public function testPdfInfoDeviceCreation()
@@ -130,22 +135,25 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $pdfInfoPath = 'path/to/pdf_info.ps';
         $pdfInfo = $instance->createPdfInfoDevice($pdfInfoPath);
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
+        $this->assertInstanceOf(PdfInfo::class, $pdfInfo);
 
-        $field = new \ReflectionProperty('GravityMedia\Ghostscript\Device\PdfInfo', 'pdfInfoPath');
+        $field = new \ReflectionProperty(PdfInfo::class, 'pdfInfoPath');
         $field->setAccessible(true);
         $this->assertEquals($pdfInfoPath, $field->getValue($pdfInfo));
     }
 
-    public function testBboxDeviceCreation()
+    public function testBoundingBoxInfoCreation()
     {
         $instance = new Ghostscript();
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\BoundingBoxInfo', $instance->createBoundingBoxInfoDevice());
+        $this->assertInstanceOf(BoundingBoxInfo::class, $instance->createBoundingBoxInfoDevice());
     }
 
     /**
      * @dataProvider provideTimeout
+     *
+     * @param null|int $value
+     * @param null|int $result
      */
     public function testTimeoutOption($value, $result)
     {
@@ -156,6 +164,9 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($result, $process->getTimeout());
     }
 
+    /**
+     * @return array
+     */
     public function provideTimeout()
     {
         return [

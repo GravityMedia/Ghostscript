@@ -9,10 +9,11 @@ namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Argument;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The null device test class
+ * The no display device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
@@ -28,11 +29,11 @@ class NoDisplayTest extends \PHPUnit_Framework_TestCase
     public function testDeviceCreation()
     {
         $ghostscript = new Ghostscript();
-        $processArguments = new ProcessArguments();
+        $arguments = new Arguments();
 
-        $noDisplay = new NoDisplay($ghostscript, $processArguments);
+        $device = new NoDisplay($ghostscript, $arguments);
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $noDisplay);
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Process\Argument', $processArguments->getArgument('-dNODISPLAY'));
+        $this->assertInstanceOf(NoDisplay::class, $device);
+        $this->assertInstanceOf(Argument::class, $arguments->getArgument('-dNODISPLAY'));
     }
 }

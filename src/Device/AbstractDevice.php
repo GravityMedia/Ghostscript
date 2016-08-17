@@ -7,15 +7,6 @@
 
 namespace GravityMedia\Ghostscript\Device;
 
-use GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait;
-use GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
@@ -24,78 +15,78 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The abstract device class
+ * The abstract device class.
  *
  * @package GravityMedia\Ghostscript\Devices
  */
 abstract class AbstractDevice
 {
     /**
-     * Use command line options
+     * Use command line options.
      */
     use CommandLineParametersTrait;
 
     /**
-     * Use rendering parameters
+     * Use rendering parameters.
      */
-    use RenderingTrait;
+    use CommandLineParameters\RenderingTrait;
 
     /**
-     * Use page parameters
+     * Use page parameters.
      */
-    use PageTrait;
+    use CommandLineParameters\PageTrait;
 
     /**
-     * Use font-related parameters
+     * Use font-related parameters.
      */
-    use FontTrait;
+    use CommandLineParameters\FontTrait;
 
     /**
-     * Use resource-related parameters
+     * Use resource-related parameters.
      */
-    use ResourceTrait;
+    use CommandLineParameters\ResourceTrait;
 
     /**
-     * Use interaction parameters
+     * Use interaction parameters.
      */
-    use InteractionTrait;
+    use CommandLineParameters\InteractionTrait;
 
     /**
-     * Use device and output selection parameters
+     * Use device and output selection parameters.
      */
-    use OutputSelectionTrait;
+    use CommandLineParameters\OutputSelectionTrait;
 
     /**
-     * Use EPS parameters
+     * Use EPS parameters.
      */
-    use EpsTrait;
+    use CommandLineParameters\EpsTrait;
 
     /**
-     * Use ICC color parameters
+     * Use ICC color parameters.
      */
-    use IccColorTrait;
+    use CommandLineParameters\IccColorTrait;
 
     /**
-     * Use other parameters
+     * Use other parameters.
      */
-    use OtherTrait;
+    use CommandLineParameters\OtherTrait;
 
     /**
-     * The Ghostscript object
+     * The Ghostscript object.
      *
      * @var Ghostscript
      */
     private $ghostscript;
 
     /**
-     * The arguments object
+     * The arguments object.
      *
      * @var Arguments
      */
     private $arguments;
 
     /**
-     * Create abstract device object
+     * Create abstract device object.
      *
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments
@@ -107,7 +98,7 @@ abstract class AbstractDevice
     }
 
     /**
-     * Get Argument
+     * Get argument.
      *
      * @param string $name
      *
@@ -119,7 +110,7 @@ abstract class AbstractDevice
     }
 
     /**
-     * Whether argument is set
+     * Whether argument is set.
      *
      * @param string $name
      *
@@ -131,7 +122,7 @@ abstract class AbstractDevice
     }
 
     /**
-     * Get argument value
+     * Get argument value.
      *
      * @param string $name
      *
@@ -148,7 +139,7 @@ abstract class AbstractDevice
     }
 
     /**
-     * Set argument
+     * Set argument.
      *
      * @param string $argument
      *
@@ -164,7 +155,7 @@ abstract class AbstractDevice
     /**
      * Sanitize input.
      *
-     * @param mixed $input
+     * @param null|string|resource|Input $input
      *
      * @return Input
      */
@@ -192,17 +183,16 @@ abstract class AbstractDevice
     }
 
     /**
-     * Create process object
+     * Create process arguments.
      *
-     * @param mixed $input
+     * @param Input $input
      *
      * @throws \RuntimeException
      *
-     * @return Process
+     * @return array
      */
-    public function createProcess($input = null)
+    protected function createProcessArguments(Input $input)
     {
-        $input = $this->sanitizeInput($input);
         $arguments = array_values($this->arguments->toArray());
 
         if (null !== $input->getPostScriptCode()) {
@@ -224,12 +214,44 @@ abstract class AbstractDevice
             array_push($arguments, '-');
         }
 
-        $processBuilder = new ProcessBuilder($arguments);
+        return $arguments;
+    }
+
+    /**
+     * Create process builder.
+     *
+     * @param array $arguments
+     * @param Input $input
+     *
+     * @return ProcessBuilder
+     */
+    protected function createProcessBuilder(array $arguments, Input $input)
+    {
+        $processBuilder = ProcessBuilder::create($arguments);
         $processBuilder->setPrefix($this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY));
+        $processBuilder->setWorkingDirectory($this->ghostscript->getOption('cwd'));
         $processBuilder->addEnvironmentVariables($this->ghostscript->getOption('env', []));
         $processBuilder->setTimeout($this->ghostscript->getOption('timeout', 60));
         $processBuilder->setInput($input->getProcessInput());
 
-        return $processBuilder->getProcess();
+        return $processBuilder;
+    }
+
+    /**
+     * Create process object.
+     *
+     * @param null|string|resource|Input $input
+     *
+     * @throws \RuntimeException
+     *
+     * @return Process
+     */
+    public function createProcess($input = null)
+    {
+        $input = $this->sanitizeInput($input);
+
+        $arguments = $this->createProcessArguments($input);
+
+        return $this->createProcessBuilder($arguments, $input)->getProcess();
     }
 }

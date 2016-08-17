@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
- * The device and output selection parameters trait
+ * The device and output selection parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  *
@@ -16,24 +16,6 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
  */
 trait OutputSelectionTrait
 {
-    /**
-     * Get argument value
-     *
-     * @param string $name
-     *
-     * @return null|string
-     */
-    abstract protected function getArgumentValue($name);
-
-    /**
-     * Set argument
-     *
-     * @param string $argument
-     *
-     * @return $this
-     */
-    abstract protected function setArgument($argument);
-
     /**
      * TODO
      *

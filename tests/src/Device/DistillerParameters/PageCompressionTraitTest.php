@@ -10,7 +10,7 @@ namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 use GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait;
 
 /**
- * The page compression distiller parameters test class
+ * The page compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -25,7 +25,7 @@ class PageCompressionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait');
+        $trait = $this->getMockForTrait(PageCompressionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')

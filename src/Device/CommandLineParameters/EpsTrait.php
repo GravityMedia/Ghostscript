@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
- * The EPS parameters trait
+ * The EPS parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  *
@@ -16,24 +16,6 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
  */
 trait EpsTrait
 {
-    /**
-     * Get argument value
-     *
-     * @param string $name
-     *
-     * @return null|string
-     */
-    abstract protected function getArgumentValue($name);
-
-    /**
-     * Set argument
-     *
-     * @param string $argument
-     *
-     * @return $this
-     */
-    abstract protected function setArgument($argument);
-
     /**
      * TODO
      *

@@ -13,7 +13,7 @@ use GravityMedia\Ghostscript\Enum\Binding;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The general distiller parameters test class
+ * The general distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *

@@ -14,7 +14,7 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 
 /**
- * The PDF write device test class
+ * The PDF write device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
@@ -71,15 +71,6 @@ class PdfWriteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($device->getOutputFile());
         $this->assertSame($outputFile, $device->setOutputFile($outputFile)->getOutputFile());
-    }
-
-    public function testOutputStdoutArgument()
-    {
-        $device = $this->createDevice();
-        $this->assertFalse($device->isOutputStdout());
-
-        $device->setOutputStdout();
-        $this->assertTrue($device->isOutputStdout());
     }
 
     /**

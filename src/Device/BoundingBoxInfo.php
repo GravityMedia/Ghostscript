@@ -11,7 +11,7 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The bounding box info device class
+ * The bounding box info device class.
  *
  * @link    http://ghostscript.com/doc/current/Devices.htm#Bounding_box_output
  *
@@ -20,7 +20,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
 class BoundingBoxInfo extends AbstractDevice
 {
     /**
-     * Create bounding box info device object
+     * Create bounding box info device object.
      *
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments

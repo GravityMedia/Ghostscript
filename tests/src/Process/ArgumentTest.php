@@ -10,7 +10,7 @@ namespace GravityMedia\GhostscriptTest\Process;
 use GravityMedia\Ghostscript\Process\Argument;
 
 /**
- * The process argument test class
+ * The process argument test class.
  *
  * @package GravityMedia\GhostscriptTest\Process
  *

@@ -12,7 +12,7 @@ use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The font distiller parameters test class
+ * The font distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -29,7 +29,7 @@ class FontTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForDefaultValue($pdfSettings)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait');
+        $trait = $this->getMockForTrait(FontTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -49,7 +49,7 @@ class FontTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait');
+        $trait = $this->getMockForTrait(FontTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -76,7 +76,10 @@ class FontTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($cannotEmbedFontPolicy, $trait->getCannotEmbedFontPolicy());
 
         $trait = $this->createTraitForArgumentValue('/' . $cannotEmbedFontPolicy);
-        $this->assertSame($cannotEmbedFontPolicy, $trait->setCannotEmbedFontPolicy($cannotEmbedFontPolicy)->getCannotEmbedFontPolicy());
+        $this->assertSame(
+            $cannotEmbedFontPolicy,
+            $trait->setCannotEmbedFontPolicy($cannotEmbedFontPolicy)->getCannotEmbedFontPolicy()
+        );
     }
 
     /**
@@ -99,7 +102,7 @@ class FontTraitTest extends \PHPUnit_Framework_TestCase
     public function testCannotEmbedFontPolicyArgumentThrowsException()
     {
         /** @var FontTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait');
+        $trait = $this->getMockForTrait(FontTrait::class);
 
         $trait->setCannotEmbedFontPolicy('/Foo');
     }

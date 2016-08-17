@@ -11,7 +11,7 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The PDF info device class
+ * The PDF info device class.
  *
  * This class supports the pdf_info.ps script that is contained in Ghostscript toolbin.
  *
@@ -22,14 +22,14 @@ use GravityMedia\Ghostscript\Process\Arguments;
 class PdfInfo extends NoDisplay
 {
     /**
-     * The PDF info path
+     * The PDF info path.
      *
      * @var string
      */
     private $pdfInfoPath;
 
     /**
-     * Create PDF info device object
+     * Create PDF info device object.
      *
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments
@@ -43,16 +43,22 @@ class PdfInfo extends NoDisplay
     }
 
     /**
+     * Create process object.
+     *
      * @param string $input Path to PDF file to be examined
+     *
+     * @throws \RuntimeException
      *
      * @return \Symfony\Component\Process\Process
      */
     public function createProcess($input = null)
     {
-        // the PDF file to be examined must be provided as parameter -sFile=...
+        if (!is_string($input) || !file_exists($input)) {
+            throw new \RuntimeException('Input file does not exist');
+        }
+
         $this->setArgument(sprintf('-sFile=%s', $input));
 
-        // the pdf_info.ps script will be read as input to gs
         return parent::createProcess($this->pdfInfoPath);
     }
 }

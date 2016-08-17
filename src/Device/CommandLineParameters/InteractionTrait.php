@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
- * The interaction-related parameters trait
+ * The interaction-related parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  *

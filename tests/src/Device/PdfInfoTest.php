@@ -9,10 +9,10 @@ namespace GravityMedia\GhostscriptTest\Device;
 
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The pdf info device test class
+ * The pdf info device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
@@ -47,30 +47,42 @@ class PdfInfoTest extends \PHPUnit_Framework_TestCase
     public function testDeviceCreation()
     {
         $ghostscript = new Ghostscript();
-        $arguments = new ProcessArguments();
+        $arguments = new Arguments();
         $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
 
-        $pdfInfo = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
+        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
 
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\PdfInfo', $pdfInfo);
-        $this->assertInstanceOf('GravityMedia\Ghostscript\Device\NoDisplay', $pdfInfo);
+        $this->assertInstanceOf(PdfInfo::class, $device);
 
-        $field = new \ReflectionProperty('GravityMedia\Ghostscript\Device\PdfInfo', 'pdfInfoPath');
+        $field = new \ReflectionProperty(PdfInfo::class, 'pdfInfoPath');
         $field->setAccessible(true);
-        $this->assertEquals($pdfInfoPath, $field->getValue($pdfInfo));
+        $this->assertEquals($pdfInfoPath, $field->getValue($device));
     }
 
     public function testProcessCreation()
     {
         $ghostscript = new Ghostscript();
-        $arguments = new ProcessArguments();
+        $arguments = new Arguments();
         $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
         $inputFile = __DIR__ . '/../../data/input.pdf';
 
-        $pdfInfo = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
-        $process = $pdfInfo->createProcess($inputFile);
+        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
+        $process = $device->createProcess($inputFile);
 
         $expectedCommandLine = "'gs' '-dNODISPLAY' '-sFile=$inputFile' '-f' '$pdfInfoPath'";
         $this->assertEquals($expectedCommandLine, $this->quoteCommandLine($process->getCommandLine()));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testProcessCreationThrowsExceptionOnMissingInputFile()
+    {
+        $ghostscript = new Ghostscript();
+        $arguments = new Arguments();
+        $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
+
+        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
+        $device->createProcess();
     }
 }

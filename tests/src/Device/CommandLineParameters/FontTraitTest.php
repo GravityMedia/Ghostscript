@@ -10,18 +10,18 @@ namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
 
 /**
- * The font-related parameters trait test class
+ * The font-related parameters trait test class.
  *
  * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
  *
- * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
+ * @covers  \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
  */
 class FontTraitTest extends \PHPUnit_Framework_TestCase
 {
     public function testFontPath()
     {
         /** @var FontTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait');
+        $trait = $this->getMockForTrait(FontTrait::class);
         $trait->expects($this->once())->method('getArgumentValue')->with('-sFONTPATH')->willReturn(null);
         $this->assertNull($trait->getFontPath());
 

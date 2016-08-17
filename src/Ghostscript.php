@@ -22,7 +22,7 @@ use Symfony\Component\Process\Process;
 class Ghostscript
 {
     /**
-     * The default binary
+     * The default binary.
      */
     const DEFAULT_BINARY = 'gs';
 
@@ -74,6 +74,18 @@ class Ghostscript
     }
 
     /**
+     * Get process to identify version.
+     *
+     * @param string $binary
+     *
+     * @return Process
+     */
+    protected function createProcessToIdentifyVersion($binary)
+    {
+        return new Process($binary . ' --version');
+    }
+
+    /**
      * Get version.
      *
      * @throws \RuntimeException
@@ -85,7 +97,7 @@ class Ghostscript
         $binary = $this->getOption('bin', static::DEFAULT_BINARY);
 
         if (!isset(static::$versions[$binary])) {
-            $process = new Process($binary . ' --version');
+            $process = $this->createProcessToIdentifyVersion($binary);
             $process->run();
 
             if (!$process->isSuccessful()) {
@@ -129,9 +141,11 @@ class Ghostscript
             ->setBatch()
             ->setNoPause();
 
-        if (null !== $outputFile) {
-            $device->setOutputFile($outputFile);
+        if (null === $outputFile) {
+            $outputFile = '-';
         }
+
+        $device->setOutputFile($outputFile);
 
         return $device;
     }

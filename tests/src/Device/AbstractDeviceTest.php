@@ -11,10 +11,10 @@ use GravityMedia\Ghostscript\Device\AbstractDevice;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The abstract device test class
+ * The abstract device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
  *
@@ -54,17 +54,17 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $arguments
+     * @param array $args
      *
      * @return AbstractDevice
      */
-    protected function createDevice(array $arguments = [])
+    protected function createDevice(array $args = [])
     {
         $ghostscript = new Ghostscript();
-        $processArguments = new ProcessArguments();
-        $processArguments->setArguments($arguments);
+        $arguments = new Arguments();
+        $arguments->setArguments($args);
 
-        return $this->getMockForAbstractClass(AbstractDevice::class, [$ghostscript, $processArguments]);
+        return $this->getMockForAbstractClass(AbstractDevice::class, [$ghostscript, $arguments]);
     }
 
     public function testArgumentGetter()
@@ -104,16 +104,16 @@ class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
     public function testArgumentSetter()
     {
         $ghostscript = new Ghostscript();
-        $processArguments = new ProcessArguments();
+        $arguments = new Arguments();
 
         /** @var AbstractDevice $device */
-        $device = $this->getMockForAbstractClass(AbstractDevice::class, [$ghostscript, $processArguments]);
+        $device = $this->getMockForAbstractClass(AbstractDevice::class, [$ghostscript, $arguments]);
 
         $method = new \ReflectionMethod(AbstractDevice::class, 'setArgument');
         $method->setAccessible(true);
         $method->invoke($device, '-dFoo=/Bar');
 
-        $argument = $processArguments->getArgument('-dFoo');
+        $argument = $arguments->getArgument('-dFoo');
         $this->assertInstanceOf(Argument::class, $argument);
         $this->assertSame('/Bar', $argument->getValue());
     }

@@ -11,14 +11,14 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
- * The no display device class
+ * The no display device class.
  *
  * @package GravityMedia\Ghostscript\Devices
  */
 class NoDisplay extends AbstractDevice
 {
     /**
-     * Create no display device object
+     * Create no display device object.
      *
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments

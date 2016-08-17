@@ -10,7 +10,7 @@ namespace GravityMedia\Ghostscript\Device\DistillerParameters;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The advanced distiller parameters trait
+ * The advanced distiller parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  *

@@ -8,7 +8,7 @@
 namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 
 /**
- * The other parameters trait
+ * The other parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\CommandLineParameters
  *

@@ -14,7 +14,7 @@ use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
 use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
 
 /**
- * The color conversion distiller parameters trait
+ * The color conversion distiller parameters trait.
  *
  * @package GravityMedia\Ghostscript\Device\DistillerParameters
  *

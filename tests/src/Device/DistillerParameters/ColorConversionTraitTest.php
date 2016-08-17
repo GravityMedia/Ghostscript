@@ -15,7 +15,7 @@ use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
 use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
 
 /**
- * The color conversion distiller parameters test class
+ * The color conversion distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -35,7 +35,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForDefaultValue($pdfSettings)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -55,7 +55,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -76,7 +76,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($trait->getCalCmykProfile());
 
         $trait = $this->createTraitForArgumentValue('(/path/to/profile.icc)');
-        $this->assertSame('/path/to/profile.icc', $trait->setCalCmykProfile('/path/to/profile.icc')->getCalCmykProfile());
+        $this->assertSame(
+            '/path/to/profile.icc',
+            $trait->setCalCmykProfile('/path/to/profile.icc')->getCalCmykProfile()
+        );
     }
 
     public function testCalGrayProfileArgument()
@@ -85,7 +88,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($trait->getCalGrayProfile());
 
         $trait = $this->createTraitForArgumentValue('(/path/to/profile.icc)');
-        $this->assertSame('/path/to/profile.icc', $trait->setCalGrayProfile('/path/to/profile.icc')->getCalGrayProfile());
+        $this->assertSame(
+            '/path/to/profile.icc',
+            $trait->setCalGrayProfile('/path/to/profile.icc')->getCalGrayProfile()
+        );
     }
 
     public function testCalRgbProfileArgument()
@@ -109,7 +115,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($colorConversionStrategy, $trait->getColorConversionStrategy());
 
         $trait = $this->createTraitForArgumentValue('/' . $colorConversionStrategy);
-        $this->assertSame($colorConversionStrategy, $trait->setColorConversionStrategy($colorConversionStrategy)->getColorConversionStrategy());
+        $this->assertSame(
+            $colorConversionStrategy,
+            $trait->setColorConversionStrategy($colorConversionStrategy)->getColorConversionStrategy()
+        );
     }
 
     /**
@@ -132,7 +141,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testColorConversionStrategyArgumentThrowsException()
     {
         /** @var ColorConversionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->setColorConversionStrategy('/Foo');
     }
@@ -169,7 +178,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testDefaultRenderingIntentArgument($defaultRenderingIntent)
     {
         $trait = $this->createTraitForArgumentValue('/' . $defaultRenderingIntent);
-        $this->assertSame($defaultRenderingIntent, $trait->setDefaultRenderingIntent($defaultRenderingIntent)->getDefaultRenderingIntent());
+        $this->assertSame(
+            $defaultRenderingIntent,
+            $trait->setDefaultRenderingIntent($defaultRenderingIntent)->getDefaultRenderingIntent()
+        );
     }
 
     /**
@@ -192,7 +204,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testDefaultRenderingIntentArgumentThrowsException()
     {
         /** @var ColorConversionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->setDefaultRenderingIntent('/Foo');
     }
@@ -218,7 +230,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($preserveOverprintSettings, $trait->isPreserveOverprintSettings());
 
         $trait = $this->createTraitForArgumentValue($preserveOverprintSettings);
-        $this->assertSame($preserveOverprintSettings, $trait->setPreserveOverprintSettings($preserveOverprintSettings)->isPreserveOverprintSettings());
+        $this->assertSame(
+            $preserveOverprintSettings,
+            $trait->setPreserveOverprintSettings($preserveOverprintSettings)->isPreserveOverprintSettings()
+        );
     }
 
     /**
@@ -258,7 +273,10 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testTransferFunctionInfoArgument($transferFunctionInfo)
     {
         $trait = $this->createTraitForArgumentValue('/' . $transferFunctionInfo);
-        $this->assertSame($transferFunctionInfo, $trait->setTransferFunctionInfo($transferFunctionInfo)->getTransferFunctionInfo());
+        $this->assertSame(
+            $transferFunctionInfo,
+            $trait->setTransferFunctionInfo($transferFunctionInfo)->getTransferFunctionInfo()
+        );
     }
 
     /**
@@ -279,7 +297,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testTransferFunctionInfoArgumentThrowsException()
     {
         /** @var ColorConversionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->setTransferFunctionInfo('/Foo');
     }
@@ -319,7 +337,7 @@ class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
     public function testUcrAndBgInfoArgumentThrowsException()
     {
         /** @var ColorConversionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait');
+        $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
         $trait->setUcrAndBgInfo('/Foo');
     }

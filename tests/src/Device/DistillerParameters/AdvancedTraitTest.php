@@ -11,7 +11,7 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The advanced distiller parameters test class
+ * The advanced distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -26,7 +26,7 @@ class AdvancedTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForDefaultValue($pdfSettings)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait');
+        $trait = $this->getMockForTrait(AdvancedTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -46,7 +46,7 @@ class AdvancedTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait');
+        $trait = $this->getMockForTrait(AdvancedTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -192,7 +192,10 @@ class AdvancedTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($preserveOpiComments, $trait->isPreserveOpiComments());
 
         $trait = $this->createTraitForArgumentValue($preserveOpiComments);
-        $this->assertSame($preserveOpiComments, $trait->setPreserveOpiComments($preserveOpiComments)->isPreserveOpiComments());
+        $this->assertSame(
+            $preserveOpiComments,
+            $trait->setPreserveOpiComments($preserveOpiComments)->isPreserveOpiComments()
+        );
     }
 
     /**

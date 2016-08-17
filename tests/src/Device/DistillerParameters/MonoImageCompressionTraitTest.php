@@ -13,7 +13,7 @@ use GravityMedia\Ghostscript\Enum\MonoImageFilter;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 
 /**
- * The monochrome image compression distiller parameters test class
+ * The monochrome image compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
  *
@@ -31,7 +31,7 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForDefaultValue($pdfSettings)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait');
+        $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -51,7 +51,7 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTraitForArgumentValue($argumentValue)
     {
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait');
+        $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
@@ -105,7 +105,10 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($monoImageDownsampleType, $trait->getMonoImageDownsampleType());
 
         $trait = $this->createTraitForArgumentValue('/' . $monoImageDownsampleType);
-        $this->assertSame($monoImageDownsampleType, $trait->setMonoImageDownsampleType($monoImageDownsampleType)->getMonoImageDownsampleType());
+        $this->assertSame(
+            $monoImageDownsampleType,
+            $trait->setMonoImageDownsampleType($monoImageDownsampleType)->getMonoImageDownsampleType()
+        );
     }
 
     /**
@@ -128,7 +131,7 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testMonoImageDownsampleTypeArgumentThrowsException()
     {
         /** @var MonoImageCompressionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait');
+        $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 
         $trait->setMonoImageDownsampleType('/Foo');
     }
@@ -147,7 +150,10 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testMonoImageFilterArgument($transferFunctionInfo)
     {
         $trait = $this->createTraitForArgumentValue('/' . $transferFunctionInfo);
-        $this->assertSame($transferFunctionInfo, $trait->setMonoImageFilter($transferFunctionInfo)->getMonoImageFilter());
+        $this->assertSame(
+            $transferFunctionInfo,
+            $trait->setMonoImageFilter($transferFunctionInfo)->getMonoImageFilter()
+        );
     }
 
     /**
@@ -168,7 +174,7 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
     public function testMonoImageFilterArgumentThrowsException()
     {
         /** @var MonoImageCompressionTrait $trait */
-        $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait');
+        $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 
         $trait->setMonoImageFilter('/Foo');
     }
@@ -185,7 +191,10 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($monoImageResolution, $trait->getMonoImageResolution());
 
         $trait = $this->createTraitForArgumentValue($monoImageResolution);
-        $this->assertSame($monoImageResolution, $trait->setMonoImageResolution($monoImageResolution)->getMonoImageResolution());
+        $this->assertSame(
+            $monoImageResolution,
+            $trait->setMonoImageResolution($monoImageResolution)->getMonoImageResolution()
+        );
     }
 
     /**
@@ -214,7 +223,10 @@ class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($downsampleMonoImages, $trait->isDownsampleMonoImages());
 
         $trait = $this->createTraitForArgumentValue($downsampleMonoImages);
-        $this->assertSame($downsampleMonoImages, $trait->setDownsampleMonoImages($downsampleMonoImages)->isDownsampleMonoImages());
+        $this->assertSame(
+            $downsampleMonoImages,
+            $trait->setDownsampleMonoImages($downsampleMonoImages)->isDownsampleMonoImages()
+        );
     }
 
     /**
