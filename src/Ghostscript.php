@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript;
 
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
+use GravityMedia\Ghostscript\Device\Inkcov;
 use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
@@ -184,6 +185,24 @@ class Ghostscript
             ->setSafer()
             ->setBatch()
             ->setNoPause();
+
+        return $device;
+    }
+
+    /**
+     * Create inkcov device object
+     *
+     * @return Inkcov
+     */
+    public function createInkcovDevice()
+    {
+        $this->options['quiet'] = false;
+
+        $arguments = $this->createArguments();
+        $arguments->addArgument('-o');
+        $arguments->addArgument('-');
+
+        $device = new Inkcov($this, $arguments);
 
         return $device;
     }
