@@ -169,6 +169,13 @@ class PdfWrite extends AbstractDevice
             $code = '';
         }
 
+        /**
+         * Make sure .setpdfwrite gets called:
+         * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
+         * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
+         * the pdfwrite device.
+         * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
+         */
         if (false === strstr($code, '.setpdfwrite')) {
             $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
         }
