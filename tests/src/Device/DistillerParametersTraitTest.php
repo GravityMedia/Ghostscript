@@ -11,6 +11,7 @@ use GravityMedia\Ghostscript\Device\DistillerParametersTrait;
 use GravityMedia\Ghostscript\Enum\AutoRotatePages;
 use GravityMedia\Ghostscript\Enum\Binding;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The general distiller parameters test class.
@@ -22,7 +23,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  * @uses    \GravityMedia\Ghostscript\Enum\AutoRotatePages
  * @uses    \GravityMedia\Ghostscript\Enum\Binding
  */
-class DistillerParametersTraitTest extends \PHPUnit_Framework_TestCase
+class DistillerParametersTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

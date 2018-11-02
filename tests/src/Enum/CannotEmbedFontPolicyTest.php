@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The cannot embed font policy enum test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
  *
  * @covers  \GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy
  */
-class CannotEmbedFontPolicyTest extends \PHPUnit_Framework_TestCase
+class CannotEmbedFontPolicyTest extends TestCase
 {
     public function testValues()
     {

@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The image downsample type enum test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
  *
  * @covers  \GravityMedia\Ghostscript\Enum\ImageDownsampleType
  */
-class ImageDownsampleTypeTest extends \PHPUnit_Framework_TestCase
+class ImageDownsampleTypeTest extends TestCase
 {
     public function testValues()
     {

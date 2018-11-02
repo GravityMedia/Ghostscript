@@ -9,6 +9,7 @@ namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The advanced distiller parameters test class.
@@ -17,7 +18,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  *
  * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait
  */
-class AdvancedTraitTest extends \PHPUnit_Framework_TestCase
+class AdvancedTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

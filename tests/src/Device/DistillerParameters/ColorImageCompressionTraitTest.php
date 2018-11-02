@@ -11,6 +11,7 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\ColorImageCompressionTra
 use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The color image compression distiller parameters test class.
@@ -22,7 +23,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  * @uses    \GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter
  * @uses    \GravityMedia\Ghostscript\Enum\ImageDownsampleType
  */
-class ColorImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
+class ColorImageCompressionTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

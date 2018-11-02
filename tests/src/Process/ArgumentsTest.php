@@ -9,6 +9,7 @@ namespace GravityMedia\GhostscriptTest\Process;
 
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The arguments test class.
@@ -19,7 +20,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  *
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  */
-class ArgumentsTest extends \PHPUnit_Framework_TestCase
+class ArgumentsTest extends TestCase
 {
     public function testArgumentsConstruction()
     {

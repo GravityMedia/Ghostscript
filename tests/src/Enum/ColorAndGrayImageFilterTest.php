@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The color and grayscale image filter enum test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
  *
  * @covers  \GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter
  */
-class ColorAndGrayImageFilterTest extends \PHPUnit_Framework_TestCase
+class ColorAndGrayImageFilterTest extends TestCase
 {
     public function testValues()
     {

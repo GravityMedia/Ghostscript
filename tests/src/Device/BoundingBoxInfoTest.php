@@ -11,6 +11,7 @@ use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The bounding box info device test class.
@@ -24,7 +25,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class BoundingBoxInfoTest extends \PHPUnit_Framework_TestCase
+class BoundingBoxInfoTest extends TestCase
 {
     public function testDeviceCreation()
     {

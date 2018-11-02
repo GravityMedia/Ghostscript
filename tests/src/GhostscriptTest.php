@@ -14,6 +14,7 @@ use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The Ghostscript test class
@@ -42,7 +43,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class GhostscriptTest extends \PHPUnit_Framework_TestCase
+class GhostscriptTest extends TestCase
 {
     public function testCreateGhostscriptObject()
     {

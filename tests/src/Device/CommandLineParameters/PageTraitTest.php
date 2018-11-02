@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
 use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The page parameters trait test class.
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait;
  *
  * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
  */
-class PageTraitTest extends \PHPUnit_Framework_TestCase
+class PageTraitTest extends TestCase
 {
     public function testFirstPage()
     {

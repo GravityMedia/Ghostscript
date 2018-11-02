@@ -11,6 +11,7 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrai
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\MonoImageFilter;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The monochrome image compression distiller parameters test class.
@@ -22,7 +23,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  * @uses    \GravityMedia\Ghostscript\Enum\MonoImageFilter
  * @uses    \GravityMedia\Ghostscript\Enum\ImageDownsampleType
  */
-class MonoImageCompressionTraitTest extends \PHPUnit_Framework_TestCase
+class MonoImageCompressionTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

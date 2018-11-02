@@ -5,7 +5,7 @@ namespace GravityMedia\Ghostscript\Device;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The inkcov device test class.
@@ -21,7 +21,7 @@ use PHPUnit_Framework_TestCase;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class InkcovTest extends PHPUnit_Framework_TestCase
+class InkcovTest extends TestCase
 {
     /**
      * Returns an OS independent representation of the commandline.

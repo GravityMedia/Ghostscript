@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The binding enum test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Enum\ProcessColorModel;
  *
  * @covers  \GravityMedia\Ghostscript\Enum\ProcessColorModel
  */
-class ProcessColorModelTest extends \PHPUnit_Framework_TestCase
+class ProcessColorModelTest extends TestCase
 {
     public function testValues()
     {

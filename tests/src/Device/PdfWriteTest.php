@@ -12,6 +12,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The PDF write device test class.
@@ -29,7 +30,7 @@ use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class PdfWriteTest extends \PHPUnit_Framework_TestCase
+class PdfWriteTest extends TestCase
 {
     /**
      * Returns an OS independent representation of the commandline.
