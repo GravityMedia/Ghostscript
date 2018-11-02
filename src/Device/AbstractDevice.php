@@ -12,7 +12,6 @@ use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The abstract device class.
@@ -218,26 +217,6 @@ abstract class AbstractDevice
     }
 
     /**
-     * Create process builder.
-     *
-     * @param array $arguments
-     * @param Input $input
-     *
-     * @return ProcessBuilder
-     */
-    protected function createProcessBuilder(array $arguments, Input $input)
-    {
-        $processBuilder = ProcessBuilder::create($arguments);
-        $processBuilder->setPrefix($this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY));
-        $processBuilder->setWorkingDirectory($this->ghostscript->getOption('cwd'));
-        $processBuilder->addEnvironmentVariables($this->ghostscript->getOption('env', []));
-        $processBuilder->setTimeout($this->ghostscript->getOption('timeout', 60));
-        $processBuilder->setInput($input->getProcessInput());
-
-        return $processBuilder;
-    }
-
-    /**
      * Create process object.
      *
      * @param null|string|resource|Input $input
@@ -251,7 +230,17 @@ abstract class AbstractDevice
         $input = $this->sanitizeInput($input);
 
         $arguments = $this->createProcessArguments($input);
+        array_unshift(
+            $arguments,
+            $this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY)
+        );
 
-        return $this->createProcessBuilder($arguments, $input)->getProcess();
+        return new Process(
+            $arguments,
+            $this->ghostscript->getOption('cwd'),
+            $this->ghostscript->getOption('env', []),
+            $input->getProcessInput(),
+            $this->ghostscript->getOption('timeout', 60)
+        );
     }
 }
