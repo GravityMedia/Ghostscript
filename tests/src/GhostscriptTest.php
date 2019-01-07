@@ -37,6 +37,7 @@ use PHPUnit\Framework\TestCase;
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
+ * @uses    \GravityMedia\Ghostscript\Device\Inkcov
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Device\PdfInfo
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
