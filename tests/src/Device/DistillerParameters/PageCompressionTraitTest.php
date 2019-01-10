@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The page compression distiller parameters test class.
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait;
  *
  * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait
  */
-class PageCompressionTraitTest extends \PHPUnit_Framework_TestCase
+class PageCompressionTraitTest extends TestCase
 {
     /**
      * @param null|string $argumentValue

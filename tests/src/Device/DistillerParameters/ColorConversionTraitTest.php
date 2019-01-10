@@ -13,6 +13,7 @@ use GravityMedia\Ghostscript\Enum\DefaultRenderingIntent;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
 use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The color conversion distiller parameters test class.
@@ -26,7 +27,7 @@ use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
  * @uses    \GravityMedia\Ghostscript\Enum\TransferFunctionInfo
  * @uses    \GravityMedia\Ghostscript\Enum\UcrAndBgInfo
  */
-class ColorConversionTraitTest extends \PHPUnit_Framework_TestCase
+class ColorConversionTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

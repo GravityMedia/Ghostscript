@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
 use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The font-related parameters trait test class.
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait;
  *
  * @covers  \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
  */
-class FontTraitTest extends \PHPUnit_Framework_TestCase
+class FontTraitTest extends TestCase
 {
     public function testFontPath()
     {

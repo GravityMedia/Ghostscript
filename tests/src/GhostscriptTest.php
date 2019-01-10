@@ -8,11 +8,13 @@
 namespace GravityMedia\GhostscriptTest;
 
 use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
+use GravityMedia\Ghostscript\Device\Inkcov;
 use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The Ghostscript test class
@@ -35,13 +37,14 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
  * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
  * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
+ * @uses    \GravityMedia\Ghostscript\Device\Inkcov
  * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
  * @uses    \GravityMedia\Ghostscript\Device\PdfInfo
  * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class GhostscriptTest extends \PHPUnit_Framework_TestCase
+class GhostscriptTest extends TestCase
 {
     public function testCreateGhostscriptObject()
     {
@@ -147,6 +150,15 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $instance = new Ghostscript();
 
         $this->assertInstanceOf(BoundingBoxInfo::class, $instance->createBoundingBoxInfoDevice());
+    }
+
+    public function testInkcovDeviceCreation()
+    {
+        $instance = new Ghostscript();
+        $device = $instance->createInkcovDevice();
+
+        $this->assertInstanceOf(Inkcov::class, $device);
+        $this->assertEquals("'gs' '-o' '-' '-sDEVICE=inkcov'", $device->createProcess()->getCommandLine());
     }
 
     /**

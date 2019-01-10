@@ -10,6 +10,7 @@ namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 use GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait;
 use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The font distiller parameters test class.
@@ -20,7 +21,7 @@ use GravityMedia\Ghostscript\Enum\PdfSettings;
  *
  * @uses    \GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy
  */
-class FontTraitTest extends \PHPUnit_Framework_TestCase
+class FontTraitTest extends TestCase
 {
     /**
      * @param string $pdfSettings

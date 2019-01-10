@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest;
 
 use GravityMedia\Ghostscript\Input;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The input test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Input;
  *
  * @covers  \GravityMedia\Ghostscript\Input
  */
-class InputTest extends \PHPUnit_Framework_TestCase
+class InputTest extends TestCase
 {
     public function testDefaultInput()
     {

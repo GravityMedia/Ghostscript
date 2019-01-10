@@ -11,6 +11,7 @@ use GravityMedia\Ghostscript\Device\NoDisplay;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The no display device test class.
@@ -24,7 +25,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class NoDisplayTest extends \PHPUnit_Framework_TestCase
+class NoDisplayTest extends TestCase
 {
     public function testDeviceCreation()
     {

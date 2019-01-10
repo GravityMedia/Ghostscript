@@ -10,6 +10,7 @@ namespace GravityMedia\GhostscriptTest\Device;
 use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The pdf info device test class.
@@ -25,7 +26,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class PdfInfoTest extends \PHPUnit_Framework_TestCase
+class PdfInfoTest extends TestCase
 {
     /**
      * Returns an OS independent representation of the commandline.

@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\Binding;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The binding enum test class
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Enum\Binding;
  *
  * @covers  \GravityMedia\Ghostscript\Enum\Binding
  */
-class BindingTest extends \PHPUnit_Framework_TestCase
+class BindingTest extends TestCase
 {
     public function testValues()
     {

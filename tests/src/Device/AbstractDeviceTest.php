@@ -12,6 +12,7 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The abstract device test class.
@@ -34,7 +35,7 @@ use GravityMedia\Ghostscript\Process\Arguments;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class AbstractDeviceTest extends \PHPUnit_Framework_TestCase
+class AbstractDeviceTest extends TestCase
 {
     /**
      * Returns an OS independent representation of the commandline.

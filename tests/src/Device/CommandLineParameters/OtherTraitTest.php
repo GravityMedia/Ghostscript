@@ -8,6 +8,7 @@
 namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
 use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The other parameters trait test class.
@@ -16,7 +17,7 @@ use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
  *
  * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
  */
-class OtherTraitTest extends \PHPUnit_Framework_TestCase
+class OtherTraitTest extends TestCase
 {
     public function testFilterImage()
     {

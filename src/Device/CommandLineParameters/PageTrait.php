@@ -17,13 +17,75 @@ namespace GravityMedia\Ghostscript\Device\CommandLineParameters;
 trait PageTrait
 {
     /**
+     * Get argument value.
+     *
+     * @param string $name
+     *
+     * @return null|string
+     */
+    abstract protected function getArgumentValue($name);
+
+    /**
+     * Set argument.
+     *
+     * @param string $argument
+     *
+     * @return $this
+     */
+    abstract protected function setArgument($argument);
+
+    /**
+     * Get FirstPage parameter value
+     *
+     * @return string|null
+     */
+    public function getFirstPage()
+    {
+        return $this->getArgumentValue('-dFirstPage');
+    }
+
+    /**
+     * Set FirstPage parameter
+     * Begins processing on the designated page of the document.
+     * 
+     * @param int $firstPage.
+     *
+     * @return $this
+     */
+    public function setFirstPage($firstPage)
+    {
+        $this->setArgument(sprintf('-dFirstPage=%d', $firstPage));
+
+        return $this;
+    }
+
+    /**
+     * Get LastPage parameter value
+     *
+     * @return string|null
+     */
+    public function getLastPage()
+    {
+        return $this->getArgumentValue('-dLastPage');
+    }
+
+    /**
+     * Set LastPage parameter
+     * Stops processing after the designated page of the document.
+     * 
+     * @param int $lastPage.
+     *
+     * @return $this
+     */
+    public function setLastPage($lastPage)
+    {
+        $this->setArgument(sprintf('-dLastPage=%d', $lastPage));
+
+        return $this;
+    }
+
+    /**
      * TODO
-     *
-     * -dFirstPage=pagenumber
-     *     Begins processing on the designated page of the document.
-     *
-     * -dLastPage=pagenumber
-     *     Stops processing after the designated page of the document.
      *
      * -dFIXEDMEDIA
      *     Causes the media size to be fixed after initialization, forcing pages of other sizes or orientations to be
