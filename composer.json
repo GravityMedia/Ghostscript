@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/process": "^4.1"
+        "symfony/process": "^3.4|^4.1"
     },
     "require-dev": {
         "phing/phing": "^2.14",
