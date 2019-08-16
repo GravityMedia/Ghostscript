@@ -4,5 +4,6 @@ build/
 cache/
 vendor/
 composer.phar
+composer.lock
 coverage.clover
 phpunit.xml
