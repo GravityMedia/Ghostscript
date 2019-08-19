@@ -3,15 +3,28 @@ language: "php"
 php:
     - "7.1"
     - "7.2"
+    - "7.3"
+
+matrix:
+    include:
+        - php: '7.1'
+          env: PREFER_LOWEST=1
+        - php: '7.2'
+          env: PREFER_LOWEST=1
+        - php: '7.3'
+          env: PREFER_LOWEST=1
 
 before_install:
     - "composer self-update"
 
 install:
-    - "composer install"
+    - if [[ $PREFER_LOWEST != 1 ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
+    - if [[ $PREFER_LOWEST == 1 ]]; then composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction; fi
+    - if [[ $PREFER_LOWEST == 1 ]]; then composer require --dev dereuromark/composer-prefer-lowest; fi
 
 script:
     - "php vendor/bin/phpunit --coverage-clover=coverage.clover --coverage-text --verbose"
+    - if [[ $PREFER_LOWEST == 1 ]]; then vendor/bin/validate-prefer-lowest; fi
 
 after_script:
     - "php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover"
