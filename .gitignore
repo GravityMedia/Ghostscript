@@ -1,5 +1,4 @@
-.idea/deployment.xml
-.idea/workspace.xml
+.idea/
 build/
 cache/
 vendor/

@@ -83,7 +83,7 @@ class Ghostscript
      */
     protected function createProcessToIdentifyVersion($binary)
     {
-        return new Process($binary . ' --version');
+        return new Process([$binary, '--version']);
     }
 
     /**
