@@ -61,6 +61,13 @@ class PdfWrite extends AbstractDevice
     use DistillerParameters\AdvancedTrait;
 
     /**
+     * The Ghostscript binary version.
+     *
+     * @var string
+     */
+    protected $ghostscriptVersion;
+
+    /**
      * Create PDF write device object.
      *
      * @param Ghostscript $ghostscript
@@ -70,6 +77,7 @@ class PdfWrite extends AbstractDevice
     {
         parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=pdfwrite'));
 
+        $this->ghostscriptVersion = $ghostscript->getVersion();
         $this->setPdfSettings(PdfSettings::__DEFAULT);
     }
 
@@ -170,13 +178,13 @@ class PdfWrite extends AbstractDevice
         }
 
         /**
-         * Make sure .setpdfwrite gets called:
+         * Make sure .setpdfwrite gets called when using Ghostscript version less than 9.50:
          * This operator conditions the environment for the pdfwrite output device. It is a shorthand for setting parameters
          * that have been deemed benificial. While not strictly necessary, it is usually helpful to set call this when using
          * the pdfwrite device.
-         * @link http://ghostscript.com/doc/current/Language.htm#.setpdfwrite
+         * @link https://ghostscript.com/doc/current/Language.htm#.setpdfwrite
          */
-        if (false === strstr($code, '.setpdfwrite')) {
+        if (version_compare($this->ghostscriptVersion, '9.50', '<') && false === strstr($code, '.setpdfwrite')) {
             $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
         }
 
