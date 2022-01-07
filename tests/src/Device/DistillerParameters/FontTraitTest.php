@@ -102,6 +102,8 @@ class FontTraitTest extends TestCase
      */
     public function testCannotEmbedFontPolicyArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid cannot embed font policy argument');
+
         /** @var FontTrait $trait */
         $trait = $this->getMockForTrait(FontTrait::class);
 

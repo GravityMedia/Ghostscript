@@ -140,6 +140,8 @@ class ColorImageCompressionTraitTest extends TestCase
      */
     public function testColorImageDownsampleTypeArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid color image downsample type argument');
+
         /** @var ColorImageCompressionTrait $trait */
         $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 
@@ -182,6 +184,8 @@ class ColorImageCompressionTraitTest extends TestCase
      */
     public function testColorImageFilterArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid color image filter argument');
+
         /** @var ColorImageCompressionTrait $trait */
         $trait = $this->getMockForTrait(ColorImageCompressionTrait::class);
 

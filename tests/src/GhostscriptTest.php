@@ -57,6 +57,8 @@ class GhostscriptTest extends TestCase
      */
     public function testCreateGhostscriptObjectThrowsExceptionOnInvalidVersion()
     {
+        $this->expectExceptionMessage('Ghostscript version 9.00 or higher is required');
+
         $mock = $this->getMockBuilder(Ghostscript::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -99,7 +101,7 @@ class GhostscriptTest extends TestCase
     {
         $instance = new Ghostscript();
 
-        $this->assertRegExp('/^[0-9]\.[0-9]+$/', $instance->getVersion());
+        $this->assertMatchesRegularExpression('/^[0-9]\.[0-9]+$/', $instance->getVersion());
     }
 
     /**
@@ -107,6 +109,8 @@ class GhostscriptTest extends TestCase
      */
     public function testGetVersionThrowsExceptionOnFailure()
     {
+        $this->expectExceptionMessage('sh: /foo/bar/baz: No such file or directory');
+
         new Ghostscript(['bin' => '/foo/bar/baz']);
     }
 

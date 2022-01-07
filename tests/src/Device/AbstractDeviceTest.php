@@ -180,6 +180,8 @@ class AbstractDeviceTest extends TestCase
      */
     public function testProcessCreationThrowsExceptionOnMissingInputFile()
     {
+        $this->expectExceptionMessage('Input file does not exist');
+
         $input = new Input();
         $input->addFile('/path/to/input/file.pdf');
 

@@ -106,6 +106,8 @@ class PdfWriteTest extends TestCase
      */
     public function testPdfSettingsSetterThrowsExceptionOnInvalidArgument()
     {
+        $this->expectExceptionMessage('Invalid PDF settings argument');
+
         $this->createDevice()->setPdfSettings('/foo');
     }
 
@@ -137,6 +139,7 @@ class PdfWriteTest extends TestCase
      */
     public function testProcessColorModelSetterThrowsExceptionOnInvalidArgument()
     {
+        $this->expectExceptionMessage('Invalid process color model argument');
         $this->createDevice()->setProcessColorModel('/foo');
     }
 
