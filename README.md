@@ -14,7 +14,7 @@ Ghostscript is an object oriented Ghostscript binary wrapper for PHP.
 
 This library has the following requirements:
 
- - PHP 7.1+
+ - PHP 8.0+
  - Ghostscript 9.00+
 
 ## Installation
