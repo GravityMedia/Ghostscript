@@ -28,7 +28,7 @@ $ curl -s https://getcomposer.org/installer | php
 Require the package via Composer:
 
 ```bash
-$ php composer.phar require gravitymedia/ghostscript
+$ php composer.phar require gravitymedia/ghostscript:v2.0
 ```
 
 ## Usage
