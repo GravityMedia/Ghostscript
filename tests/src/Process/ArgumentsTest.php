@@ -34,6 +34,8 @@ class ArgumentsTest extends TestCase
      */
     public function testArgumentConversionThrowsExceptionOnInvalidArgument()
     {
+        $this->expectExceptionMessage('Invalid argument');
+
         $method = new \ReflectionMethod(Arguments::class, 'convertArgument');
         $method->setAccessible(true);
 

@@ -101,6 +101,8 @@ class DistillerParametersTraitTest extends TestCase
      */
     public function testAutoRotatePagesArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid auto rotate pages argument');
+
         /** @var DistillerParametersTrait $trait */
         $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParametersTrait');
 
@@ -121,6 +123,8 @@ class DistillerParametersTraitTest extends TestCase
      */
     public function testBindingArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid binding argument');
+
         /** @var DistillerParametersTrait $trait */
         $trait = $this->getMockForTrait('GravityMedia\Ghostscript\Device\DistillerParametersTrait');
 

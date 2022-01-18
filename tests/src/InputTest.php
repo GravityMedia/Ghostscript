@@ -25,7 +25,7 @@ class InputTest extends TestCase
 
         $this->assertNull($input->getProcessInput());
         $this->assertNull($input->getPostScriptCode());
-        $this->assertInternalType('array', $input->getFiles());
+        $this->assertContainsOnly('array', $input->getFiles());
         $this->assertCount(0, $input->getFiles());
     }
 
@@ -39,7 +39,7 @@ class InputTest extends TestCase
 
         $this->assertSame('input', $input->getProcessInput());
         $this->assertSame('.setpdfwrite', $input->getPostScriptCode());
-        $this->assertInternalType('array', $input->getFiles());
+        $this->assertContainsOnly('string', $input->getFiles());
         $this->assertCount(1, $input->getFiles());
     }
 }

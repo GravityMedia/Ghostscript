@@ -131,6 +131,8 @@ class MonoImageCompressionTraitTest extends TestCase
      */
     public function testMonoImageDownsampleTypeArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid monochrome image downsample type argument');
+
         /** @var MonoImageCompressionTrait $trait */
         $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 
@@ -174,6 +176,8 @@ class MonoImageCompressionTraitTest extends TestCase
      */
     public function testMonoImageFilterArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid monochrome image filter argument');
+
         /** @var MonoImageCompressionTrait $trait */
         $trait = $this->getMockForTrait(MonoImageCompressionTrait::class);
 

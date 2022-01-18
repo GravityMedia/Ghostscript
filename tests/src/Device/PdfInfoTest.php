@@ -79,6 +79,8 @@ class PdfInfoTest extends TestCase
      */
     public function testProcessCreationThrowsExceptionOnMissingInputFile()
     {
+        $this->expectExceptionMessage('Input file does not exist');
+
         $ghostscript = new Ghostscript();
         $arguments = new Arguments();
         $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';

@@ -141,6 +141,8 @@ class ColorConversionTraitTest extends TestCase
      */
     public function testColorConversionStrategyArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid color conversion strategy argument');
+
         /** @var ColorConversionTrait $trait */
         $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
@@ -204,6 +206,8 @@ class ColorConversionTraitTest extends TestCase
      */
     public function testDefaultRenderingIntentArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid default rendering intent argument');
+
         /** @var ColorConversionTrait $trait */
         $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
@@ -297,6 +301,8 @@ class ColorConversionTraitTest extends TestCase
      */
     public function testTransferFunctionInfoArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid transfer function info argument');
+
         /** @var ColorConversionTrait $trait */
         $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
@@ -337,6 +343,8 @@ class ColorConversionTraitTest extends TestCase
      */
     public function testUcrAndBgInfoArgumentThrowsException()
     {
+        $this->expectExceptionMessage('Invalid UCR and BG info argument');
+
         /** @var ColorConversionTrait $trait */
         $trait = $this->getMockForTrait(ColorConversionTrait::class);
 
