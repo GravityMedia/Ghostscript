@@ -100,6 +100,11 @@ trait PageTrait
         return $this;
     }
 
+    public function getFixedMedia()
+    {
+        return $this->getArgumentValue('-dFIXEDMEDIA');
+    }
+
     /**
      * The PDF file will be scaled to fit the current device page size (usually the default page size).
      * This is useful for creating fixed size images of PDF files that may have a variety of page sizes,
@@ -112,6 +117,11 @@ trait PageTrait
         $this->setArgument('-dPDFFitPage');
 
         return $this;
+    }
+
+    public function getPDFFitPage()
+    {
+        return $this->getArgumentValue('-dPDFFitPage');
     }
 
     /**
