@@ -40,4 +40,26 @@ class PageTraitTest extends TestCase
         $trait->expects($this->once())->method('setArgument')->with('-dLastPage=42')->willReturnSelf();
         $this->assertSame($trait, $trait->setLastPage(42));
     }
+
+    public function testFixedMedia()
+    {
+        /** @var PageTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
+        $trait = $this->getMockForTrait(PageTrait::class);
+        $trait->expects($this->once())->method('getArgumentValue')->with('-dFIXEDMEDIA')->willReturn(null);
+        $this->assertNull($trait->getFixedMedia());
+
+        $trait->expects($this->once())->method('setArgument')->with('-dFIXEDMEDIA')->willReturnSelf();
+        $this->assertSame($trait, $trait->setFixedMedia());
+    }
+
+    public function testPDFFitPage()
+    {
+        /** @var PageTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
+        $trait = $this->getMockForTrait(PageTrait::class);
+        $trait->expects($this->once())->method('getArgumentValue')->with('-dPDFFitPage')->willReturn(null);
+        $this->assertNull($trait->getPDFFitPage());
+
+        $trait->expects($this->once())->method('setArgument')->with('-dPDFFitPage')->willReturnSelf();
+        $this->assertSame($trait, $trait->setPDFFitPage());
+    }
 }

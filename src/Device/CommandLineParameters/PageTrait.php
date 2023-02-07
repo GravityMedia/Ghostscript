@@ -47,7 +47,7 @@ trait PageTrait
     /**
      * Set FirstPage parameter
      * Begins processing on the designated page of the document.
-     * 
+     *
      * @param int $firstPage.
      *
      * @return $this
@@ -72,7 +72,7 @@ trait PageTrait
     /**
      * Set LastPage parameter
      * Stops processing after the designated page of the document.
-     * 
+     *
      * @param int $lastPage.
      *
      * @return $this
@@ -85,13 +85,47 @@ trait PageTrait
     }
 
     /**
-     * TODO
-     *
      * -dFIXEDMEDIA
      *     Causes the media size to be fixed after initialization, forcing pages of other sizes or orientations to be
      *     clipped. This may be useful when printing documents on a printer that can handle their requested paper size
      *     but whose default is some other size. Note that -g automatically sets -dFIXEDMEDIA, but -sPAPERSIZE= does
      *     not.
+     *
+     * @return $this
+     */
+    public function setFixedMedia()
+    {
+        $this->setArgument('-dFIXEDMEDIA');
+
+        return $this;
+    }
+
+    public function getFixedMedia()
+    {
+        return $this->getArgumentValue('-dFIXEDMEDIA');
+    }
+
+    /**
+     * The PDF file will be scaled to fit the current device page size (usually the default page size).
+     * This is useful for creating fixed size images of PDF files that may have a variety of page sizes,
+     * for example thumbnail images.
+     *
+     * @return $this
+     */
+    public function setPDFFitPage()
+    {
+        $this->setArgument('-dPDFFitPage');
+
+        return $this;
+    }
+
+    public function getPDFFitPage()
+    {
+        return $this->getArgumentValue('-dPDFFitPage');
+    }
+
+    /**
+     * TODO
      *
      * -dFIXEDRESOLUTION
      *     Causes the media resolution to be fixed similarly. -r automatically sets -dFIXEDRESOLUTION.
