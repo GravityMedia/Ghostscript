@@ -52,27 +52,6 @@ class GhostscriptTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Ghostscript version 9.00 or higher is required
-     */
-    public function testCreateGhostscriptObjectThrowsExceptionOnInvalidVersion()
-    {
-        $this->expectExceptionMessage('Ghostscript version 9.00 or higher is required');
-
-        $mock = $this->getMockBuilder(Ghostscript::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $mock->expects($this->once())
-            ->method('getVersion')
-            ->will($this->returnValue('8.00'));
-
-        $class = new \ReflectionClass(Ghostscript::class);
-        $constructor = $class->getConstructor();
-        $constructor->invoke($mock);
-    }
-
-    /**
      * @dataProvider provideOptions
      *
      * @param array  $options
@@ -101,17 +80,14 @@ class GhostscriptTest extends TestCase
     {
         $instance = new Ghostscript();
 
-        $this->assertMatchesRegularExpression('/^[0-9]\.[0-9]+$/', $instance->getVersion());
+        $this->assertMatchesRegularExpression('/^[0-9]+\.[0-9\.]+$/', $instance->getVersion());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testGetVersionThrowsExceptionOnFailure()
     {
-        $this->expectExceptionMessage('sh: /foo/bar/baz: No such file or directory');
-
-        new Ghostscript(['bin' => '/foo/bar/baz']);
+        $this->expectExceptionMessage('sh: line 0: exec: /foo/bar/baz: cannot execute: No such file or directory');
+        $ghostscript = new Ghostscript(['bin' => '/foo/bar/baz']);
+        $ghostscript->getVersion();
     }
 
     public function testProcessArgumentsCreation()

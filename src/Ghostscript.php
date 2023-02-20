@@ -20,7 +20,7 @@ use Symfony\Component\Process\Process;
  *
  * @package GravityMedia\Ghostscript
  */
-class Ghostscript
+class Ghostscript implements GhostscriptInterface
 {
     /**
      * The default binary.
@@ -39,7 +39,8 @@ class Ghostscript
      *
      * @var array
      */
-    protected $options;
+    protected $options = [];
+
 
     /**
      * Create Ghostscript object.
@@ -51,10 +52,6 @@ class Ghostscript
     public function __construct(array $options = [])
     {
         $this->options = $options;
-
-        if (version_compare('9.00', $this->getVersion()) > 0) {
-            throw new \RuntimeException('Ghostscript version 9.00 or higher is required');
-        }
     }
 
     /**

@@ -6,6 +6,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\GhostscriptInterface;
 use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
 use GravityMedia\Ghostscript\Process\Arguments;
 
@@ -14,13 +15,11 @@ use GravityMedia\Ghostscript\Process\Arguments;
  */
 class Inkcov extends AbstractDevice
 {
-    const POSTSCRIPT_COMMANDS = '';
-
     /**
      * @param Ghostscript $ghostscript
      * @param ProcessArguments $arguments
      */
-    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
+    public function __construct(GhostscriptInterface $ghostscript, Arguments $arguments)
     {
         parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=inkcov'));
     }

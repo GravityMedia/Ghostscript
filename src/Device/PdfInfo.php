@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\GhostscriptInterface;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
@@ -23,10 +24,8 @@ class PdfInfo extends NoDisplay
 {
     /**
      * The PDF info path.
-     *
-     * @var string
      */
-    private $pdfInfoPath;
+    private string $pdfInfoPath;
 
     /**
      * Create PDF info device object.
@@ -35,7 +34,7 @@ class PdfInfo extends NoDisplay
      * @param Arguments   $arguments
      * @param string      $pdfInfoPath Path to toolbin/pdf_info.ps
      */
-    public function __construct(Ghostscript $ghostscript, Arguments $arguments, $pdfInfoPath)
+    public function __construct(GhostscriptInterface $ghostscript, Arguments $arguments, $pdfInfoPath)
     {
         parent::__construct($ghostscript, $arguments);
 

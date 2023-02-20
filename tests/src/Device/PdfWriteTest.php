@@ -10,9 +10,6 @@ namespace GravityMedia\GhostscriptTest\Device;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
-use GravityMedia\Ghostscript\Ghostscript;
-use GravityMedia\Ghostscript\Process\Arguments as ProcessArguments;
-use PHPUnit\Framework\TestCase;
 
 /**
  * The PDF write device test class.
@@ -30,34 +27,11 @@ use PHPUnit\Framework\TestCase;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class PdfWriteTest extends TestCase
+class PdfWriteTest extends DeviceTestCase
 {
-    /**
-     * Returns an OS independent representation of the commandline.
-     *
-     * @param string $commandline
-     *
-     * @return mixed
-     */
-    protected function quoteCommandLine($commandline)
+    protected function createDevice(?string $version = null): PdfWrite
     {
-        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
-            return str_replace('"', '\'', $commandline);
-
-        }
-
-        return $commandline;
-    }
-
-    /**
-     * @return PdfWrite
-     */
-    protected function createDevice()
-    {
-        $ghostscript = new Ghostscript();
-        $processArguments = new ProcessArguments();
-
-        return new PdfWrite($ghostscript, $processArguments);
+        return new PdfWrite($this->getGhostscript($version), $this->arguments);
     }
 
     public function testDeviceCreation()
@@ -88,7 +62,7 @@ class PdfWriteTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return array<string[]>
      */
     public function providePdfSettings()
     {
@@ -123,9 +97,9 @@ class PdfWriteTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return array<string[]>
      */
-    public function provideProcessColorModel()
+    public static function provideProcessColorModel(): array
     {
         return [
             [ProcessColorModel::DEVICE_RGB],
@@ -143,12 +117,46 @@ class PdfWriteTest extends TestCase
         $this->createDevice()->setProcessColorModel('/foo');
     }
 
-    public function testProcessCreation()
+    protected static function dataProcessCreation(): array
     {
-        $process = $this->createDevice()->createProcess();
+        return [
+            [fn (self $self) => $self->assertProcessCreation(
+                version: '9.00',
+                expectSetPDFWrite: true,
+            )],
+            [fn (self $self) => $self->assertProcessCreation(
+                version: '9.10',
+                expectSetPDFWrite: true,
+            )],
+            [fn (self $self) => $self->assertProcessCreation(
+                version: '9.50',
+                expectSetPDFWrite: false,
+            )],
+            [fn (self $self) => $self->assertProcessCreation(
+                version: '10.00.0',
+                expectSetPDFWrite: false,
+            )]
+        ];
+    }
 
+    /**
+     * @dataProvider dataProcessCreation
+     */
+    public function testProcessCreation(callable $closure): void
+    {
+        $closure($this);
+    }
+
+    protected function assertProcessCreation(
+        string $version,
+        bool $expectSetPDFWrite,
+    ): void
+    {
+        $process = $this->createDevice($version)->createProcess();
+
+        $command = "'gs' '-sDEVICE=pdfwrite' '-dPDFSETTINGS=/default'";
         $this->assertEquals(
-            "'gs' '-sDEVICE=pdfwrite' '-dPDFSETTINGS=/default' '-c' '.setpdfwrite'",
+            $expectSetPDFWrite ? "{$command} '-c' '.setpdfwrite'" : $command,
             $this->quoteCommandLine($process->getCommandLine())
         );
     }
