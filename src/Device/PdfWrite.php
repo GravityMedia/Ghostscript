@@ -177,7 +177,7 @@ class PdfWrite extends AbstractDevice
          * the pdfwrite device.
          * @link https://ghostscript.com/doc/current/Language.htm#.setpdfwrite
          */
-        if (version_compare($version, '9.50', '<') && false === strstr($code, '.setpdfwrite')) {
+        if (version_compare($this->ghostscript->getVersion(), '9.50', '<') && false === strstr($code, '.setpdfwrite')) {
             $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
         }
 
