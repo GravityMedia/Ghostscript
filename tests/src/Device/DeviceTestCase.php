@@ -31,7 +31,7 @@ abstract class DeviceTestCase extends TestCase
         } else {
             $ghostscript = $this->createPartialMock(Ghostscript::class, ['getVersion']);
 
-            $ghostscript->expects($this->once())
+            $ghostscript->expects($this->atLeastOnce())
                 ->method('getVersion')
                 ->will($this->returnValue($version));
         }

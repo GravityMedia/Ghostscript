@@ -74,7 +74,7 @@ abstract class AbstractDevice
     /**
      * The Ghostscript object.
      */
-    private GhostscriptInterface $ghostscript;
+    protected GhostscriptInterface $ghostscript;
 
     /**
      * The arguments object.
