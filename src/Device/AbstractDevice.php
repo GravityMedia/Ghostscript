@@ -184,7 +184,7 @@ abstract class AbstractDevice
      *
      * @return array
      */
-    protected function createProcessArguments(Input $input, string $version)
+    protected function createProcessArguments(Input $input)
     {
         $arguments = array_values($this->arguments->toArray());
 
