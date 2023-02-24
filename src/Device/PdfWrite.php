@@ -163,7 +163,7 @@ class PdfWrite extends AbstractDevice
     /**
      * {@inheritdoc}
      */
-    protected function createProcessArguments(Input $input, string $version)
+    protected function createProcessArguments(Input $input)
     {
         $code = $input->getPostScriptCode();
         if (null === $code) {
