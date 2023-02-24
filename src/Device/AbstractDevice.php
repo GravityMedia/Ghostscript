@@ -229,7 +229,7 @@ abstract class AbstractDevice
 
         $input = $this->sanitizeInput($input);
 
-        $arguments = $this->createProcessArguments($input, $version);
+        $arguments = $this->createProcessArguments($input);
         array_unshift(
             $arguments,
             $this->ghostscript->getOption('bin', Ghostscript::DEFAULT_BINARY)
