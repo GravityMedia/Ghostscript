@@ -181,6 +181,6 @@ class PdfWrite extends AbstractDevice
             $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
         }
 
-        return parent::createProcessArguments($input, $version);
+        return parent::createProcessArguments($input);
     }
 }
