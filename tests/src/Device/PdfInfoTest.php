@@ -7,10 +7,10 @@
 
 namespace GravityMedia\GhostscriptTest\Device;
 
+use GravityMedia\Ghostscript\Device\AbstractDevice;
 use GravityMedia\Ghostscript\Device\PdfInfo;
-use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
-use PHPUnit\Framework\TestCase;
+use Symfony\Component\Process\Process;
 
 /**
  * The pdf info device test class.
@@ -26,48 +26,31 @@ use PHPUnit\Framework\TestCase;
  * @uses    \GravityMedia\Ghostscript\Process\Argument
  * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
-class PdfInfoTest extends TestCase
+class PdfInfoTest extends DeviceTestCase
 {
-    /**
-     * Returns an OS independent representation of the commandline.
-     *
-     * @param string $commandline
-     *
-     * @return mixed
-     */
-    protected function quoteCommandLine($commandline)
+    const PDF_PATH = __DIR__ . '/../../data/pdf_info.ps';
+
+    protected function createDevice(?string $version = null): PdfInfo
     {
-        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
-            return str_replace('"', '\'', $commandline);
+        $ghostscript = $this->getGhostscript($version);
+        $arguments = new Arguments();
 
-        }
-
-        return $commandline;
+        return new PdfInfo($ghostscript, $arguments, self::PDF_PATH);
     }
 
     public function testDeviceCreation()
     {
-        $ghostscript = new Ghostscript();
-        $arguments = new Arguments();
-        $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
-
-        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
-
-        $this->assertInstanceOf(PdfInfo::class, $device);
-
+        $device = $this->createDevice();
         $field = new \ReflectionProperty(PdfInfo::class, 'pdfInfoPath');
         $field->setAccessible(true);
-        $this->assertEquals($pdfInfoPath, $field->getValue($device));
+        $this->assertEquals(self::PDF_PATH, $field->getValue($device));
     }
 
     public function testProcessCreation()
     {
-        $ghostscript = new Ghostscript();
-        $arguments = new Arguments();
-        $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
         $inputFile = __DIR__ . '/../../data/input.pdf';
-
-        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
+        $pdfInfoPath = self::PDF_PATH;
+        $device = $this->createDevice();
         $process = $device->createProcess($inputFile);
 
         $expectedCommandLine = "'gs' '-dNODISPLAY' '-sFile=$inputFile' '-f' '$pdfInfoPath'";
@@ -81,11 +64,14 @@ class PdfInfoTest extends TestCase
     {
         $this->expectExceptionMessage('Input file does not exist');
 
-        $ghostscript = new Ghostscript();
-        $arguments = new Arguments();
-        $pdfInfoPath = __DIR__ . '/../../data/pdf_info.ps';
-
-        $device = new PdfInfo($ghostscript, $arguments, $pdfInfoPath);
+        $device = $this->createDevice();
         $device->createProcess();
+    }
+
+    protected function createProcessForVersionTest(AbstractDevice $device): Process
+    {
+        $inputFile = __DIR__ . '/../../data/input.pdf';
+
+        return $device->createProcess($inputFile);
     }
 }

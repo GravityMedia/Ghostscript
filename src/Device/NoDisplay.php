@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\GhostscriptInterface;
 use GravityMedia\Ghostscript\Process\Arguments;
 
 /**
@@ -23,7 +24,7 @@ class NoDisplay extends AbstractDevice
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments
      */
-    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
+    public function __construct(GhostscriptInterface $ghostscript, Arguments $arguments)
     {
         parent::__construct($ghostscript, $arguments->setArgument('-dNODISPLAY'));
     }

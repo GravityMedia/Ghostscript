@@ -10,6 +10,7 @@ namespace GravityMedia\Ghostscript\Device;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\GhostscriptInterface;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Arguments;
 
@@ -61,23 +62,15 @@ class PdfWrite extends AbstractDevice
     use DistillerParameters\AdvancedTrait;
 
     /**
-     * The Ghostscript binary version.
-     *
-     * @var string
-     */
-    protected $ghostscriptVersion;
-
-    /**
      * Create PDF write device object.
      *
      * @param Ghostscript $ghostscript
      * @param Arguments   $arguments
      */
-    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
+    public function __construct(GhostscriptInterface $ghostscript, Arguments $arguments)
     {
         parent::__construct($ghostscript, $arguments->setArgument('-sDEVICE=pdfwrite'));
 
-        $this->ghostscriptVersion = $ghostscript->getVersion();
         $this->setPdfSettings(PdfSettings::__DEFAULT);
     }
 
@@ -184,7 +177,7 @@ class PdfWrite extends AbstractDevice
          * the pdfwrite device.
          * @link https://ghostscript.com/doc/current/Language.htm#.setpdfwrite
          */
-        if (version_compare($this->ghostscriptVersion, '9.50', '<') && false === strstr($code, '.setpdfwrite')) {
+        if (version_compare($this->ghostscript->getVersion(), '9.50', '<') && false === strstr($code, '.setpdfwrite')) {
             $input->setPostScriptCode(ltrim($code . ' .setpdfwrite', ' '));
         }
 

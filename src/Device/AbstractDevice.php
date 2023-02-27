@@ -8,6 +8,7 @@
 namespace GravityMedia\Ghostscript\Device;
 
 use GravityMedia\Ghostscript\Ghostscript;
+use GravityMedia\Ghostscript\GhostscriptInterface;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
@@ -72,25 +73,18 @@ abstract class AbstractDevice
 
     /**
      * The Ghostscript object.
-     *
-     * @var Ghostscript
      */
-    private $ghostscript;
+    protected GhostscriptInterface $ghostscript;
 
     /**
      * The arguments object.
-     *
-     * @var Arguments
      */
-    private $arguments;
+    private Arguments $arguments;
 
     /**
      * Create abstract device object.
-     *
-     * @param Ghostscript $ghostscript
-     * @param Arguments   $arguments
      */
-    public function __construct(Ghostscript $ghostscript, Arguments $arguments)
+    public function __construct(GhostscriptInterface $ghostscript, Arguments $arguments)
     {
         $this->ghostscript = $ghostscript;
         $this->arguments = $arguments;
@@ -227,6 +221,12 @@ abstract class AbstractDevice
      */
     public function createProcess($input = null)
     {
+        $requiredVersion = $this->getRequiredVersion();
+        $version = $this->ghostscript->getVersion();
+        if (version_compare($requiredVersion, $version) > 0) {
+            throw new \RuntimeException("Ghostscript version {$requiredVersion} or higher is required");
+        }
+
         $input = $this->sanitizeInput($input);
 
         $arguments = $this->createProcessArguments($input);
@@ -242,5 +242,10 @@ abstract class AbstractDevice
             $input->getProcessInput(),
             $this->ghostscript->getOption('timeout', 60)
         );
+    }
+
+    protected function getRequiredVersion(): string
+    {
+        return '9.00';
     }
 }
