@@ -10,23 +10,23 @@ namespace GravityMedia\GhostscriptTest\Device;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * The PDF write device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
- *
- * @covers  \GravityMedia\Ghostscript\Device\PdfWrite
- *
- * @uses    \GravityMedia\Ghostscript\Ghostscript
- * @uses    \GravityMedia\Ghostscript\Input
- * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
- * @uses    \GravityMedia\Ghostscript\Enum\ProcessColorModel
- * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
- * @uses    \GravityMedia\Ghostscript\Process\Argument
- * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\PdfWrite::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Ghostscript::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Input::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\PdfSettings::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\ProcessColorModel::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\AbstractDevice::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\DistillerParametersTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Argument::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Arguments::class)]
 class PdfWriteTest extends DeviceTestCase
 {
     protected function createDevice(?string $version = null): PdfWrite
@@ -64,7 +64,7 @@ class PdfWriteTest extends DeviceTestCase
     /**
      * @return array<string[]>
      */
-    public function providePdfSettings()
+    public static function providePdfSettings()
     {
         return [
             [PdfSettings::__DEFAULT],
@@ -117,7 +117,7 @@ class PdfWriteTest extends DeviceTestCase
         $this->createDevice()->setProcessColorModel('/foo');
     }
 
-    protected static function dataProcessCreation(): array
+    public static function dataProcessCreation(): array
     {
         return [
             [fn (self $self) => $self->assertProcessCreation(

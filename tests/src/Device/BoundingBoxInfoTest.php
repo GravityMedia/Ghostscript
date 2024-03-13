@@ -12,20 +12,20 @@ use GravityMedia\Ghostscript\Device\BoundingBoxInfo;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The bounding box info device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
- *
- * @covers  \GravityMedia\Ghostscript\Device\BoundingBoxInfo
- *
- * @uses    \GravityMedia\Ghostscript\Ghostscript
- * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Process\Argument
- * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\BoundingBoxInfo::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Ghostscript::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\AbstractDevice::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Argument::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Arguments::class)]
 class BoundingBoxInfoTest extends DeviceTestCase
 {
     protected function createDevice(?string $version = null): AbstractDevice

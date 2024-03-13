@@ -12,29 +12,29 @@ use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Input;
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The abstract device test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
- *
- * @covers  \GravityMedia\Ghostscript\Device\AbstractDevice
- *
- * @uses    \GravityMedia\Ghostscript\Ghostscript
- * @uses    \GravityMedia\Ghostscript\Input
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
- * @uses    \GravityMedia\Ghostscript\Process\Argument
- * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\AbstractDevice::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Ghostscript::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Input::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Argument::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Arguments::class)]
 class AbstractDeviceTest extends TestCase
 {
     /**

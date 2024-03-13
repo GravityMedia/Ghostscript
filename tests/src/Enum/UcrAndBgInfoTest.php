@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The UCR and BG info enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\UcrAndBgInfo
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\UcrAndBgInfo::class)]
 class UcrAndBgInfoTest extends TestCase
 {
     public function testValues()

@@ -13,20 +13,20 @@ use GravityMedia\Ghostscript\Enum\DefaultRenderingIntent;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
 use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
 use GravityMedia\Ghostscript\Enum\UcrAndBgInfo;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The color conversion distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait
- *
- * @uses    \GravityMedia\Ghostscript\Enum\ColorConversionStrategy
- * @uses    \GravityMedia\Ghostscript\Enum\DefaultRenderingIntent
- * @uses    \GravityMedia\Ghostscript\Enum\TransferFunctionInfo
- * @uses    \GravityMedia\Ghostscript\Enum\UcrAndBgInfo
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\ColorConversionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\ColorConversionStrategy::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\DefaultRenderingIntent::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\TransferFunctionInfo::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\UcrAndBgInfo::class)]
 class ColorConversionTraitTest extends TestCase
 {
     /**
@@ -40,11 +40,11 @@ class ColorConversionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -60,7 +60,7 @@ class ColorConversionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -125,7 +125,7 @@ class ColorConversionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForColorConversionStrategy()
+    public static function providePdfSettingsForColorConversionStrategy()
     {
         return [
             [ColorConversionStrategy::LEAVE_COLOR_UNCHANGED, PdfSettings::__DEFAULT],
@@ -190,7 +190,7 @@ class ColorConversionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForDefaultRenderingIntent()
+    public static function providePdfSettingsForDefaultRenderingIntent()
     {
         return [
             [DefaultRenderingIntent::__DEFAULT],
@@ -244,7 +244,7 @@ class ColorConversionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForPreserveOverprintSettings()
+    public static function providePdfSettingsForPreserveOverprintSettings()
     {
         return [
             [false, PdfSettings::__DEFAULT],
@@ -287,7 +287,7 @@ class ColorConversionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForTransferFunctionInfo()
+    public static function providePdfSettingsForTransferFunctionInfo()
     {
         return [
             [TransferFunctionInfo::PRESERVE],
@@ -327,7 +327,7 @@ class ColorConversionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForUcrAndBgInfo()
+    public static function providePdfSettingsForUcrAndBgInfo()
     {
         return [
             [UcrAndBgInfo::REMOVE, PdfSettings::__DEFAULT],

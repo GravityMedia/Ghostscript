@@ -11,18 +11,18 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrai
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\MonoImageFilter;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The monochrome image compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait
- *
- * @uses    \GravityMedia\Ghostscript\Enum\MonoImageFilter
- * @uses    \GravityMedia\Ghostscript\Enum\ImageDownsampleType
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\MonoImageCompressionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\MonoImageFilter::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\ImageDownsampleType::class)]
 class MonoImageCompressionTraitTest extends TestCase
 {
     /**
@@ -36,11 +36,11 @@ class MonoImageCompressionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -56,7 +56,7 @@ class MonoImageCompressionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -115,7 +115,7 @@ class MonoImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForMonoImageDownsampleType()
+    public static function providePdfSettingsForMonoImageDownsampleType()
     {
         return [
             [ImageDownsampleType::SUBSAMPLE, PdfSettings::__DEFAULT],
@@ -162,7 +162,7 @@ class MonoImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForMonoImageFilter()
+    public static function providePdfSettingsForMonoImageFilter()
     {
         return [
             [MonoImageFilter::CCITT_FAX_ENCODE],
@@ -205,7 +205,7 @@ class MonoImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForMonoImageResolution()
+    public static function providePdfSettingsForMonoImageResolution()
     {
         return [
             [300, PdfSettings::__DEFAULT],
@@ -237,7 +237,7 @@ class MonoImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForDownsampleMonoImages()
+    public static function providePdfSettingsForDownsampleMonoImages()
     {
         return [
             [false, PdfSettings::__DEFAULT],

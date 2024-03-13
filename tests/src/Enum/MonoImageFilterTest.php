@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\MonoImageFilter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The monochrome image filter enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\MonoImageFilter
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\MonoImageFilter::class)]
 class MonoImageFilterTest extends TestCase
 {
     public function testValues()

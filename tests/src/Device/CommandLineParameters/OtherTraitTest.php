@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
 use GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The other parameters trait test class.
  *
  * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
- *
- * @covers \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait::class)]
 class OtherTraitTest extends TestCase
 {
     public function testFilterImage()
@@ -151,17 +151,28 @@ class OtherTraitTest extends TestCase
         $this->assertSame($trait, $trait->setSafer());
     }
 
-    public function testPreBandThreshold()
+    public function testPreBandThresholdTrue()
     {
         /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
         $trait = $this->getMockForTrait(OtherTrait::class);
-        $trait->expects($this->exactly(3))->method('getArgumentValue')
-            ->with('-dPreBandThreshold')->willReturnOnConsecutiveCalls(null, true, false);
-        $trait->expects($this->exactly(2))->method('setArgument')
-            ->withConsecutive(['-dPreBandThreshold=true'], ['-dPreBandThreshold=false'])->willReturnSelf();
+        $trait->expects($this->exactly(2))->method('getArgumentValue')
+            ->with('-dPreBandThreshold')->willReturnOnConsecutiveCalls(null, true);
+        $trait->expects($this->exactly(1))->method('setArgument')
+            ->with('-dPreBandThreshold=true')->willReturnSelf();
         $this->assertFalse($trait->isPreBandThreshold());
         $this->assertSame($trait, $trait->setPreBandThreshold(true));
         $this->assertTrue($trait->isPreBandThreshold());
+    }
+
+    public function testPreBandThresholdFalse()
+    {
+        /** @var OtherTrait|\PHPUnit_Framework_MockObject_MockObject $trait */
+        $trait = $this->getMockForTrait(OtherTrait::class);
+        $trait->expects($this->exactly(2))->method('getArgumentValue')
+            ->with('-dPreBandThreshold')->willReturnOnConsecutiveCalls(null, false);
+        $trait->expects($this->exactly(1))->method('setArgument')
+            ->with('-dPreBandThreshold=false')->willReturnSelf();
+        $this->assertFalse($trait->isPreBandThreshold());
         $this->assertSame($trait, $trait->setPreBandThreshold(false));
         $this->assertFalse($trait->isPreBandThreshold());
     }

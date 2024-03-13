@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\TransferFunctionInfo;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The transfer function info enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\TransferFunctionInfo
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\TransferFunctionInfo::class)]
 class TransferFunctionInfoTest extends TestCase
 {
     public function testValues()

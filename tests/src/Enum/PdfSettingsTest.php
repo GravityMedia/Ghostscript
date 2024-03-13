@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The PDF settings enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\PdfSettings
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\PdfSettings::class)]
 class PdfSettingsTest extends TestCase
 {
     public function testValues()

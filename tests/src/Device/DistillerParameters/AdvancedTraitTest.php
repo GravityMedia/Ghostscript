@@ -9,15 +9,15 @@ namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The advanced distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\AdvancedTrait::class)]
 class AdvancedTraitTest extends TestCase
 {
     /**
@@ -31,11 +31,11 @@ class AdvancedTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -51,7 +51,7 @@ class AdvancedTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -98,7 +98,7 @@ class AdvancedTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForCreateJobTicket()
+    public static function providePdfSettingsForCreateJobTicket()
     {
         return [
             [false, PdfSettings::__DEFAULT],
@@ -202,7 +202,7 @@ class AdvancedTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForPreserveOpiComments()
+    public static function providePdfSettingsForPreserveOpiComments()
     {
         return [
             [false, PdfSettings::__DEFAULT],

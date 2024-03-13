@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Device\CommandLineParameters;
 
 use GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The interaction-related parameters trait test class.
  *
  * @package GravityMedia\GhostscriptTest\Device\CommandLineParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait::class)]
 class InteractionTraitTest extends TestCase
 {
     public function testBatch()
