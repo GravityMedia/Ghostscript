@@ -14,36 +14,36 @@ use GravityMedia\Ghostscript\Device\PdfInfo;
 use GravityMedia\Ghostscript\Device\PdfWrite;
 use GravityMedia\Ghostscript\Ghostscript;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The Ghostscript test class
  *
  * @package GravityMedia\GhostscriptTest
- *
- * @covers  \GravityMedia\Ghostscript\Ghostscript
- *
- * @uses    \GravityMedia\Ghostscript\Input
- * @uses    \GravityMedia\Ghostscript\Enum\PdfSettings
- * @uses    \GravityMedia\Ghostscript\Device\AbstractDevice
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait
- * @uses    \GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait
- * @uses    \GravityMedia\Ghostscript\Device\DistillerParametersTrait
- * @uses    \GravityMedia\Ghostscript\Device\BoundingBoxInfo
- * @uses    \GravityMedia\Ghostscript\Device\Inkcov
- * @uses    \GravityMedia\Ghostscript\Device\NoDisplay
- * @uses    \GravityMedia\Ghostscript\Device\PdfInfo
- * @uses    \GravityMedia\Ghostscript\Device\PdfWrite
- * @uses    \GravityMedia\Ghostscript\Process\Argument
- * @uses    \GravityMedia\Ghostscript\Process\Arguments
  */
+#[CoversClass(\GravityMedia\Ghostscript\Ghostscript::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Input::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\PdfSettings::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\AbstractDevice::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\EpsTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\FontTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\IccColorTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\InteractionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\OtherTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\OutputSelectionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\PageTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\RenderingTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\CommandLineParameters\ResourceTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\DistillerParametersTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\BoundingBoxInfo::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\Inkcov::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\NoDisplay::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\PdfInfo::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Device\PdfWrite::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Argument::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Arguments::class)]
 class GhostscriptTest extends TestCase
 {
     public function testCreateGhostscriptObject()
@@ -68,7 +68,7 @@ class GhostscriptTest extends TestCase
     /**
      * @return array
      */
-    public function provideOptions()
+    public static function provideOptions()
     {
         return [
             [[], 'foo', null],
@@ -85,7 +85,7 @@ class GhostscriptTest extends TestCase
 
     public function testGetVersionThrowsExceptionOnFailure()
     {
-        $this->expectExceptionMessage('sh: line 0: exec: /foo/bar/baz: cannot execute: No such file or directory');
+        $this->expectExceptionMessageMatches('/exec: \/foo\/bar\/baz/');
         $ghostscript = new Ghostscript(['bin' => '/foo/bar/baz']);
         $ghostscript->getVersion();
     }
@@ -159,7 +159,7 @@ class GhostscriptTest extends TestCase
     /**
      * @return array
      */
-    public function provideTimeout()
+    public static function provideTimeout()
     {
         return [
             [42, 42],

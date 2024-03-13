@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\ColorConversionStrategy;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The color conversion strategy enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\ColorConversionStrategy
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\ColorConversionStrategy::class)]
 class ColorConversionStrategyTest extends TestCase
 {
     public function testValues()

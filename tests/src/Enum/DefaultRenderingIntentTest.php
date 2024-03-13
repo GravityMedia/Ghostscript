@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\DefaultRenderingIntent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The default rendering intent enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\DefaultRenderingIntent
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\DefaultRenderingIntent::class)]
 class DefaultRenderingIntentTest extends TestCase
 {
     public function testValues()

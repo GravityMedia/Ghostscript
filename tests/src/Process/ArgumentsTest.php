@@ -9,17 +9,17 @@ namespace GravityMedia\GhostscriptTest\Process;
 
 use GravityMedia\Ghostscript\Process\Argument;
 use GravityMedia\Ghostscript\Process\Arguments;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The arguments test class.
  *
  * @package GravityMedia\GhostscriptTest\Process
- *
- * @covers  \GravityMedia\Ghostscript\Process\Arguments
- *
- * @uses    \GravityMedia\Ghostscript\Process\Argument
  */
+#[CoversClass(\GravityMedia\Ghostscript\Process\Arguments::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Process\Argument::class)]
 class ArgumentsTest extends TestCase
 {
     public function testArgumentsConstruction()
@@ -59,7 +59,7 @@ class ArgumentsTest extends TestCase
     /**
      * @return array
      */
-    public function provideArgumentsForAddition()
+    public static function provideArgumentsForAddition()
     {
         return [
             [['foo'], ['foo']],
@@ -85,7 +85,7 @@ class ArgumentsTest extends TestCase
     /**
      * @return array
      */
-    public function provideArgumentsForSetting()
+    public static function provideArgumentsForSetting()
     {
         return [
             [['foo'], ['foo']],

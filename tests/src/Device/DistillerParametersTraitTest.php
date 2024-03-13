@@ -11,18 +11,18 @@ use GravityMedia\Ghostscript\Device\DistillerParametersTrait;
 use GravityMedia\Ghostscript\Enum\AutoRotatePages;
 use GravityMedia\Ghostscript\Enum\Binding;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The general distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParametersTrait
- *
- * @uses    \GravityMedia\Ghostscript\Enum\AutoRotatePages
- * @uses    \GravityMedia\Ghostscript\Enum\Binding
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParametersTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\AutoRotatePages::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\Binding::class)]
 class DistillerParametersTraitTest extends TestCase
 {
     /**
@@ -36,11 +36,11 @@ class DistillerParametersTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -56,7 +56,7 @@ class DistillerParametersTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -85,7 +85,7 @@ class DistillerParametersTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForAutoRotatePages()
+    public static function providePdfSettingsForAutoRotatePages()
     {
         return [
             [AutoRotatePages::PAGE_BY_PAGE, PdfSettings::__DEFAULT],
@@ -149,7 +149,7 @@ class DistillerParametersTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForCompatibilityLevel()
+    public static function providePdfSettingsForCompatibilityLevel()
     {
         return [
             [1.4, PdfSettings::__DEFAULT],
@@ -187,7 +187,7 @@ class DistillerParametersTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForDoThumbnails()
+    public static function providePdfSettingsForDoThumbnails()
     {
         return [
             [false, PdfSettings::__DEFAULT],
@@ -243,7 +243,7 @@ class DistillerParametersTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForOptimize()
+    public static function providePdfSettingsForOptimize()
     {
         return [
             [false, PdfSettings::__DEFAULT],

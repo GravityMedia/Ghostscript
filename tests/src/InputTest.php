@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest;
 
 use GravityMedia\Ghostscript\Input;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The input test class
  *
  * @package GravityMedia\GhostscriptTest
- *
- * @covers  \GravityMedia\Ghostscript\Input
  */
+#[CoversClass(\GravityMedia\Ghostscript\Input::class)]
 class InputTest extends TestCase
 {
     public function testDefaultInput()

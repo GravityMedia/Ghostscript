@@ -10,17 +10,17 @@ namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 use GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait;
 use GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The font distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait
- *
- * @uses    \GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\FontTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\CannotEmbedFontPolicy::class)]
 class FontTraitTest extends TestCase
 {
     /**
@@ -34,11 +34,11 @@ class FontTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -54,7 +54,7 @@ class FontTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -86,7 +86,7 @@ class FontTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForCannotEmbedFontPolicy()
+    public static function providePdfSettingsForCannotEmbedFontPolicy()
     {
         return [
             [CannotEmbedFontPolicy::WARNING, PdfSettings::__DEFAULT],
@@ -128,7 +128,7 @@ class FontTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForEmbedAllFonts()
+    public static function providePdfSettingsForEmbedAllFonts()
     {
         return [
             [true, PdfSettings::__DEFAULT],

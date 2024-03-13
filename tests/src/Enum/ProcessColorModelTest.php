@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\ProcessColorModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The binding enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\ProcessColorModel
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\ProcessColorModel::class)]
 class ProcessColorModelTest extends TestCase
 {
     public function testValues()

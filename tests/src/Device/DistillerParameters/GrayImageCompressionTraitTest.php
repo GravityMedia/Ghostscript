@@ -11,18 +11,18 @@ use GravityMedia\Ghostscript\Device\DistillerParameters\GrayImageCompressionTrai
 use GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter;
 use GravityMedia\Ghostscript\Enum\ImageDownsampleType;
 use GravityMedia\Ghostscript\Enum\PdfSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The grayscale image compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\GrayImageCompressionTrait
- *
- * @uses    \GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter
- * @uses    \GravityMedia\Ghostscript\Enum\ImageDownsampleType
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\GrayImageCompressionTrait::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\ColorAndGrayImageFilter::class)]
+#[UsesClass(\GravityMedia\Ghostscript\Enum\ImageDownsampleType::class)]
 class GrayImageCompressionTraitTest extends TestCase
 {
     /**
@@ -36,11 +36,11 @@ class GrayImageCompressionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $trait->expects($this->once())
             ->method('getPdfSettings')
-            ->will($this->returnValue($pdfSettings));
+            ->willReturn($pdfSettings);
 
         return $trait;
     }
@@ -56,7 +56,7 @@ class GrayImageCompressionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
@@ -124,7 +124,7 @@ class GrayImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForGrayImageDownsampleType()
+    public static function providePdfSettingsForGrayImageDownsampleType()
     {
         return [
             [ImageDownsampleType::SUBSAMPLE, PdfSettings::__DEFAULT],
@@ -171,7 +171,7 @@ class GrayImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForGrayImageFilter()
+    public static function providePdfSettingsForGrayImageFilter()
     {
         return [
             [ColorAndGrayImageFilter::DCT_ENCODE],
@@ -213,7 +213,7 @@ class GrayImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForGrayImageResolution()
+    public static function providePdfSettingsForGrayImageResolution()
     {
         return [
             [72, PdfSettings::__DEFAULT],
@@ -245,7 +245,7 @@ class GrayImageCompressionTraitTest extends TestCase
     /**
      * @return array
      */
-    public function providePdfSettingsForDownsampleGrayImages()
+    public static function providePdfSettingsForDownsampleGrayImages()
     {
         return [
             [false, PdfSettings::__DEFAULT],

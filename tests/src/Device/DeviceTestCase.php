@@ -33,14 +33,14 @@ abstract class DeviceTestCase extends TestCase
 
             $ghostscript->expects($this->atLeastOnce())
                 ->method('getVersion')
-                ->will($this->returnValue($version));
+                ->willReturn($version);
         }
         return $ghostscript;
     }
 
-    public function dataVersionsChecks(): array
+    public static function dataVersionsChecks(): array
     {
-        $minVersion = $this->getExpectedMinimumVersion();
+        $minVersion = static::getExpectedMinimumVersion();
         return [
             '8.50' => [fn (self $self) => $self->assertVersionCheck(
                 version: '8.50',
@@ -79,7 +79,7 @@ abstract class DeviceTestCase extends TestCase
     ): void
     {
         if ($expectedFailure) {
-            $expectedMinimumVersion = $this->getExpectedMinimumVersion();
+            $expectedMinimumVersion = static::getExpectedMinimumVersion();
             $this->expectExceptionMessage('Ghostscript version ' . $expectedMinimumVersion . ' or higher is required');
         }
 
@@ -87,7 +87,7 @@ abstract class DeviceTestCase extends TestCase
         $this->createProcessForVersionTest($device);
     }
 
-    protected function getExpectedMinimumVersion(): string
+    protected static function getExpectedMinimumVersion(): string
     {
         return '9.00';
     }

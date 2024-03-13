@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Enum;
 
 use GravityMedia\Ghostscript\Enum\AutoRotatePages;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The auto rotate pages enum test class
  *
  * @package GravityMedia\GhostscriptTest\Enum
- *
- * @covers  \GravityMedia\Ghostscript\Enum\AutoRotatePages
  */
+#[CoversClass(\GravityMedia\Ghostscript\Enum\AutoRotatePages::class)]
 class AutoRotatePagesTest extends TestCase
 {
     public function testValues()

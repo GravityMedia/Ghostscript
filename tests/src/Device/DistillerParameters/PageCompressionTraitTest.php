@@ -8,15 +8,15 @@
 namespace GravityMedia\GhostscriptTest\Device\DistillerParameters;
 
 use GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The page compression distiller parameters test class.
  *
  * @package GravityMedia\GhostscriptTest\Devices\DistillerParameters
- *
- * @covers  \GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait
  */
+#[CoversClass(\GravityMedia\Ghostscript\Device\DistillerParameters\PageCompressionTrait::class)]
 class PageCompressionTraitTest extends TestCase
 {
     /**
@@ -30,7 +30,7 @@ class PageCompressionTraitTest extends TestCase
 
         $trait->expects($this->once())
             ->method('getArgumentValue')
-            ->will($this->returnValue($argumentValue));
+            ->willReturn($argumentValue);
 
         // expect the method `setArgument` to be called when the argument value is not null
         if (null !== $argumentValue) {
