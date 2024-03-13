@@ -14,3 +14,7 @@ trim_trailing_whitespace = true
 # Markdown file settings
 [*.md]
 trim_trailing_whitespace = false
+
+# YAML file settings
+[*.yaml]
+indent_size = 2
