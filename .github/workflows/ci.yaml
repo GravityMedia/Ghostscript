@@ -35,7 +35,7 @@ jobs:
           key: ${{ runner.os }}-PHP-Extensions-V1
 
       - name: Cache PHP extensions
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.php-extensions-cache.outputs.dir }}
           key: ${{ steps.php-extensions-cache.outputs.key }}
